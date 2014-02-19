@@ -7,55 +7,39 @@
                 </div>
                 <a href="<?php echo site_url('welcome/index');?>">
                     <i class="icon-home"></i>
-                    <span>Home</span>
+                    <span>Dashboard</span>
                 </a>
             </li>            
              <li>
-                <a class="dropdown-toggle" href="<?php site_url('welcome/patient_list');?>">
+                <a  href="<?php echo site_url('lab/diagnostic_report');?>">
                     <i class="icon-group"></i>
-                    <span>Patients</span>
-                    <i class="icon-chevron-down"></i>
+                    <span>Add Diagnostic Report</span>
+                    
                 </a>
-                <ul class="submenu">
-                    <li><a href="<?php echo site_url('welcome/patient_list');?>">Patient list</a></li>
-                    <li><a href="<?php echo site_url('welcome/new_patient');?>">New Patient form</a></li>
-                    <li><a href="<?php echo site_url('welcome/patient_profile');?>">Inpatient</a></li>
-                    <li><a href="<?php echo site_url('welcome/patient_profile');?>">outpatient</a></li>
-                </ul>
+                
             </li>
             <li>
-                <a class="dropdown-toggle" href="<?php site_url('welcome/manage_bed');?>">
+                <a  href="<?php echo site_url('lab/blood_bank');?>">
                     <i class="icon-edit"></i>
-                    <span>bed ward</span>
-                    <i class="icon-chevron-down"></i>
+                    <span>Manage Blood Bank</span>
+               
                 </a>
-                <ul class="submenu">
-                    <li><a href="<?php echo site_url('welcome/manage_bed');?>">manage bed</a></li>
-                    <li><a href="<?php echo site_url('welcome/bed_allotment');?>">manage bed allotment</a></li>
-                </ul>
+                
             </li>
             <li>
-                <a class="dropdown-toggle" href="">
+                <a  href="<?php echo site_url('lab/blood_donor')?>">
                     <i class="icon-edit"></i>
-                    <span>Blood Bank</span>
-                    <i class="icon-chevron-down"></i>
+                    <span>Manage Blood Donor</span>
+                    
                 </a>
-                <ul class="submenu">
-                    <li><a href="<?php echo site_url('welcome/blood_bank');?>">Manage blood bank</a></li>
-                    <li><a href="<?php echo site_url('welcome/blood_donors');?>">Manage blood bank donor</a></li>
-                </ul>
+                
             </li>
+            
             <li>
-                <a href="<?php echo site_url('welcome/nurse_report');?>">
-                    <i class="icon-picture"></i>
-                    <span>Report</span>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo site_url('welcome/nurse_profile')?>">
+                <a href="<?php echo site_url('lab/lab_profile')?>">
                     <i class="icon-calendar-empty"></i>
                     <span>Profile</span>
-                </a>
+                </a>                                                                                                                                                                                                                                                                                                                                                                                                                                                 
             </li>
             
         </ul>

@@ -16,7 +16,7 @@ class Welcome extends CI_Controller {
 	{
 //           $this->load->model('nurse_model');
 //           $data['query']=$this->nurse_model->get_patient();
-		$this->load->view('admin/index');
+		$this->load->view('lab/index');
 //               $this->load->view('nurse/index',$data);
 	}
         /* Nurse controller main */

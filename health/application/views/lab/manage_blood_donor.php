@@ -5,7 +5,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/sidebar.php"); ?>
+    <?php include("includes/lab/sidebar.php"); ?>
     <!-- end sidebar -->
 
 

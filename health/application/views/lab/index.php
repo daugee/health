@@ -6,7 +6,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/sidebar.php");?>
+    <?php include("includes/lab/sidebar.php");?>
     <!-- end sidebar -->
 
 
@@ -34,40 +34,7 @@
                 <!-- UI Elements section -->
                 
                 <!-- end UI elements section -->
-<table class="table table-striped table-bordered table-condensed">
-            <thead>
-              <tr>
-                <th class="header">#</th>
-                <th class="yellow header headerSortDown">Patient</th>
-                <th class="green header">age</th>
-                <th class="red header">gender</th>
-                <th class="red header">Blood Group</th>
-                <th class="red header">Birth Date</th>
-                <th class="red header">Actions</th>
-              </tr>
-            </thead>
-             <tbody>
-              <?php
-              foreach($query as $row)
-              {
-                echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
-                echo '<td>'.$row['name'].'</td>';
-                echo '<td>'.$row['age'].'</td>';
-                echo '<td>'.$row['sex'].'</td>';
-                echo '<td>'.$row['bloodgroup'].'</td>';
-                echo '<td>'.$row['birthdate'].'</td>';
-                echo '<td class="crud-actions">
-                  <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
-                  <a href="'.site_url("admin").'/products/delete/'.$row['id'].'" class="btn btn-danger">delete</a>
-                </td>';
-                echo '</tr>';
-              }
-              ?>      
-            </tbody>
-</table>
-                <?php echo '<div class="pagination">'.$this->pagination->create_links().'</div>'; ?>
-                   </div>
+ </div>
         </div>
     </div>
 
