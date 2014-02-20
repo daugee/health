@@ -11,14 +11,27 @@ class Welcome extends CI_Controller {
             $this->load->library('form_validation');
             $this->load->model('nurse_model');
             $this->load->library('pagination');
+            $this->check_isvalidated();
        }
-	public function index()
+	public function index($msg= NULL)
 	{
-//           $this->load->model('nurse_model');
-//           $data['query']=$this->nurse_model->get_patient();
-		$this->load->view('lab/index');
-//               $this->load->view('nurse/index',$data);
+                 $data['msg'] = $msg;
+                $this->load->view('welcome_message', $data);
+		
+
 	}
+        
+        /* logout page */
+         private function check_isvalidated(){
+        if(! $this->session->userdata('validated')){
+             $this->index();
+             }
+             }
+             
+             public function logout(){
+        $this->session->sess_destroy();
+        $this->index();
+    }
         /* Nurse controller main */
         public function nurse(){
             
@@ -27,10 +40,126 @@ class Welcome extends CI_Controller {
 	     $this->load->view('nurse/index',$data);
         }
 
-        public function login()
-	{
-		$this->load->view('welcome_message');
-	}
+       /*########################login  function#######################################################*/
+        
+       public function login() {
+           
+                $this->load->library('form_validation');
+                $this->form_validation->set_rules('email', 'Email Address?', 'trim|required|valid_email');
+                $this->form_validation->set_rules('pass', 'Password?', 'trim|required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->index();
+            //$this->load->view('welcome_message'); //redirecting to the login view
+         
+        }
+        else{
+                    // Load the model
+                 $this->load->model('login');
+                 // Validate the user can login
+                 $result = $this->login->validate();
+            
+
+           if(sizeof($result)>0) {
+                //Capturing the necessary data from the database
+                $user_type=$result[0]->id;
+                
+                if ((int)$user_type == 1) {
+                    
+                    //Admin's session data
+                    $data = array(
+                            'id' => $result[0]->login_type,
+                            'email' => $result[0]->email,
+                            'name' => $result[0]->name,
+                            'logged_in' => true
+                        );
+                   
+                    
+                    /* setting the session variables */
+                    $this->session->set_userdata($data);
+                    redirect("admin/index");
+                } else if ((int)$user_type == 2) {
+                    
+                    //Admin's session data
+                    $data = array(
+                            'id' => $result[0]->login_type,
+                            'email' => $result[0]->email,
+                            'name' => $result[0]->name,
+                            'logged_in' => true
+                        );
+                    
+                    
+                    /* setting the session variables */
+                    $this->session->set_userdata($data);
+                    redirect("doctor/index");
+                } else if ((int)$user_type == 3) {
+                    
+                    //Admin's session data
+                    $data = array(
+                            'id' => $result[0]->login_type,
+                            'email' => $result[0]->email,
+                            'name' => $result[0]->name,
+                            'logged_in' => true
+                        );
+                    /* setting the session variables */
+                    $this->session->set_userdata($data);
+                    redirect("patient/index");
+                }
+                else if ((int)$user_type == 4) {
+                    
+                    //Admin's session data
+                    $data = array(
+                            'id' => $result[0]->login_type,
+                            'email' => $result[0]->email,
+                            'name' => $result[0]->name,
+                            'logged_in' => true
+                        );
+                   
+                    /* setting the session variables */
+                    $this->session->set_userdata($data);
+                    redirect("nurse/index");
+                }
+                else if ((int)$user_type == 5) {
+                    
+                    //Admin's session data
+                    $data = array(
+                            'id' => $result[0]->login_type,
+                            'email' => $result[0]->email,
+                            'name' => $result[0]->name,
+                            'logged_in' => true
+                        );
+                   
+                    /* setting the session variables */
+                    $this->session->set_userdata($data);
+                    redirect("pharmacy/index");
+                }
+                else if ((int)$user_type == 6) {
+                    
+                    //Admin's session data
+                    $data = array(
+                            'id' => $result[0]->login_type,
+                            'email' => $result[0]->email,
+                            'name' => $result[0]->name,
+                            'logged_in' => true
+                        );
+                    /* setting the session variables */
+                    $this->session->set_userdata($data);
+                    redirect("lab/index");
+                }  else {
+                    
+                     // If user did not validate, then show them login page again
+                     $msg = '<font color=red>Invalid username and/or password.</font><br />';
+                     $this->index($msg);
+                 
+                }
+            } 
+        }   
+   }
+       
+       
+       
+        
+        
+        
         public function register()
 	{
 		$this->load->view('welcome_message');
