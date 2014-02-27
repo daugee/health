@@ -63,8 +63,8 @@
                 echo '<td>'.$row['bloodgroup'].'</td>';
                 echo '<td>'.$row['birthdate'].'</td>';
                 echo '<td class="crud-actions">
-                  <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
-                  <a href="'.site_url("admin").'/products/delete/'.$row['id'].'" class="btn btn-danger">delete</a>
+                  <a href="'.site_url("welcome").'/patients/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
+                  
                 </td>';
                 echo '</tr>';
               }

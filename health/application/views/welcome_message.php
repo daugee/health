@@ -1,6 +1,6 @@
 <html>
-<head>
-	<title>Detail Admin - Home</title>
+
+<head>	
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	
@@ -16,7 +16,7 @@
     
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/elements.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/icons.css">
-
+</head>
 <body>
 
     <!-- navbar -->
@@ -26,18 +26,20 @@
 
     <!-- end sidebar -->
     <link href="<?php echo base_url();?>css/bayanno.css" media="screen" rel="stylesheet" type="text/css" />
-        <div class="navbar navbar-top navbar-inverse">
+    
+      <div class="content">
+
+<div class="container-fluid">
+    <div class="navbar navbar-top navbar-inverse">
             <div class="navbar-inner">
-                <div class="container-fluid">
-                    <a class="brand" href="index.html">Bayanno Hospital Manager PRO</a>
-              </div>
+                
+                    <a class="brand" href="index.html">Hospital Management </a>
+              
             </div>
         </div>
 	<!-- main container -->
-    <div class="content">
-
-
-        <div class="container-fluid">
+  
+   
 
  
 
@@ -108,8 +110,11 @@
                    </div>
         </div>
     </div>
-
-
+            </div>
+        </div>
+    </div>
+   
+</body>
 	<!-- scripts -->
     <?php include ("includes/scripts.php");?>
 <script type="text/javascript">

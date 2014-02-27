@@ -8,7 +8,10 @@ public function __construct()
             $this->load->library('form_validation');
        
        }
-       public function index(){
-           $this->load->view('nurse/index');
-       }
+       public function index() {
+
+        $this->load->model('nurse_model');
+        $data['query'] = $this->nurse_model->get_patient();
+        $this->load->view('nurse/index', $data);
+    }
 }
