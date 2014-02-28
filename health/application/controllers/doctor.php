@@ -32,6 +32,46 @@ public function __construct()
 		$this->load->view('doctor/manage_appointment',$data);
 	}
         
+        public function report()
+	{
+		$this->load->view('doctor/profile');
+	}
+        /*#####################PRESCRIPTION FUNCTIONS########################*/
+        
+        
+        public function prescription()
+	{
+                $this->load->model('nurse_model');
+                $data['result']=$this->nurse_model->get_patient();
+		$this->load->view('doctor/manage_prescription',$data);
+	}
+        
+        
+        /*#######################bed allotment#################*/
+        public function bed_allotment() {
+           
+             $this->load->model('nurse_model');
+        $data['allotment'] = $this->nurse_model->get_bedallotment();
+        $data['query'] = $this->nurse_model->get_bed();
+        $data['result'] = $this->nurse_model->get_patient();
+        $this->load->view('doctor/bed_allotment',$data);
+
+    }
+        /*#######################bed bank#################*/
+    public function blood_bank() {
+        $this->load->model('nurse_model');
+        $data['query'] = $this->nurse_model->get_donors();
+        $data['a'] = $this->nurse_model->a();
+        $data['a1'] = $this->nurse_model->a1();
+        $data['b'] = $this->nurse_model->b();
+        $data['b1'] = $this->nurse_model->b1();
+        $data['ab'] = $this->nurse_model->ab();
+        $data['ab1'] = $this->nurse_model->ab1();
+        $data['o'] = $this->nurse_model->o();
+        $data['o1'] = $this->nurse_model->o1();
+
+        $this->load->view('doctor/manage_blood_bank', $data);
+    }
         public function add()
     {
             $this->load->model('nurse_model');

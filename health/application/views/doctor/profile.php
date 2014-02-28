@@ -5,7 +5,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-<?php include("includes/sidebar.php"); ?>
+<?php include("includes/docs/docs_sidebar.php"); ?>
     <!-- end sidebar -->
 
 	<!-- main container -->

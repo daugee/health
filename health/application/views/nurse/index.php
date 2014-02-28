@@ -66,7 +66,7 @@
               ?>      
             </tbody>
 </table>
-                <?php echo '<div class="pagination">'.$this->pagination->create_links().'</div>'; ?>
+          
                    </div>
         </div>
     </div>

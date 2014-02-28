@@ -1,7 +1,4 @@
-<?php
-
-if (!defined('BASEPATH'))
-    exit('No direct script access allowed');
+<?php if (!defined('BASEPATH'))    exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
 
@@ -16,7 +13,7 @@ class Admin extends CI_Controller {
         $this->load->library('session');
         $this->load->library('form_validation');
         $this->load->library('pagination');
-        $this->check_isvalidated();
+        
     }
     
     private function check_isvalidated() {

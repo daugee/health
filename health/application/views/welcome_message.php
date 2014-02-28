@@ -16,6 +16,7 @@
     
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/elements.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/icons.css">
+    <link href="<?php echo base_url();?>css/bayanno.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
 <body>
 
@@ -25,7 +26,7 @@
 
 
     <!-- end sidebar -->
-    <link href="<?php echo base_url();?>css/bayanno.css" media="screen" rel="stylesheet" type="text/css" />
+    
     
       <div class="content">
 
@@ -111,12 +112,10 @@
         </div>
     </div>
             </div>
-        </div>
-    </div>
+      </div>
    
-</body>
 	<!-- scripts -->
-    <?php include ("includes/scripts.php");?>
+   
 <script type="text/javascript">
                             function check_account_type()
 				{
@@ -130,3 +129,5 @@
 					return true;
 				}
 </script>
+ <?php include ("includes/scripts.php");?>
+</html

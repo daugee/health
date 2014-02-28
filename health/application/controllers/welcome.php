@@ -19,7 +19,7 @@ class Welcome extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('nurse_model');
         $this->load->library('pagination');
-        $this->check_isvalidated();
+        
     }
 
     public function index($msg = NULL) {
@@ -29,12 +29,7 @@ class Welcome extends CI_Controller {
    
     /* logout page */
 
-    private function check_isvalidated() {
-        if (!$this->session->userdata('logged_in')) {
-            $this->index();
-        }
-    }
-
+  
     public function logout() {
         $this->session->sess_destroy();
         $this->index();
@@ -135,7 +130,7 @@ class Welcome extends CI_Controller {
 
                     /* setting the session variables */
                     $this->session->set_userdata($data);
-                    redirect("pharmacy/index");
+                    redirect("pharmacy/login");
                 } else if ((int) $user_type == 6) {
 
                     //Admin's session data
@@ -148,13 +143,15 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("lab/index");
-                } else {
+                } 
+            }
+                else {
 
                     // If user did not validate, then show them login page again
-                    $msg = '<font color=red>Invalid username and/or password.</font><br />';
-                    $this->index($msg);
+                    $msg['msg'] = '<font color=red>Invalid username and/or password .</font><br />';
+                    $this->load->view('welcome_message', $msg);
                 }
-            }
+            
         }
     }
 

@@ -5,7 +5,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/docs_sidebar.php"); ?>
+    <?php include("includes/docs/docs_sidebar.php"); ?>
     <!-- end sidebar -->
 
 
@@ -20,14 +20,14 @@
                 <div class="row-fluid form-wrapper">
                     <!-- left column -->
                      <div class="page-header">
-			    <h1>Manage Appointment</h1>
+			    <h1>Manage Prescription</h1>
 		    </div>
 		    
 		    		<div class="row">
 							<div class="tabbable span12">
 								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tabs1-pane1" data-toggle="tab">Appointment list</a></li>
-									<li><a href="#tabs1-pane2" data-toggle="tab">+Add Appointment</a></li>
+									<li class="active"><a href="#tabs1-pane1" data-toggle="tab">Prescription list</a></li>
+									<li><a href="#tabs1-pane2" data-toggle="tab">+add Prescription</a></li>
 									
 								</ul>
 								<div class="tab-content">
@@ -72,61 +72,38 @@
                 echo '<td>'.$row['bedtype'].'</td>';
                 echo '<td class="crud-actions">
                   <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
-                  <a href="'.site_url("admin").'/products/delete/'.$row['id'].'" class="btn btn-danger">delete</a>
+                 
                 </td>';
                 echo '</tr>';
               }
               ?>      
             </tbody>-->
 </table>
-                <?php echo '<div class="pagination">'.$this->pagination->create_links().'</div>'; ?>
+                
 							</div>
 									<div class="tab-pane" id="tabs1-pane2">
-	<?php
-      //flash messages
-      if(isset($flash_message)){
-        if($flash_message == TRUE)
-        {
-          echo '<div class="alert alert-success">';
-            echo '<a class="close" data-dismiss="alert">×</a>';
-            echo '<strong>Well done!</strong> new patient created with success.';
-          echo '</div>';       
-        }else{
-          echo '<div class="alert alert-error">';
-            echo '<a class="close" data-dismiss="alert">×</a>';
-            echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
-          echo '</div>';          
-        }
-      }
-      ?>
-                    <?php   
-      //form validation
-      echo validation_errors();?>
-         <form method="post" action="<?php echo site_url('doctor/add_appointment'); ?>" id="formID" class="form-horizontal" >
+	 <form method="post" action="<?php echo site_url('welcome/add_prescription'); ?>" id="formID" class="form-horizontal" >					
+                                                                            
 <fieldset>
 
 <!-- Form Name -->
-<legend>Add Appointment</legend>
+<legend>Prescription</legend>
 
 <!-- Select Basic -->
 <div class="control-group">
-  <label class="control-label" for="Doctor">Doctor</label>
+  <label class="control-label" for="type">Doctor</label>
   <div class="controls">
-    <select id="doctor" name="doctor" class="input-medium">
-        <option>kevin</option>
-        <option>brian</option>
-     <!-- <?php
-              foreach($query as $row)
-              {
-                echo "<option value=".$row['doctor'].">".$row['doctor']."</option>";
-              }
-              ?>-->
-      
+    <select id="type" name="bedtype" class="input-medium">
+      <option value="ward">Daudi</option>
+      <option value="cabin">Kevo</option>
+      <option value="icu">Peter</option>
+      <option value="other">Liyosi</option>
     </select>
   </div>
 </div>
 
-<!-- Select Basic -->
+
+<!-- Text input-->
 <div class="control-group">
   <label class="control-label" for="Patient">patient</label>
   <div class="controls">
@@ -141,28 +118,55 @@
   </div>
 </div>
 
-<!-- Text input-->
+<!-- Select Basic -->
 <div class="control-group">
-  <label class="control-label" for="appointment date">appointment date</label>
-  <div class="controls">
-      <input type="text" name="appointmentdate" value="appointment date" class="input-medium datepicker"  data-date-format="yyyy/mm/dd" />
+  <label class="control-label" for="casehistory">Case History</label>
+  <div class="controls">                     
+    <textarea id="description" name="casehistory" value="<?php echo set_value('description'); ?>"></textarea>
   </div>
 </div>
 
+<!-- Textarea -->
+<div class="control-group">
+  <label class="control-label" for="medication">Medication</label>
+  <div class="controls">                     
+    <textarea id="description" name="medication" value="<?php echo set_value('description'); ?>"></textarea>
+  </div>
+</div>
 
+<!-- Textarea -->
+<div class="control-group">
+  <label class="control-label" for="medication">Medication from pharmacist</label>
+  <div class="controls">                     
+    <textarea id="description" name="medicationpharmacist" value="<?php echo set_value('description'); ?>"></textarea>
+  </div>
+</div>
 
+<!-- Textarea -->
+<div class="control-group">
+  <label class="control-label" for="description">Description</label>
+  <div class="controls">                     
+    <textarea id="description" name="description" value="<?php echo set_value('description'); ?>"></textarea>
+  </div>
+</div>
 
+<!-- Text input-->
+<div class="control-group">
+  <label class="control-label" for="date">Date</label>
+  <div class="controls">
+      <input type="text" name="date" value="date" class="input-medium datepicker"  data-date-format="yyyy/mm/dd" />
+  </div>
+</div>
 <!-- Button -->
 <div class="control-group">
-  <label class="control-label" for="Add Appointment"></label>
+  <label class="control-label" for="add"></label>
   <div class="controls">
-    <button id="Add bed allotment" name="Add appointment" class="btn btn-primary">add Appointment</button>
+    <button id="add" name="add" class="btn btn-primary">Add Bed</button>
   </div>
 </div>
 
 </fieldset>
-</form>                                                                      
-
+</form>
     </div>
 									</div>
 									

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Detail Admin - Home</title>
+	<title>HMS</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
+        <link rel="icon" type="image/x-icon" href="<?php echo base_url();?>img/favicon.ico"/>  
     <!-- bootstrap -->
     <link href="<?php echo base_url();?>css/bootstrap/bootstrap.css" rel="stylesheet" />
     <link href="<?php echo base_url();?>css/bootstrap/bootstrap-responsive.css" rel="stylesheet" />
@@ -23,7 +23,7 @@
 
     <!-- this page specific styles -->
     <link rel="stylesheet" href="<?php echo base_url();?>css/compiled/index.css" type="text/css" media="screen" />    
-
+    
     <!-- open sans font -->
 <!--    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 
