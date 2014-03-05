@@ -22,17 +22,7 @@
                      <div class="page-header">
 			    <h1>Manage Prescription</h1>
 		    </div>
-		    
-		    		<div class="row">
-							<div class="tabbable span12">
-								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tabs1-pane1" data-toggle="tab">Prescription list</a></li>
-									<li><a href="#tabs1-pane2" data-toggle="tab">+add Prescription</a></li>
-									
-								</ul>
-								<div class="tab-content">
-									<div class="tab-pane active" id="tabs1-pane1">
-                                                                            <?php
+                      <?php
       //flash messages
       if(isset($flash_message)){
         if($flash_message == TRUE)
@@ -52,6 +42,17 @@
                     <?php   
       //form validation
       echo validation_errors();?> 
+		    
+		    		<div class="row">
+							<div class="tabbable span12">
+								<ul class="nav nav-tabs">
+									<li class="active"><a href="#tabs1-pane1" data-toggle="tab">Prescription list</a></li>
+									<li><a href="#tabs1-pane2" data-toggle="tab">+add Prescription</a></li>
+									
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane active" id="tabs1-pane1">
+                                                                          
         <table class="table table-striped table-bordered table-condensed">
             <thead>
               <tr>
@@ -62,14 +63,15 @@
                 <th class="red header">Actions</th>
               </tr>
             </thead>
-<!--             <tbody>
+            <tbody>
               <?php
               foreach($query as $row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
-                echo '<td>'.$row['bedno'].'</td>';
-                echo '<td>'.$row['bedtype'].'</td>';
+                 echo '<td>'.$row['id'].'</td>';
+                echo '<td>'.$row['date'].'</td>';
+                echo '<td>'.$row['pname'].'</td>';
+                echo '<td>'.$row['doctorid'].'</td>';
                 echo '<td class="crud-actions">
                   <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
                  
@@ -77,12 +79,12 @@
                 echo '</tr>';
               }
               ?>      
-            </tbody>-->
+            </tbody>
 </table>
                 
 							</div>
 									<div class="tab-pane" id="tabs1-pane2">
-	 <form method="post" action="<?php echo site_url('welcome/add_prescription'); ?>" id="formID" class="form-horizontal" >					
+	 <form method="post" action="<?php echo site_url('doctor/add_prescription'); ?>" id="formID" class="form-horizontal" >					
                                                                             
 <fieldset>
 
@@ -93,11 +95,11 @@
 <div class="control-group">
   <label class="control-label" for="type">Doctor</label>
   <div class="controls">
-    <select id="type" name="bedtype" class="input-medium">
-      <option value="ward">Daudi</option>
-      <option value="cabin">Kevo</option>
-      <option value="icu">Peter</option>
-      <option value="other">Liyosi</option>
+    <select id="type" name="doctor" class="input-medium">
+      <option value="1">Daudi</option>
+      <option value="2">Kevo</option>
+      <option value="3">Peter</option>
+      <option value="4">Liyosi</option>
     </select>
   </div>
 </div>
@@ -112,6 +114,7 @@
               foreach($result as $row)
               {
                 echo "<option value=".$row['name'].">".$row['name']."</option>";
+               
               }
               ?>
     </select>
@@ -130,7 +133,7 @@
 <div class="control-group">
   <label class="control-label" for="medication">Medication</label>
   <div class="controls">                     
-    <textarea id="description" name="medication" value="<?php echo set_value('description'); ?>"></textarea>
+    <textarea id="description" name="medication" value="<?php echo set_value('medication'); ?>"></textarea>
   </div>
 </div>
 
@@ -138,7 +141,7 @@
 <div class="control-group">
   <label class="control-label" for="medication">Medication from pharmacist</label>
   <div class="controls">                     
-    <textarea id="description" name="medicationpharmacist" value="<?php echo set_value('description'); ?>"></textarea>
+    <textarea id="description" name="medicationpharmacist" value="<?php echo set_value('medicationpharmacist'); ?>"></textarea>
   </div>
 </div>
 
@@ -161,7 +164,7 @@
 <div class="control-group">
   <label class="control-label" for="add"></label>
   <div class="controls">
-    <button id="add" name="add" class="btn btn-primary">Add Bed</button>
+    <button id="add" name="add" class="btn btn-primary">Add medication</button>
   </div>
 </div>
 

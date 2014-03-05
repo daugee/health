@@ -6,7 +6,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/docs_sidebar.php");?>
+    <?php include("includes/docs/docs_sidebar.php");?>
     <!-- end sidebar -->
 
 

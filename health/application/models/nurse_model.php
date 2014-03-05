@@ -10,6 +10,13 @@ class Nurse_model extends CI_Model {
 		$insert = $this->db->insert('patient', $data);
 	    return $insert;
 	}
+        
+        function add_patient1($data)
+    {
+            $insert = $this->db->insert('patient', $data);
+	    return $insert;
+	}
+        
     public function get_patient()
     {
 	    
