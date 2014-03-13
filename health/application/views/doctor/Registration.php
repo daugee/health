@@ -97,9 +97,11 @@
       ?>
                     <?php   
       //form validation
+                    
+           
       echo validation_errors();?>
                         
-                        <form method="post" action="<?php echo site_url('doctor/add_patient'); ?>" id="formID"  >
+                        <form method="post" action="<?php echo site_url('doctor/add_patient'); ?>" id="formID" enctype="multipart/form-data" >
                         <div class="step-content">
                             
                             <div class="step-pane active" id="step1">
@@ -185,7 +187,7 @@
                                             </div>
                                             <div class="field-box">
                                                 <label>Photo:</label>
-                                                <input type="file" />
+                                                <input type="file" name="image" />
                                             </div>
                                              <div class="field-box">
                                                 <label>Password:</label>

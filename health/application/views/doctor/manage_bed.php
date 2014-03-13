@@ -5,7 +5,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/sidebar.php"); ?>
+    <?php include("includes/docs/docs_sidebar.php"); ?>
     <!-- end sidebar -->
 
 
@@ -81,7 +81,7 @@
                 <?php echo '<div class="pagination">'.$this->pagination->create_links().'</div>'; ?>
 							</div>
 									<div class="tab-pane" id="tabs1-pane2">
-	 <form method="post" action="<?php echo site_url('welcome/add_bed'); ?>" id="formID" class="form-horizontal" >					
+	 <form method="post" action="<?php echo site_url('doctor/add_bed'); ?>" id="formID" class="form-horizontal" >					
                                                                             
 <fieldset>
 

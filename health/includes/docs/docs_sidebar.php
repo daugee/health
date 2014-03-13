@@ -54,7 +54,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="<?php echo site_url('doctor/profile'); ?>">
                     <i class="icon-calendar-empty"></i>
                     <span>Profile</span>
                 </a>

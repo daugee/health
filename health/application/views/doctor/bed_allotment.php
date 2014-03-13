@@ -20,7 +20,7 @@
                 <div class="row-fluid form-wrapper">
                     <!-- left column -->
                      <div class="page-header">
-			    <h1>Manage bed</h1>
+			    <h1>Bed Allotment</h1>
 		    </div>
 		    
 		    		<div class="row">
@@ -61,7 +61,7 @@
 <!--                <th class="green header">Bed Type</th>-->
                 <th class="red header">Patient</th>
                 <th class="red header">Allotment Date</th>
-                <th class="red header">Discgarge Date</th>
+                <th class="red header">Discharge Date</th>
                 <th class="red header">Actions</th>
               </tr>
             </thead>
@@ -78,7 +78,7 @@
                 echo '<td>'.$row['dischargedate'].'</td>';
                 echo '<td class="crud-actions">
                   <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
-                  <a href="'.site_url("admin").'/products/delete/'.$row['id'].'" class="btn btn-danger">delete</a>
+                 
                 </td>';
                 echo '</tr>';
               }
@@ -108,7 +108,7 @@
                     <?php   
       //form validation
       echo validation_errors();?>
-         <form method="post" action="<?php echo site_url('welcome/add_bedallotment'); ?>" id="formID" class="form-horizontal" >
+         <form method="post" action="<?php echo site_url('doctor/add_bedallotment'); ?>" id="formID" class="form-horizontal" >
 <fieldset>
 
 <!-- Form Name -->

@@ -50,7 +50,7 @@ class Nurse_model extends CI_Model {
     
     //function for adding nurse report details
     public function add_nurse_report ($data){
-        $insert = $this->db->insert('nurse_report', $data);
+        $insert = $this->db->insert('report', $data);
         return $insert;
     }
     
