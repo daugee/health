@@ -66,10 +66,11 @@
             </thead>
              <tbody>
               <?php
+              $i=1;
               foreach($query as $row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
+                echo '<td>'.$i.'</td>';$i++;
                 echo '<td>'.$row['name'].'</td>';
                 echo '<td>'.$row['age'].'</td>';
                 echo '<td>'.$row['sex'].'</td>';
@@ -87,115 +88,186 @@
                 <?php echo '<div class="pagination">'.$this->pagination->create_links().'</div>'; ?>
 							</div>
 									<div class="tab-pane" id="tabs1-pane2">
-	<form method="post" action="<?php echo site_url('admin/add_patient'); ?>" id="formID" class="form-horizontal" >
+	<div class="span12">
+                        <div id="fuelux-wizard" class="wizard row-fluid">
+                            <ul class="wizard-steps">
+                                <li data-target="#step1" class="active">
+                                    <span class="step">1</span>
+                                    <span class="title">General <br> information</span>
+                                </li>
+                                <li data-target="#step2">
+                                    <span class="step">2</span>
+                                    <span class="title">Address <br> information</span>
+                                </li>
+                                <li data-target="#step3">
+                                    <span class="step">3</span>
+                                    <span class="title">User <br> Details</span>
+                                </li>
+                                <li data-target="#step4">
+                                    <span class="step">4</span>
+                                    <span class="title">Health <br> info</span>
+                                </li>
+                            </ul>                            
+                        </div>
+                                     <?php
+      //flash messages
+      if(isset($flash_message)){
+        if($flash_message == TRUE)
+        {
+          echo '<div class="alert alert-success">';
+            echo '<a class="close" data-dismiss="alert">×</a>';
+            echo '<strong>Well done!</strong> new patient created with success.';
+          echo '</div>';       
+        }else{
+          echo '<div class="alert alert-error">';
+            echo '<a class="close" data-dismiss="alert">×</a>';
+            echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
+          echo '</div>';          
+        }
+      }
+      ?>
+                    <?php   
+      //form validation
                     
-<fieldset>
-
-<!-- Form Name -->
-<legend>New Patient</legend>
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="Patient Name">Patient Name</label>
-  <div class="controls">
-    <input id="Patient Name" name="patientname" type="text" placeholder="name" class="input-medium" required="" value="<?php echo set_value('patientname'); ?>">
-    
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="Email">Email</label>
-  <div class="controls">
-    <input id="Email" name="email" type="text" placeholder="email" class="input-medium" required="" value="<?php echo set_value('email'); ?>">
-    
-  </div>
-</div>
-
-<!-- Password input-->
-<div class="control-group">
-  <label class="control-label" for="password">Password </label>
-  <div class="controls">
-    <input id="password" name="password" type="password" placeholder="password" class="input-medium" required="" value="<?php echo set_value('password'); ?>">
-    
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="address">Address</label>
-  <div class="controls">
-    <input id="address" name="address" type="text" placeholder="address" class="input-medium" required="" value="<?php echo set_value('address'); ?>">
-    
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="phoneno">Phone</label>
-  <div class="controls">
-    <input id="phoneno" name="phone" type="text" placeholder="phone" class="input-medium" required=""value="<?php echo set_value('phone'); ?>">
-    
-  </div>
-</div>
-
-<!-- Select Basic -->
-<div class="control-group">
-  <label class="control-label" for="Gender">Gender</label>
-  <div class="controls">
-     
-    <select id="Gender" name="gender" class="input-medium" >
-      <option value="0">Male</option>
-      <option value="1">Female</option>
-    </select>
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="Birthdate">Birth Date</label>
-  <div class="controls">
-       <input type="text" name="birthdate" value="Birth date" class="input-medium datepicker" data-date-format="yyyy/mm/dd" required="" />
-   
-  </div>
-</div>
-
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="age">Age</label>
-  <div class="controls">
-    <input id="age" name="age" type="text" placeholder="age" class="input-medium" required="" value="<?php echo set_value('age'); ?>">
-    
-  </div>
-</div>
-
-<!-- Select Basic -->
-<div class="control-group">
-  <label class="control-label" for="bloodgroup">Blood Group</label>
-  <div class="controls">
-    <select id="bloodgroup" name="bloodgroup" class="input-medium" >
-      <option value="A+">A+</option>
-      <option value="A-">A-</option>
-      <option value="B+">B+</option>
-      <option value="B-">B-</option>
-      <option value="AB+">AB+</option>
-      <option value="AB-">AB-</option>
-      <option value="O+">O+</option>
-      <option value="O-">O-</option>
-    </select>
-  </div>
-</div>
-
-<!-- Button -->
-<div class="control-group">
-  <label class="control-label" for="AddPatient"></label>
-  <div class="controls">
-    <button id="AddPatient" name="AddPatient" class="btn btn-primary">Add Patient</button>
-  </div>
-</div>
-
-</fieldset>
-</form>
+           
+      echo validation_errors();?>
+                        
+                        <form method="post" action="<?php echo site_url('admin/add_patient'); ?>" id="formID" enctype="multipart/form-data" >
+                        <div class="step-content">
+                            
+                            <div class="step-pane active" id="step1">
+                                <div class="row-fluid form-wrapper">
+                                    <div class="span8">
+                                       
+                                            <div class="field-box">
+                                                <label>First Name:</label>
+                                                <input name="fname" class="span8" required="" type="text" />
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Last Name:</label>
+                                                <input class="span8" name="lname" type="text" />
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Birth Date:</label>
+                                                  <input type="text" name="birthdate" value="Birth date" class="span8 datepicker" data-date-format="yyyy/mm/dd" required="" />
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Age:</label>
+                                                <input class="span8" name="age" type="text" />
+                                            </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step-pane" id="step2">
+                                <div class="row-fluid form-wrapper">
+                                    <div class="span8">
+                                      
+                                            <div class="field-box">
+                                                <label>phone:</label>
+                                                <input name="phone" class="span8" type="text" />
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Email:</label>
+                                                <input name="email" class="span8" type="text" />
+                                            </div>
+                                        
+                                            <div class="field-box">
+                                                <label>Address:</label>
+                                                <input name="address" class="span8" type="text" />
+                                            </div>
+                                            <div class="field-box">
+                                                <label>City:</label>
+                                                <input name="city" class="span8" type="text" />
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Postal/ZIP code:</label>
+                                                <input name="pcode" class="span8" type="text" />
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Country:</label>
+                                                <input name="country" class="span8" type="text" />
+                                            </div>
+                                      
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step-pane" id="step3">
+                                <div class="row-fluid form-wrapper">
+                                    <div class="span8">
+                                     
+                                            <div class="field-box">
+                                                <label>Gender:</label>
+                                                    <select id="Gender" name="gender" class="span8" >
+                                                            <option value="male">Male</option>
+                                                            <option value="female">Female</option>
+                                                         </select>
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Blood Group:</label>
+                                                    <select id="bloodgroup" name="bloodgroup" class="input-medium" >
+                                                        <option value="A+">A+</option>
+                                                        <option value="A-">A-</option>
+                                                        <option value="B+">B+</option>
+                                                        <option value="B-">B-</option>
+                                                        <option value="AB+">AB+</option>
+                                                        <option value="AB-">AB-</option>
+                                                        <option value="O+">O+</option>
+                                                        <option value="O-">O-</option>
+                                                    </select>
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Photo:</label>
+                                                <input type="file" name="image" />
+                                            </div>
+                                             <div class="field-box">
+                                                <label>Password:</label>
+                                                <input name="password" type="text" />
+                                            </div>
+                                            
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="step-pane" id="step4">
+                                <div class="row-fluid form-wrapper payment-info">
+                                    <div class="span8">
+                                       
+                                            <div class="field-box">
+                                                <label>Weight:</label>
+                                                <input name="weight" class="span5" type="text" />
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Height:</label>
+                                                <input name="height" class="span5" type="text" />
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Temperature:</label>
+                                                <input name="temperature" class="span5" type="text" />
+                                            </div>
+                                            <div class="field-box">
+                                                <label>Health History:</label>
+                                                <input name="history" class="span4" type="text" />
+                                            </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                           
+                        </div>
+                        <div class="wizard-actions">
+                            <button type="button" disabled class="btn-glow primary btn-prev"> 
+                                <i class="icon-chevron-left"></i> Prev
+                            </button>
+                            <button type="button" class="btn-glow primary btn-next" data-last="Finish">
+                                Next <i class="icon-chevron-right"></i>
+                            </button>
+                            <button id="add" name="add" class="btn btn-primary btn-finish">
+                                Add Patient
+                            </button>
+                        </div>
+                         </form>
+                    </div>
 
     </div>
 									</div>
@@ -215,7 +287,49 @@
 
 	<!-- scripts for this page -->
     <?php include("includes/scripts.php")?>
+ <script src="<?php echo base_url();?>js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url();?>js/theme.js"></script>
+    <script src="<?php echo base_url();?>js/fuelux.wizard.js"></script>
 
+    <script type="text/javascript">
+        $(function () {
+            var $wizard = $('#fuelux-wizard'),
+                $btnPrev = $('.wizard-actions .btn-prev'),
+                $btnNext = $('.wizard-actions .btn-next'),
+                $btnFinish = $(".wizard-actions .btn-finish");
+
+            $wizard.wizard().on('finished', function(e) {
+                // wizard complete code
+            }).on("changed", function(e) {
+                var step = $wizard.wizard("selectedItem");
+                // reset states
+                $btnNext.removeAttr("disabled");
+                $btnPrev.removeAttr("disabled");
+                $btnNext.show();
+                $btnFinish.hide();
+
+                if (step.step === 1) {
+                    $btnPrev.attr("disabled", "disabled");
+                } else if (step.step === 4) {
+                    $btnNext.hide();
+                    $btnFinish.show();
+                }
+            });
+            
+       
+          
+
+            $btnPrev.on('click', function() {
+                $wizard.wizard('previous');
+            });
+            $btnNext.on('click', function() {
+                $wizard.wizard('next');
+            });
+            
+             
+        });
+        
+    </script>
     <!-- call this page plugins -->
     <script type="text/javascript">
         $(function () {
@@ -239,4 +353,6 @@
             });
         });
     </script>
+    
+    
 </body>

@@ -18,27 +18,26 @@
                     </div>
 
                     <div class="row">
-                         <?php
-                                    //flash messages
-                                    if (isset($flash_message)) {
-                                        if ($flash_message == TRUE) {
-                                            echo '<div class="alert alert-success">';
-                                            echo '<a class="close" data-dismiss="alert">×</a>';
-                                            echo '<strong>Well done!</strong> new patient created with success.';
-                                            echo '</div>';
-                                        } else {
-                                            echo '<div class="alert alert-error">';
-                                            echo '<a class="close" data-dismiss="alert">×</a>';
-                                            echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
-                                            echo '</div>';
-                                        }
-                                    }
-                                    ?>
-                                    <?php
-                                    //form validation
-                                    echo validation_errors();
-                                    
-                                    ?> 
+                        <?php
+                        //flash messages
+                        if (isset($flash_message)) {
+                            if ($flash_message == TRUE) {
+                                echo '<div class="alert alert-success">';
+                                echo '<a class="close" data-dismiss="alert">×</a>';
+                                echo '<strong>Well done!</strong> new patient created with success.';
+                                echo '</div>';
+                            } else {
+                                echo '<div class="alert alert-error">';
+                                echo '<a class="close" data-dismiss="alert">×</a>';
+                                echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
+                                echo '</div>';
+                            }
+                        }
+                        ?>
+                        <?php
+                        //form validation
+                        echo validation_errors();
+                        ?> 
 
                         <div class="tabbable span12">
                             <ul class="nav nav-tabs">
@@ -62,23 +61,23 @@
                                                 <th class="red header">Actions</th>
                                             </tr>
                                         </thead>
-                            <!--             <tbody>
-                                        <?php
-                                        foreach ($query as $row) {
-                                            echo '<tr>';
-                                            echo '<td>' . $row['id'] . '</td>';
-                                            echo '<td>' . $row['description'] . '</td>';
-                                            echo '<td>' . $row['date'] . '</td>';
-                                            echo '<td>' . $row['patient'] . '</td>';
-                                            echo '<td>' . $row['doctor'] . '</td>';
-                                            echo '<td class="crud-actions">
+                                        <tbody>
+                                            <?php
+                                            foreach ($query as $row) {
+                                                echo '<tr>';
+                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $row['description'] . '</td>';
+                                                echo '<td>' . $row['date'] . '</td>';
+                                                echo '<td>' . $row['patient'] . '</td>';
+                                                echo '<td>' . $row['doctor'] . '</td>';
+                                                echo '<td class="crud-actions">
                   <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                  <a href="' . site_url("admin") . '/products/delete/' . $row['id'] . '" class="btn btn-danger">delete</a>
+                  <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                 </td>';
-                                            echo '</tr>';
-                                        }
-                                        ?>      
-                                        </tbody>-->
+                                                echo '</tr>';
+                                            }
+                                            ?>      
+                                        </tbody>
                                     </table>
                                     <?php echo '<div class="pagination">' . $this->pagination->create_links() . '</div>'; ?>
 
@@ -96,23 +95,23 @@
                                                 <th class="red header">Actions</th>
                                             </tr>
                                         </thead>
-                            <!--             <tbody>
-                                        <?php
-                                        foreach ($q as $row) {
-                                            echo '<tr>';
-                                            echo '<td>' . $row['id'] . '</td>';
-                                            echo '<td>' . $row['description'] . '</td>';
-                                            echo '<td>' . $row['date'] . '</td>';
-                                            echo '<td>' . $row['patient'] . '</td>';
-                                            echo '<td>' . $row['doctor'] . '</td>';
-                                            echo '<td class="crud-actions">
+                                        <tbody>
+                                            <?php
+                                            foreach ($q as $row) {
+                                                echo '<tr>';
+                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $row['description'] . '</td>';
+                                                echo '<td>' . $row['date'] . '</td>';
+                                                echo '<td>' . $row['patient'] . '</td>';
+                                                echo '<td>' . $row['doctor'] . '</td>';
+                                                echo '<td class="crud-actions">
                   <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                  <a href="' . site_url("admin") . '/products/delete/' . $row['id'] . '" class="btn btn-danger">delete</a>
+                  <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                 </td>';
-                                            echo '</tr>';
-                                        }
-                                        ?>      
-                                        </tbody>-->
+                                                echo '</tr>';
+                                            }
+                                            ?>      
+                                        </tbody>
                                     </table>
                                 </div>
                                 <div class="tab-pane" id="tabs1-pane3">
@@ -127,23 +126,23 @@
                                                 <th class="red header">Actions</th>
                                             </tr>
                                         </thead>
-                            <!--             <tbody>
-                                        <?php
-                                        foreach ($d as $row) {
-                                            echo '<tr>';
-                                            echo '<td>' . $row['id'] . '</td>';
-                                            echo '<td>' . $row['description'] . '</td>';
-                                            echo '<td>' . $row['date'] . '</td>';
-                                            echo '<td>' . $row['patient'] . '</td>';
-                                            echo '<td>' . $row['doctor'] . '</td>';
-                                            echo '<td class="crud-actions">
+                                        <tbody>
+                                            <?php
+                                            foreach ($d as $row) {
+                                                echo '<tr>';
+                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $row['description'] . '</td>';
+                                                echo '<td>' . $row['date'] . '</td>';
+                                                echo '<td>' . $row['patient'] . '</td>';
+                                                echo '<td>' . $row['doctor'] . '</td>';
+                                                echo '<td class="crud-actions">
                   <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                  <a href="' . site_url("admin") . '/products/delete/' . $row['id'] . '" class="btn btn-danger">delete</a>
+                  <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                 </td>';
-                                            echo '</tr>';
-                                        }
-                                        ?>      
-                                        </tbody>-->
+                                                echo '</tr>';
+                                            }
+                                            ?>      
+                                        </tbody>
                                     </table>
 
                                 </div>
@@ -159,23 +158,23 @@
                                                 <th class="red header">Actions</th>
                                             </tr>
                                         </thead>
-                            <!--             <tbody>
-                                        <?php
-                                        foreach ($oth as $row) {
-                                            echo '<tr>';
-                                            echo '<td>' . $row['id'] . '</td>';
-                                            echo '<td>' . $row['description'] . '</td>';
-                                            echo '<td>' . $row['date'] . '</td>';
-                                            echo '<td>' . $row['patient'] . '</td>';
-                                            echo '<td>' . $row['doctor'] . '</td>';
-                                            echo '<td class="crud-actions">
+                                        <tbody>
+                                            <?php
+                                            foreach ($oth as $row) {
+                                                echo '<tr>';
+                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $row['description'] . '</td>';
+                                                echo '<td>' . $row['date'] . '</td>';
+                                                echo '<td>' . $row['patient'] . '</td>';
+                                                echo '<td>' . $row['doctor'] . '</td>';
+                                                echo '<td class="crud-actions">
                   <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                  <a href="' . site_url("admin") . '/products/delete/' . $row['id'] . '" class="btn btn-danger">delete</a>
+                   <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                 </td>';
-                                            echo '</tr>';
-                                        }
-                                        ?>      
-                                        </tbody>-->
+                                                echo '</tr>';
+                                            }
+                                            ?>      
+                                        </tbody>
                                     </table>
 
                                 </div>
@@ -204,10 +203,10 @@
                                                 <div class="controls">
                                                     <select id="doctor" name="doctor" class="input-medium search-query" required="">
                                                         < <?php
-                                                        foreach ($doctor as $row) {
-                                                            echo "<option value=" . $row['id'] . ">" . $row['dname'] . "</option>";
-                                                        }
-                                                        ?>
+                                            foreach ($doctor as $row) {
+                                                echo "<option value=" . $row['id'] . ">" . $row['dname'] . "</option>";
+                                            }
+                                            ?>
 
                                                     </select>
                                                 </div>

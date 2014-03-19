@@ -17,7 +17,7 @@ public function validate(){
         // Prep the query
         $this->db->where('email', $username);
         $this->db->where('password', $password);
-        $this->db->where('id',  $account_type);
+        $this->db->where('type',  $account_type);
        
         // Run the query
         $query = $this->db->get('users');

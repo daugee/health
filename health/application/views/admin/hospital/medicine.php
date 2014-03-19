@@ -45,18 +45,23 @@
                 <th class="yellow header headerSortDown">Status</th>
               </tr>
             </thead>
-<!--             <tbody>
+             <tbody>
               <?php
+              $i=1;
               foreach($query as $row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
-                echo '<td>'.$row['bedno'].'</td>';
-                echo '<td>'.$row['bedtype'].'</td>';
+                echo '<td>'.$i.'</td>';$i++;
+                echo '<td>'.$row['med_name'].'</td>';
+                echo '<td>'.$row['med_cat_name'].'</td>';
+                echo '<td>'.$row['med_description'].'</td>';
+                echo '<td>'.$row['med_price'].'</td>';
+                echo '<td>'.$row['med_man_company'].'</td>';
+                echo '<td>'.$row['med_status'].'</td>';
                 echo '</tr>';
               }
               ?>      
-            </tbody>-->
+            </tbody>
 </table>
            
 							</div>

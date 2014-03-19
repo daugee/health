@@ -63,9 +63,9 @@ class Welcome extends CI_Controller {
 
             if (sizeof($result) > 0) {
                 //Capturing the necessary data from the database
-                $user_type = $result[0]->id;
+                $user_type = $result[0]->type;
 
-                if ((int) $user_type == 1) {
+                if ( $user_type == 'admin') {
 
                     //Admin's session data
                     $data = array(
@@ -79,7 +79,7 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("admin/index");
-                } else if ((int) $user_type == 2) {
+                } else if ( $user_type == 'doctor') {
 
                     //Admin's session data
                     $data = array(
@@ -93,7 +93,7 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("doctor/index");
-                } else if ((int) $user_type == 3) {
+                } else if ( $user_type == 'patient') {
 
                     //Admin's session data
                     $data = array(
@@ -105,7 +105,7 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("patient/index");
-                } else if ((int) $user_type == 4) {
+                } else if ( $user_type == 'nurse') {
 
                     //Admin's session data
                     $data = array(
@@ -118,7 +118,7 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("nurse/index");
-                } else if ((int) $user_type == 5) {
+                } else if ( $user_type == 'pharmacist') {
 
                     //Admin's session data
                     $data = array(
@@ -131,7 +131,7 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("pharmacy/login");
-                } else if ((int) $user_type == 6) {
+                } else if ( $user_type == 'lab') {
 
                     //Admin's session data
                     $data = array(

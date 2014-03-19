@@ -42,6 +42,10 @@ class Doctor extends CI_Controller {
         $this->load->model('nurse_model');
         $data['result'] = $this->nurse_model->get_patient();
         $data['doctor'] = $this->doctor_model->get_doctor();
+        $data['query'] = $this->doctor_model->get_report_operation();
+        $data['q'] = $this->doctor_model->get_report_birth();
+        $data['d'] = $this->doctor_model->get_report_death();
+        $data['oth'] = $this->doctor_model->get_report_other();
         $this->load->view('doctor/report', $data);
     }
 
@@ -359,7 +363,7 @@ class Doctor extends CI_Controller {
         }
     }
 
-    //doctor report add function
+    //*********************doctor report add function***************************//
 
     public function add_report() {
         //if save button was clicked, get the data sent via post
@@ -389,6 +393,8 @@ class Doctor extends CI_Controller {
                 $config['encrypt_name'] = TRUE;
 
                 $this->load->library('upload', $config);
+                
+                
 
                 if (!$this->upload->do_upload('file')) {
                     $error = array('error' => $this->upload->display_errors());
@@ -400,7 +406,7 @@ class Doctor extends CI_Controller {
 
                     $q = $data['file_name'];
 
-
+                
                     $data_to_store = array(
                         'type' => $this->input->post('type'),
                         'description' => $this->input->post('description'),
@@ -422,5 +428,9 @@ class Doctor extends CI_Controller {
             }
         }
     }
+    
+    
+    //***************function for getting the reports***********************//
+      
 
 }

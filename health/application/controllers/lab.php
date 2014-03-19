@@ -18,6 +18,11 @@ class Lab extends CI_Controller {
        }
        
        
+       public function index() {
+        $this->load->view('lab/index');
+    }
+       
+       
        /*################### Lab blood bank/donor ###################################*/ 
        
        public function blood_bank(){

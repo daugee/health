@@ -36,6 +36,7 @@
                 <th class="green header">date</th>
                 <th class="red header">patient</th>
                 <th class="red header">doctor</th>
+                <th class="red header">Files</th>
               </tr>
             </thead>
              <tbody>
@@ -48,6 +49,9 @@
                 echo '<td>'.$row['date'].'</td>';
                 echo '<td>'.$row['patient'].'</td>';
                 echo '<td>'.$row['doctor'].'</td>';
+                echo '<td class="crud-actions">
+                 <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
+                       </td>';
                 echo '</tr>';
               }
               ?>      
@@ -66,6 +70,7 @@
                 <th class="green header">date</th>
                 <th class="red header">patient</th>
                 <th class="red header">doctor</th>
+                <th class="red header">Files</th>
               </tr>
             </thead>
              <tbody>
@@ -78,6 +83,9 @@
                 echo '<td>'.$row['date'].'</td>';
                 echo '<td>'.$row['patient'].'</td>';
                 echo '<td>'.$row['doctor'].'</td>';
+                echo '<td class="crud-actions">
+                 <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
+                       </td>';
                 echo '</tr>';
               }
               ?>      
@@ -93,6 +101,7 @@
                 <th class="green header">date</th>
                 <th class="red header">patient</th>
                 <th class="red header">doctor</th>
+                <th class="red header">Files</th>
               </tr>
             </thead>
              <tbody>
@@ -105,6 +114,9 @@
                 echo '<td>'.$row['date'].'</td>';
                 echo '<td>'.$row['patient'].'</td>';
                 echo '<td>'.$row['doctor'].'</td>';
+                echo '<td class="crud-actions">
+                 <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
+                       </td>';
                 echo '</tr>';
               }
               ?>      
@@ -121,6 +133,7 @@
                 <th class="green header">date</th>
                 <th class="red header">patient</th>
                 <th class="red header">doctor</th>
+                <th class="red header">Files</th>
               </tr>
             </thead>
              <tbody>
@@ -133,6 +146,9 @@
                 echo '<td>'.$row['date'].'</td>';
                 echo '<td>'.$row['patient'].'</td>';
                 echo '<td>'.$row['doctor'].'</td>';
+                echo '<td class="crud-actions">
+                 <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
+                       </td>';
                 echo '</tr>';
               }
               ?>      

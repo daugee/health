@@ -1,7 +1,7 @@
-<?php include("includes/header.php")?>
+<?php include("includes/header.php") ?>
 <body>
-<!-- navbar -->
-<?php include("includes/navbar.php");?>
+    <!-- navbar -->
+    <?php include("includes/navbar.php"); ?>
     <!-- end navbar -->
 
     <!-- sidebar -->
@@ -9,154 +9,155 @@
     <!-- end sidebar -->
 
 
-	<!-- main container -->
+    <!-- main container -->
     <div class="content">
-        
+
         <!-- settings changer -->
-        
-        
+
+
         <div class="container-fluid">
             <div id="pad-wrapper" class="form-page">
                 <div class="row-fluid form-wrapper">
                     <!-- left column -->
-                     <div class="page-header">
-			    <h1>Manage bed</h1>
-		    </div>
-		    
-		    		<div class="row">
-							<div class="tabbable span12">
-								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tabs1-pane1" data-toggle="tab">Medicine Category List</a></li>
-									<li><a href="#tabs1-pane2" data-toggle="tab">+add Medicine Category</a></li>
-									
-								</ul>
-								<div class="tab-content">
-									<div class="tab-pane active" id="tabs1-pane1">
-                                                                            <?php
-      //flash messages
-      if(isset($flash_message)){
-        if($flash_message == TRUE)
-        {
-          echo '<div class="alert alert-success">';
-            echo '<a class="close" data-dismiss="alert">×</a>';
-            echo '<strong>Well done!</strong> new patient created with success.';
-          echo '</div>';       
-        }else{
-          echo '<div class="alert alert-error">';
-            echo '<a class="close" data-dismiss="alert">×</a>';
-            echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
-          echo '</div>';          
-        }
-      }
-      ?>
-                    <?php   
-      //form validation
-      echo validation_errors();?> 
-        <table class="table table-striped table-bordered table-condensed">
-            <thead>
-              <tr>
-                <th class="header">#</th>
-                <th class="yellow header headerSortDown">Medicine Category Name</th>
-                <th class="green header">Description</th>
-                <th class="red header">Actions</th>
-              </tr>
-            </thead>
-<!--             <tbody>
-              <?php
-              foreach($query as $row)
-              {
-                echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
-                echo '<td>'.$row['bedno'].'</td>';
-                echo '<td>'.$row['bedtype'].'</td>';
-                echo '<td class="crud-actions">
-                  <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
-                  <a href="'.site_url("admin").'/products/delete/'.$row['id'].'" class="btn btn-danger">delete</a>
+                    <div class="page-header">
+                        <h1>Medicine Category</h1>
+                    </div>
+                    <?php
+                    //flash messages
+                    if (isset($flash_message) || isset($query)) {
+                        if ($flash_message == TRUE) {
+                            echo '<div class="alert alert-success">';
+                            echo '<a class="close" data-dismiss="alert">×</a>';
+                            echo '<strong>Well done!</strong> new patient created with success.';
+                            echo '</div>';
+                        } else {
+                            echo '<div class="alert alert-error">';
+                            echo '<a class="close" data-dismiss="alert">×</a>';
+                            echo '<strong>Oh snap!</strong> '.$query.' exists in the database.';
+                            echo '</div>';
+                        }
+                    }
+                    ?>
+                    <?php
+                    //form validation
+                    echo validation_errors();
+                    ?> 
+                    <div class="row">
+                        <div class="tabbable span12">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tabs1-pane1" data-toggle="tab">Medicine Category List</a></li>
+                                <li><a href="#tabs1-pane2" data-toggle="tab">+add Medicine Category</a></li>
+
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tabs1-pane1">
+
+                                    <table class="table table-striped table-bordered table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th class="header">#</th>
+                                                <th class="yellow header headerSortDown">Medicine Category Name</th>
+                                                <th class="green header">Description</th>
+                                                <th class="red header">Actions</th>
+                                            </tr>
+                                        </thead>
+                          <tbody>
+                                        <?php
+                                        $i = 1;
+                                        foreach ($results as $row) {
+                                            echo '<tr>';
+                                            echo '<td>' . $i . '</td>';
+                                            $i++;
+                                            echo '<td>' . $row['med_cat_name'] . '</td>';
+                                            echo '<td>' . $row['med_cat_description'] . '</td>';
+                                            echo '<td class="crud-actions">
+                  <a href="' . site_url("admin") . '/products/update/' . $row['med_cat_id'] . '" class="btn btn-info">view & edit</a>  
+                  <a href="' . site_url("admin") . '/products/delete/' . $row['med_cat_id'] . '" class="btn btn-danger">delete</a>
                 </td>';
-                echo '</tr>';
-              }
-              ?>      
-            </tbody>-->
-</table>
-               
-							</div>
-									<div class="tab-pane" id="tabs1-pane2">
-	 <form method="post" action="<?php echo site_url('welcome/add_bed'); ?>" id="formID" class="form-horizontal" >					
-                                                                            
-<fieldset>
+                                            echo '</tr>';
+                                        }
+                                        ?>      
+                                        </tbody>
+                                    </table>
 
-<!-- Form Name -->
-<legend>Medicine Category</legend>
+                                </div>
+                                <div class="tab-pane" id="tabs1-pane2">
+                                    <form method="post" action="<?php echo site_url('pharmacy/add_medicine_category'); ?>" id="formID" class="form-horizontal" >					
 
-<!-- Text input-->
-<div class="control-group">
-  <label class="control-label" for="category">Medicine Category Name</label>
-  <div class="controls">
-    <input id="bednumber" name="medicine category" type="text" placeholder="category name" class="input-medium" required="" value="<?php echo set_value('bedno'); ?>">
-    
-  </div>
-</div>
+                                        <fieldset>
+
+                                            <!-- Form Name -->
+                                            <legend>Medicine Category</legend>
+
+                                            <!-- Text input-->
+                                            <div class="control-group">
+                                                <label class="control-label" for="category">Medicine Category Name</label>
+                                                <div class="controls">
+                                                    <input id="bednumber" name="medicinecategory" type="text" placeholder="category name" class="input-medium" required="" value="<?php echo set_value('bedno'); ?>">
+
+                                                </div>
+                                            </div>
 
 
 
-<!-- Textarea -->
-<div class="control-group">
-  <label class="control-label" for="description">Medicine Category Description</label>
-  <div class="controls">                     
-    <textarea id="description" name="description" value="<?php echo set_value('description'); ?>"></textarea>
-  </div>
-</div>
+                                            <!-- Textarea -->
+                                            <div class="control-group">
+                                                <label class="control-label" for="description">Medicine Category Description</label>
+                                                <div class="controls">                     
+                                                    <textarea id="description" name="description" value="<?php echo set_value('description'); ?>"></textarea>
+                                                </div>
+                                            </div>
 
-<!-- Button -->
-<div class="control-group">
-  <label class="control-label" for="add"></label>
-  <div class="controls">
-    <button id="add" name="add" class="btn btn-primary">Add Medicine Category</button>
-  </div>
-</div>
+                                            <!-- Button -->
+                                            <div class="control-group">
+                                                <label class="control-label" for="add"></label>
+                                                <div class="controls">
+                                                    <button id="add" name="add" class="btn btn-primary">Add Medicine Category</button>
+                                                </div>
+                                            </div>
 
-</fieldset>
-</form>
-    </div>
-									</div>
-									
-								</div><!-- /.tab-content -->
-							</div><!-- /.tabbable -->
-						</div><!-- /.row -->
-                    
+                                        </fieldset>
+                                    </form>
+                                </div>
+                            </div>
 
-                    <!-- right column -->
-                 
-                </div>
+                        </div><!-- /.tab-content -->
+                    </div><!-- /.tabbable -->
+                </div><!-- /.row -->
+
+
+                <!-- right column -->
+
             </div>
         </div>
     </div>
-    <!-- end main container -->
+</div>
+<!-- end main container -->
 
-	<!-- scripts for this page -->
-    <?php include("includes/scripts.php")?>
+<!-- scripts for this page -->
+<?php include("includes/scripts.php") ?>
 
-    <!-- call this page plugins -->
-    <script type="text/javascript">
-        $(function () {
+<!-- call this page plugins -->
+<script type="text/javascript">
+    $(function() {
 
-            // add uniform plugin styles to html elements
-            $("input:checkbox, input:radio").uniform();
+        // add uniform plugin styles to html elements
+        $("input:checkbox, input:radio").uniform();
 
-            // select2 plugin for select elements
-            $(".select2").select2({
-                placeholder: "Select a State"
-            });
-
-            // datepicker plugin
-            $('.datepicker').datepicker().on('changeDate', function (ev) {
-                $(this).datepicker('hide');
-            });
-
-            // wysihtml5 plugin on textarea
-            $(".wysihtml5").wysihtml5({
-                "font-styles": false
-            });
+        // select2 plugin for select elements
+        $(".select2").select2({
+            placeholder: "Select a State"
         });
-    </script>
+
+        // datepicker plugin
+        $('.datepicker').datepicker().on('changeDate', function(ev) {
+            $(this).datepicker('hide');
+        });
+
+        // wysihtml5 plugin on textarea
+        $(".wysihtml5").wysihtml5({
+            "font-styles": false
+        });
+    });
+</script>
 </body>

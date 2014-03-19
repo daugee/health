@@ -1,8 +1,11 @@
 <html>
 
 <head>	
+    <title>HMS</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="<?php echo base_url();?>img/favicon.ico"/> 
+ 
 	
     <!-- bootstrap -->
     <link href="<?php echo base_url();?>css/bootstrap/bootstrap.css" rel="stylesheet" />
@@ -72,12 +75,12 @@
                                     
                                     <select id="account_type" class="validate[required]" name="login_type" style="width:100%;">
                                         <option value="">account type</option>
-                                        <option value="1">admin</option>
-                                        <option value="2">doctor</option>
-                                        <option value="3">patient</option>
-                                        <option value="4">nurse</option>
-                                        <option value="5">pharmacist</option>
-                                        <option value="6">laboratorist,eo</option>
+                                        <option value="admin">admin</option>
+                                        <option value="doctor">doctor</option>
+                                        <option value="patient">patient</option>
+                                        <option value="nurse">nurse</option>
+                                        <option value="pharmacist">pharmacist</option>
+                                        <option value="lab">laboratorist,eo</option>
                                     </select>
     
                                 </div>
