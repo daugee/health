@@ -70,7 +70,7 @@
                                                 echo '<td>' . $row['name'] .'&nbsp'.$row['lname']. '</td>';
                                                 echo '<td>' . $row['dname'] . '</td>';
                                                 echo '<td class="crud-actions">
-                  <a href="' . site_url("pharmacy") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                  <a href="' . site_url("pharmacy") . '/edit_prescription/' . $row['id'] . '" value='.$row['id'].' class="btn btn-info">view & edit</a>  
                  
                 </td>';
                                                 echo '</tr>';
