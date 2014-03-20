@@ -76,7 +76,7 @@ class Pharmacy extends CI_Controller {
     public function manage_medicine() {
         $data['query'] = $this->pharmacy_model->get_medicine();
         $data['results'] = $this->pharmacy_model->get_medicine_category();
-        $this->load->view('pharmacy/manage_medicine',$data);
+        $this->load->view('pharmacy/manage_medicine', $data);
     }
 
     //*****************public function for adding medicine ************?/
@@ -97,7 +97,7 @@ class Pharmacy extends CI_Controller {
 
                 $data['query'] = $this->pharmacy_model->get_medicine();
                 $data['results'] = $this->pharmacy_model->get_medicine_category();
-               $this->load->view('pharmacy/manage_medicine', $data);
+                $this->load->view('pharmacy/manage_medicine', $data);
             }
             //if the form has passed through the validation
             if ($this->form_validation->run()) {
@@ -133,16 +133,45 @@ class Pharmacy extends CI_Controller {
     public function prescription() {
         $this->load->model('doctor_model');
         $data['query'] = $this->doctor_model->get_prescription();
-        $this->load->view('pharmacy/prescription',$data);
+        $this->load->view('pharmacy/prescription', $data);
     }
 
     public function pharmacist_profile() {
         $this->load->view('pharmacy/pharmacist_profile');
     }
 
-    public function edit_prescription() {
-        
-        $this->load->view('pharmacy/edit_prescription');
+    public function edit_prescription($id) {
+
+        $p = $id;
+        $data['query'] = $this->pharmacy_model->get_prescription($p);
+
+
+        $this->load->view('pharmacy/edit_prescription', $data);
+    }
+
+    public function update_prescription() {
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            //form validation
+            $this->form_validation->set_rules('medicationpharmacist', 'medication from pharmacist', 'required');
+            $this->form_validation->set_rules('description', 'description', 'required|trim');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+            if ($this->form_validation->run() == FALSE) {
+                $p = $this->input->post('id');
+                $data['query'] = $this->pharmacy_model->get_prescription($p);
+                $this->load->view('pharmacy/edit_prescription', $data);
+            }
+            //if the form has passed through the validation
+            if ($this->form_validation->run()) {
+
+                $p = $this->input->post('id');
+                $this->pharmacy_model->update_prescription();
+                redirect('pharmacy/prescription');
+                
+            }
+        }
     }
 
 }

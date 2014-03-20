@@ -73,7 +73,7 @@
                                                 echo '<td>' . $row['dname'] . '</td>';
                                                 echo '<td class="crud-actions">
                   <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                 
+                  <input type="hidden" name="id" value=' . $row['id'] . ' />
                 </td>';
                                                 echo '</tr>';
                                             }
