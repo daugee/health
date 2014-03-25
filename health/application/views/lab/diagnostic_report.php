@@ -63,7 +63,7 @@
                                             </tr>
                                         </thead>
                                         <?php
-                                        foreach ($query as $row) {
+                                        foreach ($results as $row) {
                                             echo '<tr>';
                                             echo '<td>' . $row['id'] . '</td>';
                                             echo '<td>' . $row['date'] . '</td>';
@@ -71,11 +71,12 @@
                                             echo '<td>' . $row['dname'] . '</td>';
                                             echo '<td> <button id="add" name="add" class="btn btn-primary">0 Report</button></td>';
                                             echo '<td class="crud-actions">
-                  <a href="' . site_url("lab") . '/edit_diagnostic_report/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                  <a href="' . site_url("lab") . '/edit_diagnostic_report/' . $row['id'] . '/' . $row['patientid'] . '" class="btn btn-info">view & edit</a>  
                  
                 </td>';
                                             echo '</tr>';
                                             echo '<input type="hidden" name="id" value="' . $row['id'] . '" /> ';
+                                            echo '<input type="hidden" name="patientid" value="' . $row['patientid'] . '" /> ';
                                         }
                                         ?>   
                                     </table>

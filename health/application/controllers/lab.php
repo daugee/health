@@ -13,11 +13,13 @@ class Lab extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->library('pagination');
         $this->load->model('lab_model');
+       $this->load->helper('date');
     }
 
     public function diagnostic_report() {
         $this->load->model('doctor_model');
-        $data['query'] = $this->doctor_model->get_prescription();
+        
+        $data['results'] = $this->doctor_model->get_prescription();
         $this->load->view('lab/diagnostic_report', $data);
     }
 
@@ -54,11 +56,14 @@ class Lab extends CI_Controller {
 
     //**********************Edit diagnostic report ***********************//
 
-    public function edit_diagnostic_report($id) {
+    public function edit_diagnostic_report($id,$patientid) {
         $this->load->model('pharmacy_model');
         $this->load->model('doctor_model');
         $p = $id;
+        $q= $patientid;
+        $data['row'] = $this->lab_model->get_diagnostic_report($patientid);
         $data['query'] = $this->pharmacy_model->get_prescription($p);
+        $data['count'] = $this->lab_model->count_report($patientid);
 
         $data['results'] = $this->doctor_model->get_prescription();
         $data['id'] = $id;
@@ -115,12 +120,14 @@ class Lab extends CI_Controller {
 
                     $q = $data['file_name'];
                     $data_to_store = array(
-                        'lab_type' => $this->input->post('reporttype'),
+                        'report_type' => $this->input->post('reporttype'),
                         'document_type' => $this->input->post('documenttype'),
                         'lab_description' => $this->input->post('description'),
-                        'patient' => $this->input->post('patient1'),
-                        'doctor' => $this->input->post('doctor1'),
-                        'lab_document' => $q
+                        'patient_id' => $this->input->post('patient1'),
+                        'doctor_id' => $this->input->post('doctor1'),
+                        'document' => $q,
+                        'date' => date('Y-m-d H:i:s',now())
+                       
                     );
 
 

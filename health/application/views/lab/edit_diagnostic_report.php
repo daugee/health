@@ -5,7 +5,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/pharmacy/sidebar.php"); ?>
+    <?php include("includes/lab/sidebar.php"); ?>
     <!-- end sidebar -->
 
 
@@ -19,7 +19,7 @@
             <div id="pad-wrapper" class="form-page">
                 <div class="row-fluid form-wrapper">
                     <!-- left column -->
-                    
+
                     <div class="page-header">
                         <h1>Edit Prescription report</h1>
                     </div>
@@ -39,11 +39,10 @@
                         }
                     }
                     ?>
-                    
-                    
+
+
                     <?php
-                    
-                    if(isset($error)){
+                    if (isset($error)) {
                         echo $error;
                     }
                     ?>
@@ -51,9 +50,9 @@
                     //form validation
                     echo validation_errors();
                     ?> 
-                    
-                      <div class="row">
-                   <div class="tabbable span12">
+
+                    <div class="row">
+                        <div class="tabbable span12">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a href="#tabs1-pane1" data-toggle="tab">Edit Prescription</a></li>
                                 <li><a href="#tabs1-pane2" data-toggle="tab">Prescription List</a></li>
@@ -62,9 +61,9 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs1-pane1">
 
-                                   
-                                          
-                      
+
+
+
                                     <form class="form-horizontal">
                                         <fieldset>
 
@@ -77,7 +76,7 @@
                                                 <div class="controls">
                                                     <input id="doctor" name="doctor" type="text" value="<?php echo $query[0]['dname']; ?>" class="input-medium" readonly>
                                                     <input type="hidden" name="doctor1" id="<?php echo $query[0]['doctorid']; ?>"/>
-                                                    
+
                                                 </div>
                                             </div>
 
@@ -137,7 +136,7 @@
 
                                     </form>
 
-                                 	  <form class="form-horizontal">				
+                                    <form class="form-horizontal">				
                                         <fieldset>Diagnostic Report</fieldset>
                                         <table class="table table-striped table-bordered table-condensed">
                                             <thead>
@@ -152,28 +151,36 @@
                                                     <th class="red header">Options</th>
                                                 </tr>
                                             </thead>
-                                <!--             <tbody>
-                                            <?php
-                                            foreach ($query as $row) {
-                                                echo '<tr>';
-                                                echo '<td>' . $row['id'] . '</td>';
-                                                echo '<td>' . $row['bedno'] . '</td>';
-                                                echo '<td>' . $row['bedtype'] . '</td>';
-                                                echo '<td class="crud-actions">
-                    <a href="' . site_url("admin") . '/products/delete/' . $row['id'] . '" class="btn btn-danger">delete</a>
+                                            <tbody>
+                                                <?php
+                                                $i = 1;
+                                                foreach ($row as $result) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . $i . '</td>';
+                                                    $i++;
+                                                    echo '<td>' . $result['report_type'] . '</td>';
+                                                    echo '<td>' . $result['document_type'] . '</td>';
+                                                    echo '<td><a href="' . base_url('') . 'img/projo/'. $result['document'] . '" class="btn btn-danger">delete</a></td>';
+                                                    echo '<td>' . $result['lab_description'] . '</td>';
+                                                    echo '<td>' . $result['date'] . '</td>';
+                                                    echo '<td>' . $result['lab_user'] . '</td>';
+                                                    echo '<td class="crud-actions">
+                    <a href="' . site_url("admin") . '/products/delete/' . $result['lab_id'] . '" class="btn btn-danger">delete</a>
                 </td>';
-                                                echo '</tr>';
-                                            }
-                                            ?>      
-                                            </tbody>-->
+                                                    echo '</tr>';
+                                                }
+                                                ?>      
+                                            </tbody>
                                         </table>                                                                  
                                     </form>
                                     <form method="post" action="<?php echo site_url('lab/add_diagnostic_report'); ?>" id="formID" class="form-horizontal" enctype="multipart/form-data">	
-                                         <input type="hidden" name="userid" value="<?php echo $id; ?>" />
-                                           <input type="hidden" name="doctor1" value="<?php echo $query[0]['doctorid']; ?>" />
-                                           <input type="hidden" name="patient1" value="<?php echo $query[0]['patientid']; ?>" />
-                                           <input type="hidden" name="id1" value="<?php echo $query[0]['id']; ?>" />
-                                        <fieldset>
+                                        <input type="hidden" name="userid" value="<?php echo $id; ?>" />
+                                        <input type="hidden" name="doctor1" value="<?php echo $query[0]['doctorid']; ?>" />
+                                        <input type="hidden" name="patient1" value="<?php echo $query[0]['patientid']; ?>" />
+                                        <input type="hidden" name="id1" value="<?php echo $query[0]['id']; ?>" />
+                                        <input type="hidden"  name="date" value="<?php print date("m/d/y G.i:s<br>", time()); ?>"
+
+                                               <fieldset>
 
                                             <!-- Form Name -->
                                             <legend>Add diagnosis Report</legend>
@@ -228,81 +235,84 @@
 
                                         </fieldset>
                                     </form>   
-                    </div>
-                                     <div class="tab-pane" id="tabs1-pane2">
-                                          <table class="table table-striped table-bordered table-condensed">
+                                </div>
+                                <div class="tab-pane" id="tabs1-pane2">
+                                    <table class="table table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
                                                 <th class="header">#</th>
-                                                <th class="yellow header headerSortDown">Date</th>
-                                                <th class="yellow header headerSortDown">Patient</th>
+                                                <th class="yellow header headerSortDown">date</th>
+                                                <th class="green header">Patient</th>
                                                 <th class="green header">Doctor</th>
-                                                <th class="red header">Actions</th>
+                                                <th class="green header">Report Status</th>
+                                                <th class="red header">Options</th>
                                             </tr>
                                         </thead>
-                           <?php
-                           
-                                            foreach ($results as $row) {
-                                                echo '<tr>';
-                                                echo '<td>' . $row['id'] . '</td>';
-                                                echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['name'] .'&nbsp'.$row['lname']. '</td>';
-                                                echo '<td>' . $row['dname'] . '</td>';
-                                                echo '<td class="crud-actions">
-                  <a href="' . site_url("pharmacy") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                                        <?php
+                                        foreach ($query as $row) {
+                                            echo '<tr>';
+                                            echo '<td>' . $row['id'] . '</td>';
+                                            echo '<td>' . $row['date'] . '</td>';
+                                            echo '<td>' . $row['name'] . '&nbsp' . $row['lname'] . '</td>';
+                                            echo '<td>' . $row['dname'] . '</td>';
+                                            echo '<td> <button id="add" name="add" class="btn btn-primary">'.$count.' Report</button></td>';
+                                            echo '<td class="crud-actions">
+                  <a href="' . site_url("lab") . '/edit_diagnostic_report/' . $row['id'] . '/' . $row['patientid'] . '" class="btn btn-info">view & edit</a>  
                  
                 </td>';
-                                                echo '</tr>';
-                                                echo      '<input type="hidden" name="id" value="'.$row['id'].'" /> ';    
-                                            }
-                                            ?>      
+                                            echo '</tr>';
+                                            echo '<input type="hidden" name="id" value="' . $row['id'] . '" /> ';
+                                            echo '<input type="hidden" name="patientid" value="' . $row['patientid'] . '" /> ';
+                                        }
+                                        ?>   
                                     </table>
-                                         
+
+
                                 </div>
                             </div>
-                   </div>
-                </div>
-
-                                </div>
-
-                        
-                    </div><!-- /.row -->
-
-
-                    <!-- right column -->
+                        </div>
+                    </div>
 
                 </div>
-            </div>
+
+
+            </div><!-- /.row -->
+
+
+            <!-- right column -->
+
         </div>
     </div>
-    <!-- end main container -->
+</div>
+</div>
+<!-- end main container -->
 
-    <!-- scripts for this page -->
-    <?php include("includes/scripts.php") ?>
+<!-- scripts for this page -->
+<?php include("includes/scripts.php") ?>
 
-    <!-- call this page plugins -->
-    <script type="text/javascript">
-        $(function() {
+<!-- call this page plugins -->
+<script type="text/javascript">
+    $(function() {
 
-            // add uniform plugin styles to html elements
-            $("input:checkbox, input:radio").uniform();
+        // add uniform plugin styles to html elements
+        $("input:checkbox, input:radio").uniform();
 
-            // select2 plugin for select elements
-            $(".select2").select2({
-                placeholder: "Select a State"
-            });
-
-            // datepicker plugin
-            $('.datepicker').datepicker().on('changeDate', function(ev) {
-                $(this).datepicker('hide');
-            });
-
-            // wysihtml5 plugin on textarea
-            $(".wysihtml5").wysihtml5({
-                "font-styles": false
-            });
+        // select2 plugin for select elements
+        $(".select2").select2({
+            placeholder: "Select a State"
         });
-    </script>
+
+        // datepicker plugin
+        $('.datepicker').datepicker().on('changeDate', function(ev) {
+            $(this).datepicker('hide');
+        });
+
+        // wysihtml5 plugin on textarea
+        $(".wysihtml5").wysihtml5({
+            "font-styles": false
+        });
+    });
+</script>
 </body>
 
 

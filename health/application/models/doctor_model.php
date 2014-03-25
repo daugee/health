@@ -14,7 +14,7 @@ class Doctor_model extends CI_Model {
 
     //function for getting prescription details
     public function get_prescription() {
-        $this->db->select('prescription.date,prescription.id,doctor.dname,
+        $this->db->select('prescription.*,doctor.dname,
            patient.name,patient.lname');
 
         $this->db->join('patient', 'patient.id = prescription.patientid', 'INNER');
