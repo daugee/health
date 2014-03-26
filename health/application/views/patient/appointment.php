@@ -20,48 +20,50 @@
                 <div class="row-fluid form-wrapper">
                     <!-- left column -->
                     <div class="page-header">
-                        <h1>Doctors</h1>
+                        <h1>View Appointment</h1>
                     </div>
-                   
+
                     <div class="row">
                         <div class="tabbable span12">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tabs1-pane1" data-toggle="tab">Doctors list</a></li>
-                              
+                                <li class="active"><a href="#tabs1-pane1" data-toggle="tab">Appointment list</a></li>
+                               
+
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs1-pane1">
-
+                                    
                                     <table class="table table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
                                                 <th class="header">#</th>
-                                                <th class="yellow header headerSortDown">Doctor Name</th>
+                                                <th class="yellow header headerSortDown">Date</th>
+                                                <th class="green header">Doctor</th>
                                                 <th class="green header">Department</th>
                                                 
                                             </tr>
                                         </thead>
-                                        <tbody>
+<!--                                        <tbody>
                                             <?php
-                                            
-                                            $i = 1;
-                                            
                                             foreach ($query as $row) {
-                                                
                                                 echo '<tr>';
-                                                echo '<td>' . $i . '</td>'; $i++;
-                                                echo '<td>' . $row['name'] . '</td>';
-                                                echo '<td>' . $row['dep_name'] . '</td>';
-
-                               
+                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $row['date'] . '</td>';
+                                                echo '<td>' . $row['name'] . '&nbsp' . $row['lname'] . '</td>';
+                                                echo '<td>' . $row['dname'] . '</td>';
+                                                echo '<td class="crud-actions">
+                  <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                  
+                </td>';
                                                 echo '</tr>';
                                             }
                                             ?>      
-                                        </tbody>
+                                        </tbody>-->
                                     </table>
-
+                                    <?php echo '<div class="pagination">' . $this->pagination->create_links() . '</div>'; ?>
                                 </div>
-                                
+                          
+                                </div>
                             </div>
 
                         </div><!-- /.tab-content -->

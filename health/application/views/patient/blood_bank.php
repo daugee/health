@@ -5,7 +5,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/admin/sidebar.php"); ?>
+    <?php include("includes/patient/sidebar.php"); ?>
     <!-- end sidebar -->
 
 
@@ -26,42 +26,13 @@
 		    		<div class="row">
 							<div class="tabbable span12">
 								<ul class="nav nav-tabs">
-									<li class="active"><a href="#tabs1-pane1" data-toggle="tab">Blood donor list</a></li>
-									<li><a href="#tabs1-pane2" data-toggle="tab">blood bank</a></li>
+									
+									<li class="active"><a href="#tabs1-pane1" data-toggle="tab">blood bank</a></li>
 									
 								</ul>
 								<div class="tab-content">
+									
 									<div class="tab-pane active" id="tabs1-pane1">
-                                                                            
-        <table class="table table-striped table-bordered table-condensed">
-            <thead>
-              <tr>
-                <th class="header">#</th>
-                <th class="yellow header headerSortDown">Name</th>
-                <th class="green header">Age</th>
-                <th class="green header">Sex</th>
-                <th class="green header">Blood Group</th>
-                <th class="green header">Last Donation Date</th>
-              </tr>
-            </thead>
-        <tbody>
-              <?php
-              foreach($query as $row)
-              {
-                echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
-                echo '<td>'.$row['name'].'</td>';
-                echo '<td>'.$row['age'].'</td>';
-                echo '<td>'.$row['gender'].'</td>';
-                echo '<td>'.$row['bloodgroup'].'</td>';
-                echo '<td>'.$row['donationdate'].'</td>';
-                echo '</tr>';
-              }
-              ?>      
-            </tbody>
-</table>
-                		</div>
-									<div class="tab-pane" id="tabs1-pane2">
 	 <table class="table table-striped table-bordered table-condensed">
             <thead>
               <tr>

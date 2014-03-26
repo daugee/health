@@ -24,6 +24,25 @@ public function validate(){
         
         return $query->result(); 
 }
+
+
+
+public function patient_validate(){
+        // grab user inpu
+    
+        $username = $this->security->xss_clean($this->input->post('email'));
+        $password = $this->security->xss_clean($this->input->post('pass'));
+        
+        // Prep the query
+        $this->db->where('email', $username);
+        $this->db->where('password', $password);
+       
+       
+        // Run the query
+        $query = $this->db->get('patient');
+        
+        return $query->row(); 
+}
 //public function validate($user_category) {
 //
 //        $email = $this->input->post('email');

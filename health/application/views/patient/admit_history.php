@@ -20,14 +20,15 @@
                 <div class="row-fluid form-wrapper">
                     <!-- left column -->
                     <div class="page-header">
-                        <h1>Doctors</h1>
+                        <h1>Admit History</h1>
                     </div>
-                   
+
                     <div class="row">
                         <div class="tabbable span12">
                             <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tabs1-pane1" data-toggle="tab">Doctors list</a></li>
-                              
+                                <li class="active"><a href="#tabs1-pane1" data-toggle="tab">bed allotment list</a></li>
+
+
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs1-pane1">
@@ -36,44 +37,51 @@
                                         <thead>
                                             <tr>
                                                 <th class="header">#</th>
-                                                <th class="yellow header headerSortDown">Doctor Name</th>
-                                                <th class="green header">Department</th>
-                                                
+                                                <th class="yellow header headerSortDown">Bed Number</th>
+                                                <th class="green header">Bed Type</th>
+                                                <!--<th class="red header">Patient</th>-->
+                                                <th class="red header">Allotment Date</th>
+                                                <th class="red header">Discharge Date</th>
+                                           
+
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <?php
-                                            
-                                            $i = 1;
-                                            
-                                            foreach ($query as $row) {
-                                                
-                                                echo '<tr>';
-                                                echo '<td>' . $i . '</td>'; $i++;
-                                                echo '<td>' . $row['name'] . '</td>';
-                                                echo '<td>' . $row['dep_name'] . '</td>';
-
-                               
-                                                echo '</tr>';
-                                            }
-                                            ?>      
-                                        </tbody>
+<!--                                        <tbody>
+                                        <?php
+              foreach($allotment as $row)
+              {
+                echo '<tr>';
+                echo '<td>'.$row['id'].'</td>';
+                echo '<td>'.$row['bedno'].'</td>';
+                //echo '<td>'.$row['bedtype'].'</td>';
+                echo '<td>'.$row['patient'].'</td>';
+                echo '<td>'.$row['allotmentdate'].'</td>';
+                echo '<td>'.$row['dischargedate'].'</td>';
+                echo '<td class="crud-actions">
+                  <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
+                 
+                </td>';
+                echo '</tr>';
+              }
+              ?>      
+                                        </tbody>-->
                                     </table>
-
+                                    <?php echo '<div class="pagination">' . $this->pagination->create_links() . '</div>'; ?>
                                 </div>
-                                
+
                             </div>
+                        </div>
 
-                        </div><!-- /.tab-content -->
-                    </div><!-- /.tabbable -->
-                </div><!-- /.row -->
+                    </div><!-- /.tab-content -->
+                </div><!-- /.tabbable -->
+            </div><!-- /.row -->
 
 
-                <!-- right column -->
+            <!-- right column -->
 
-            </div>
         </div>
     </div>
+</div>
 </div>
 <!-- end main container -->
 

@@ -19,20 +19,32 @@ class Welcome extends CI_Controller {
         $this->load->library('form_validation');
         $this->load->model('nurse_model');
         $this->load->library('pagination');
-        
     }
 
-    public function index($msg = NULL) {
-        $data['msg'] = $msg;
+    public function index($error = NULL) {
+        $data['error'] = $error;
         $this->load->view('welcome_message', $data);
     }
-   
+
     /* logout page */
 
-  
     public function logout() {
         $this->session->sess_destroy();
         $this->index();
+    }
+
+    public function patient_index($data) {
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+
+            $this->load->model('nurse_model');
+            $data['query'] = $this->nurse_model->get_patient();
+            $this->load->view('patient/index', $data);
+        } else {
+
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     /* Nurse controller main */
@@ -59,13 +71,23 @@ class Welcome extends CI_Controller {
             $this->load->model('login');
             // Validate the user can login
             $result = $this->login->validate();
-
-
+            $result1 = $this->login->patient_validate();
+            
+           
+            
             if (sizeof($result) > 0) {
                 //Capturing the necessary data from the database
-                $user_type = $result[0]->type;
+                
+               
+                    $user_type = $result[0]->type; 
+                   
+             
+               
+                
+           
+                
 
-                if ( $user_type == 'admin') {
+                if ($user_type == 'admin') {
 
                     //Admin's session data
                     $data = array(
@@ -79,7 +101,11 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("admin/index");
-                } else if ( $user_type == 'doctor') {
+                }elseif ($user_type==NUll || $id==NULL) {
+                    echo 'nimechew';
+                    
+                } 
+                else if ($user_type == 'doctor') {
 
                     //Admin's session data
                     $data = array(
@@ -93,19 +119,7 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("doctor/index");
-                } else if ( $user_type == 'patient') {
-
-                    //Admin's session data
-                    $data = array(
-                        'id' => $result[0]->login_type,
-                        'email' => $result[0]->email,
-                        'name' => $result[0]->name,
-                        'logged_in' => true
-                    );
-                    /* setting the session variables */
-                    $this->session->set_userdata($data);
-                    redirect("patient/index");
-                } else if ( $user_type == 'nurse') {
+                } else if ($user_type == 'nurse') {
 
                     //Admin's session data
                     $data = array(
@@ -118,7 +132,7 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("nurse/index");
-                } else if ( $user_type == 'pharmacist') {
+                } else if ($user_type == 'pharmacist') {
 
                     //Admin's session data
                     $data = array(
@@ -131,7 +145,7 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("pharmacy/login");
-                } else if ( $user_type == 'lab') {
+                } else if ($user_type == 'lab') {
 
                     //Admin's session data
                     $data = array(
@@ -145,13 +159,48 @@ class Welcome extends CI_Controller {
                     redirect("lab/index");
                 } 
             }
-                else {
-
-                    // If user did not validate, then show them login page again
-                    $msg['msg'] = '<font color=red>Invalid username and/or password .</font><br />';
-                    $this->load->view('welcome_message', $msg);
-                }
             
+//            else {
+//
+//                // If user did not validate, then show them login page again
+//                $error['error'] = '<font color=red>Invalid username and/or password .</font><br />';
+//                $this->load->view('welcome_message', $error);
+//            }
+            if(sizeof($result1) > 0){
+                
+                $data = array(
+                        'id' => $result1->id,
+                        'email' => $result1->email,
+                        'name' => $result1->name,
+                        'lname' => $result1->lname,
+                        'logged_in' => true
+                    );
+                    /* setting the session variables */
+                    $this->session->set_userdata($data);
+                    
+                   
+                    //print_r($data);die;
+                    if ($this->session->userdata('logged_in') == TRUE) {
+                       // die("here");
+                        $this->load->model('nurse_model');
+                        $data['query'] = $this->nurse_model->get_patient();
+                        $this->load->view('patient/index', $data);
+                        //exit();
+                       
+                    }
+                    if ($this->session->userdata('logged_in') == FALSE) {
+                         
+                        $data['error'] = 'login details are wrong';
+                        $this->load->view('welcome_message', $data);
+                    }
+            }
+            
+            else {
+
+                // If user did not validate, then show them login page again
+                $error['error'] = '<font color=red>Invalid username and/or password .</font><br />';
+                $this->load->view('welcome_message', $error);
+            }
         }
     }
 
@@ -474,12 +523,16 @@ class Welcome extends CI_Controller {
             }
         }
     }
-    
-    /*#######################patients update details###########################*/
-    
-    
-    
 
+    /* #######################patients view appointment########################### */
+    
+    
+    
+     public function view_appointment(){
+    
+            $this->load->view('patient/appointment');
+                
+    }
 }
 
 /* End of file welcome.php */

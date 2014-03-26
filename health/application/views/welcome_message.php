@@ -70,7 +70,7 @@
                     <?php   
       //form validation
       echo validation_errors();?> 
-                        <?php if(! is_null($msg)) echo $msg;?>
+                        <?php if(! is_null($error)) echo $error;?>
                         	<form action="<?php echo site_url('welcome/login'); ?>" method="post" accept-charset="utf-8" class="separate-sections" onsubmit="return check_account_type()">                                <div class="">
                                     
                                     <select id="account_type" class="validate[required]" name="login_type" style="width:100%;">

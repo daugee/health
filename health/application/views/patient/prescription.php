@@ -5,7 +5,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/pharmacy/sidebar.php"); ?>
+    <?php include("includes/patient/sidebar.php"); ?>
     <!-- end sidebar -->
 
 
@@ -22,26 +22,7 @@
                     <div class="page-header">
                         <h1>Manage Prescription</h1>
                     </div>
-                    <?php
-                    //flash messages
-                    if (isset($flash_message)) {
-                        if ($flash_message == TRUE) {
-                            echo '<div class="alert alert-success">';
-                            echo '<a class="close" data-dismiss="alert">×</a>';
-                            echo '<strong>Well done!</strong> new patient created with success.';
-                            echo '</div>';
-                        } else {
-                            echo '<div class="alert alert-error">';
-                            echo '<a class="close" data-dismiss="alert">×</a>';
-                            echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
-                            echo '</div>';
-                        }
-                    }
-                    ?>
-                    <?php
-                    //form validation
-                    echo validation_errors();
-                    ?> 
+                  
                     <div class="row">
                         <div class="tabbable span12">
                             <ul class="nav nav-tabs">
@@ -57,27 +38,26 @@
                                             <tr>
                                                 <th class="header">#</th>
                                                 <th class="yellow header headerSortDown">Date</th>
-                                                <th class="yellow header headerSortDown">Patient</th>
                                                 <th class="green header">Doctor</th>
                                                 <th class="red header">Actions</th>
                                             </tr>
                                         </thead>
-                           <?php
-                           
-                                            foreach ($query as $row) {
-                                                echo '<tr>';
-                                                echo '<td>' . $row['id'] . '</td>';
-                                                echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['name'] .'&nbsp'.$row['lname']. '</td>';
-                                                echo '<td>' . $row['dname'] . '</td>';
-                                                echo '<td class="crud-actions">
-                  <a href="' . site_url("pharmacy") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                 
-                </td>';
-                                                echo '</tr>';
-                                                echo      '<input type="hidden" name="id" value="'.$row['id'].'" /> ';    
-                                            }
-                                            ?>      
+                           //<?php
+//                           
+//                                            foreach ($query as $row) {
+//                                                echo '<tr>';
+//                                                echo '<td>' . $row['id'] . '</td>';
+//                                                echo '<td>' . $row['date'] . '</td>';
+//                                                echo '<td>' . $row['name'] .'&nbsp'.$row['lname']. '</td>';
+//                                                echo '<td>' . $row['dname'] . '</td>';
+//                                                echo '<td class="crud-actions">
+//                  <a href="' . site_url("pharmacy") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+//                 
+//                </td>';
+//                                                echo '</tr>';
+//                                                echo      '<input type="hidden" name="id" value="'.$row['id'].'" /> ';    
+//                                            }
+//                                            ?>      
                                     </table>
 
 

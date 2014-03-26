@@ -11,7 +11,7 @@
                 </a>
             </li>            
              <li>
-                <a  href="<?php echo site_url('patient/view_appointment');?>">
+                <a  href="<?php echo site_url('welcome/view_appointment');?>">
                     <i class="icon-group"></i>
                     <span>View Appointment</span>
                     
