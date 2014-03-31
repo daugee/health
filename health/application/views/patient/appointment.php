@@ -43,22 +43,20 @@
                                                 
                                             </tr>
                                         </thead>
-<!--                                        <tbody>
+                                        <tbody>
                                             <?php
+                                            $i=1;
                                             foreach ($query as $row) {
                                                 echo '<tr>';
-                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $i. '</td>';$i++;
                                                 echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['name'] . '&nbsp' . $row['lname'] . '</td>';
                                                 echo '<td>' . $row['dname'] . '</td>';
-                                                echo '<td class="crud-actions">
-                  <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                  
-                </td>';
+                                                echo '<td>' . $row['dept'] . '</td>';
+                                                
                                                 echo '</tr>';
                                             }
                                             ?>      
-                                        </tbody>-->
+                                        </tbody>
                                     </table>
                                     <?php echo '<div class="pagination">' . $this->pagination->create_links() . '</div>'; ?>
                                 </div>

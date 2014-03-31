@@ -22,7 +22,7 @@
                     <div class="page-header">
                         <h1>Manage Prescription</h1>
                     </div>
-                  
+
                     <div class="row">
                         <div class="tabbable span12">
                             <ul class="nav nav-tabs">
@@ -42,22 +42,34 @@
                                                 <th class="red header">Actions</th>
                                             </tr>
                                         </thead>
-                           //<?php
-//                           
-//                                            foreach ($query as $row) {
-//                                                echo '<tr>';
-//                                                echo '<td>' . $row['id'] . '</td>';
-//                                                echo '<td>' . $row['date'] . '</td>';
-//                                                echo '<td>' . $row['name'] .'&nbsp'.$row['lname']. '</td>';
-//                                                echo '<td>' . $row['dname'] . '</td>';
-//                                                echo '<td class="crud-actions">
-//                  <a href="' . site_url("pharmacy") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-//                 
-//                </td>';
-//                                                echo '</tr>';
-//                                                echo      '<input type="hidden" name="id" value="'.$row['id'].'" /> ';    
-//                                            }
-//                                            ?>      
+                                        <?php
+                                    //flash messages
+                                    if (isset($flash_message)) {
+                                        if ($flash_message == TRUE) {
+                                            $i = 1;
+                                            foreach ($query as $row) {
+                                                echo '<tr>';
+                                                echo '<td>' . $i . '</td>';
+                                                $i++;
+                                                echo '<td>' . $row['date'] . '</td>';
+                                                echo '<td>' . $row['dname'] . '</td>';
+                                                echo '<td class="crud-actions">
+                  <a href="' . site_url("patient") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                 
+                </td>';
+                                                echo '</tr>';
+                                                echo '<input type="hidden" name="id" value="' . $row['id'] . '" /> ';
+                                            }
+                                        } else {
+                                            echo '<div class="alert alert-error">';
+                                            echo '<a class="close" data-dismiss="alert">×</a>';
+                                            echo '<strong>You dont have any prescription</strong>' ;
+                                            echo '</div>';
+                                        }
+                                    }
+                                    ?>
+                                         
+
                                     </table>
 
 

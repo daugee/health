@@ -36,6 +36,11 @@ class Nurse_model extends CI_Model {
 
     //function for getting bed allotment details
     public function get_bedallotment() {
+        
+        $this->db->select('bedallotment.*,patient.name');
+    
+        $this->db->join('patient', 'patient.id = bedallotment.patient', 'INNER');
+       
         $query = $this->db->get('bedallotment');
         return $query->result_array();
     }

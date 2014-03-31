@@ -33,15 +33,28 @@ class Welcome extends CI_Controller {
         $this->index();
     }
 
-    public function patient_index($data) {
-        if ($this->session->userdata('is_logged_in') == TRUE) {
+    public function patient_index() {
+        $result1 = $this->login->patient_validate();
+        $data = array(
+            'id' => $result1->id,
+            'email' => $result1->email,
+            'name' => $result1->name,
+            'lname' => $result1->lname,
+            'logged_in' => TRUE
+        );
+        /* setting the session variables */
+        $this->session->set_userdata($data);
+        print_r($data);
 
+        
+        if ($this->session->userdata('logged_in') == TRUE) {
 
+ print "yes the session has been set";
             $this->load->model('nurse_model');
             $data['query'] = $this->nurse_model->get_patient();
             $this->load->view('patient/index', $data);
         } else {
-
+print "no the session hasn't been set";
             $data['error'] = 'login details are wrong';
             $this->load->view('welcome_message', $data);
         }
@@ -72,20 +85,20 @@ class Welcome extends CI_Controller {
             // Validate the user can login
             $result = $this->login->validate();
             $result1 = $this->login->patient_validate();
-            
-           
-            
+
+
+
             if (sizeof($result) > 0) {
                 //Capturing the necessary data from the database
-                
-               
-                    $user_type = $result[0]->type; 
-                   
-             
-               
-                
-           
-                
+
+
+                $user_type = $result[0]->type;
+
+
+
+
+
+
 
                 if ($user_type == 'admin') {
 
@@ -101,18 +114,16 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("admin/index");
-                }elseif ($user_type==NUll || $id==NULL) {
-                    echo 'nimechew';
-                    
                 } 
                 else if ($user_type == 'doctor') {
 
                     //Admin's session data
                     $data = array(
-                        'id' => $result[0]->login_type,
+                        'id' => $result[0]->id,
                         'email' => $result[0]->email,
                         'name' => $result[0]->name,
-                        'logged_in' => true
+                        'dep_id'=>$result[0]->dep_id,
+                        'is_logged_in' => TRUE
                     );
 
 
@@ -157,45 +168,45 @@ class Welcome extends CI_Controller {
                     /* setting the session variables */
                     $this->session->set_userdata($data);
                     redirect("lab/index");
-                } 
+                }
             }
-            
+
 //            else {
 //
 //                // If user did not validate, then show them login page again
 //                $error['error'] = '<font color=red>Invalid username and/or password .</font><br />';
 //                $this->load->view('welcome_message', $error);
 //            }
-            if(sizeof($result1) > 0){
-                
-                $data = array(
-                        'id' => $result1->id,
-                        'email' => $result1->email,
-                        'name' => $result1->name,
-                        'lname' => $result1->lname,
-                        'logged_in' => true
-                    );
-                    /* setting the session variables */
-                    $this->session->set_userdata($data);
-                    
-                   
-                    //print_r($data);die;
-                    if ($this->session->userdata('logged_in') == TRUE) {
-                       // die("here");
-                        $this->load->model('nurse_model');
-                        $data['query'] = $this->nurse_model->get_patient();
-                        $this->load->view('patient/index', $data);
-                        //exit();
-                       
-                    }
-                    if ($this->session->userdata('logged_in') == FALSE) {
-                         
-                        $data['error'] = 'login details are wrong';
-                        $this->load->view('welcome_message', $data);
-                    }
-            }
-            
-            else {
+            if (sizeof($result1) > 0) {
+
+                $this->patient_index();
+//                
+//                $data = array(
+//                        'id' => $result1->id,
+//                        'email' => $result1->email,
+//                        'name' => $result1->name,
+//                        'lname' => $result1->lname,
+//                        'logged_in' => true
+//                    );
+//                    /* setting the session variables */
+//                    $this->session->set_userdata($data);
+//                    
+//                   
+//                    //print_r($data);die;
+//                    if ($this->session->userdata('logged_in') == TRUE) {
+//                       // die("here");
+//                        $this->load->model('nurse_model');
+//                        $data['query'] = $this->nurse_model->get_patient();
+//                        $this->load->view('patient/index', $data);
+//                        //exit();
+//                       
+//                    }
+//                    if ($this->session->userdata('logged_in') == FALSE) {
+//                         
+//                        $data['error'] = 'login details are wrong';
+//                        $this->load->view('welcome_message', $data);
+//                    }
+            } else {
 
                 // If user did not validate, then show them login page again
                 $error['error'] = '<font color=red>Invalid username and/or password .</font><br />';
@@ -525,14 +536,19 @@ class Welcome extends CI_Controller {
     }
 
     /* #######################patients view appointment########################### */
-    
-    
-    
-     public function view_appointment(){
-    
-            $this->load->view('patient/appointment');
-                
+
+    public function view_appointment() {
+  $this->session->set_userdata();
+  $q=$this->session->userdata('id');
+        if ($this->session->userdata('logged_in') == true) {
+            $this->load->model('patient_model');
+            $data['query'] = $this->patient_model->get_appointment($q);
+            $this->load->view('patient/appointment',$data);
+        } else {
+            echo 'haha';
+        }
     }
+
 }
 
 /* End of file welcome.php */

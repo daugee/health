@@ -67,17 +67,17 @@
             </thead>
            <tbody>
               <?php
+              $i=1;
               foreach($allotment as $row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
+                echo '<td>'.$i.'</td>';$i++;
                 echo '<td>'.$row['bedno'].'</td>';
-                //echo '<td>'.$row['bedtype'].'</td>';
-                echo '<td>'.$row['patient'].'</td>';
+                echo '<td>'.$row['name'].'</td>';
                 echo '<td>'.$row['allotmentdate'].'</td>';
                 echo '<td>'.$row['dischargedate'].'</td>';
                 echo '<td class="crud-actions">
-                  <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
+                <a href="' . site_url("doctor") . '/edit_bedallotment/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                  
                 </td>';
                 echo '</tr>';
@@ -138,7 +138,7 @@
       <?php
               foreach($result as $row)
               {
-                echo "<option value=".$row['name'].">".$row['name']."</option>";
+                echo "<option value=".$row['id'].">".$row['name']."</option>";
               }
               ?>
     </select>

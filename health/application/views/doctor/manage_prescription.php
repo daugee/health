@@ -70,10 +70,9 @@
                                                 echo '<td>' . $row['id'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
                                                 echo '<td>' . $row['name'] .'&nbsp'.$row['lname']. '</td>';
-                                                echo '<td>' . $row['dname'] . '</td>';
+                                                echo '<td>' . $name . '</td>';
                                                 echo '<td class="crud-actions">
-                  <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                  <input type="hidden" name="id" value=' . $row['id'] . ' />
+                <a href="' . site_url("doctor") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                 </td>';
                                                 echo '</tr>';
                                             }
@@ -94,13 +93,9 @@
                                             <div class="control-group">
                                                 <label class="control-label" for="type">Doctor</label>
                                                 <div class="controls">
-                                                    <select id="type" name="doctor" class="input-medium">
-                                                        <?php
-                                                        foreach ($doctor as $row) {
-                                                            echo "<option value=" . $row['id'] . ">" . $row['dname'] . "</option>";
-                                                        }
-                                                        ?>
-                                                    </select>
+                                                   
+                                                       <input type="text" name="doctor" value="<?php echo $name;?>" class="input-medium " disabled/>
+                                                   
                                                 </div>
                                             </div>
 

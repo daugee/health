@@ -15,27 +15,69 @@ class Doctor extends CI_Controller {
     }
 
     public function index() {
-        $this->load->model('nurse_model');
-        $data['query'] = $this->nurse_model->get_patient();
-        $this->load->view('doctor/index', $data);
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+            $this->load->model('nurse_model');
+            $data['name'] = $this->session->userdata('name');
+            $data['query'] = $this->nurse_model->get_patient();
+            $this->load->view('doctor/index', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function new_patient() {
-        $this->load->view('doctor/Registration');
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+            $data['name'] = $this->session->userdata('name');
+            $this->load->view('doctor/Registration', $name);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function patient_list() {
-        $this->load->model('nurse_model');
-        $data['query'] = $this->nurse_model->get_patient();
-        $this->load->view('doctor/patient_list', $data);
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+            $this->load->model('nurse_model');
+            $data['name'] = $this->session->userdata('name');
+            $data['query'] = $this->nurse_model->get_patient();
+            $this->load->view('doctor/patient_list', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function appointment() {
+        $q = $this->session->userdata('id');
+
+
         $this->load->model('nurse_model');
-        $data['query'] = $this->doctor_model->get_appointment();
-        $data['result'] = $this->nurse_model->get_patient();
-        $data['doctor'] = $this->doctor_model->get_doctor();
-        $this->load->view('doctor/manage_appointment', $data);
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+            $data1 = $this->doctor_model->get_appointment($q);
+            if (sizeof($data1) > 0) {
+                $data['flash_message'] = TRUE;
+                $data['query'] = $this->doctor_model->get_appointment($q);
+                $data['result'] = $this->nurse_model->get_patient();
+                $data['doctor'] = $this->doctor_model->get_doctor();
+                $data['name'] = $this->session->userdata('name');
+                $this->load->view('doctor/manage_appointment', $data);
+            } else {
+                $data['flash_message'] = FALSE;
+                $data['result'] = $this->nurse_model->get_patient();
+                $data['doctor'] = $this->doctor_model->get_doctor();
+                $data['name'] = $this->session->userdata('name');
+                $this->load->view('doctor/manage_appointment', $data);
+            }
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function report() {
@@ -46,28 +88,45 @@ class Doctor extends CI_Controller {
         $data['q'] = $this->doctor_model->get_report_birth();
         $data['d'] = $this->doctor_model->get_report_death();
         $data['oth'] = $this->doctor_model->get_report_other();
+        $data['name'] = $this->session->userdata('name');
         $this->load->view('doctor/report', $data);
     }
 
     /* #####################PRESCRIPTION FUNCTIONS######################## */
 
     public function prescription() {
-        $this->load->model('nurse_model');
-        $data['query'] = $this->doctor_model->get_prescription();
-        $data['result'] = $this->nurse_model->get_patient();
-        $data['doctor'] = $this->doctor_model->get_doctor();
-        $this->load->view('doctor/manage_prescription', $data);
+        $q = $this->session->userdata('id');
+
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+            $this->load->model('nurse_model');
+            $data['query'] = $this->doctor_model->get_prescription($q);
+
+            $data['result'] = $this->nurse_model->get_patient();
+
+            $data['name'] = $this->session->userdata('name');
+            $this->load->view('doctor/manage_prescription', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     /* #######################bed allotment################# */
 
     public function bed_allotment() {
-
         $this->load->model('nurse_model');
-        $data['allotment'] = $this->nurse_model->get_bedallotment();
-        $data['query'] = $this->nurse_model->get_bed();
-        $data['result'] = $this->nurse_model->get_patient();
-        $this->load->view('doctor/bed_allotment', $data);
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+            $data['allotment'] = $this->nurse_model->get_bedallotment();
+            $data['query'] = $this->nurse_model->get_bed();
+            $data['result'] = $this->nurse_model->get_patient();
+            $this->load->view('doctor/bed_allotment', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     /* #######################bed bank################# */
@@ -337,27 +396,83 @@ class Doctor extends CI_Controller {
             $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
 
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('nurse/bed_allotment');
+                $this->load->view('doctor/bed_allotment');
             }
             //if the form has passed through the validation
             if ($this->form_validation->run()) {
+                if ($this->session->userdata('is_logged_in') == TRUE) {
+
+                    $data_to_store = array(
+                        'bedno' => $this->input->post('bedno'),
+                        'patient' => $this->input->post('patient'),
+                        'allotmentdate' => $this->input->post('allotmentdate'),
+                        'dischargedate' => $this->input->post('dischargedate')
+                    );
+
+                    //if the insert has returned true then we show the flash message
+                    if ($this->nurse_model->add_bedallotment($data_to_store)) {
+                        $data['flash_message'] = TRUE;
+                        redirect('doctor/bed_allotment', $data);
+                    } else {
+                        $data['flash_message'] = FALSE;
+                        redirect('doctor/bed_allotment', $data);
+                    }
+                }
+            }
+        }
+    }
+
+    public function edit_bedallotment($id) {
 
 
-                $data_to_store = array(
-                    'bedno' => $this->input->post('bedno'),
-                    'patient' => $this->input->post('patient'),
-                    'patient' => $this->input->post('patient'),
-                    'allotmentdate' => $this->input->post('allotmentdate'),
-                    'dischargedate' => $this->input->post('dischargedate')
-                );
 
-                //if the insert has returned true then we show the flash message
-                if ($this->nurse_model->add_bedallotment($data_to_store)) {
-                    $data['flash_message'] = TRUE;
-                    redirect('doctor/bed_allotment', $data);
-                } else {
-                    $data['flash_message'] = FALSE;
-                    redirect('doctor/bed_allotment', $data);
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+            $data['allotment'] = $this->doctor_model->get_bedallotment($id);
+
+            $data['name'] = $this->session->userdata('name');
+            $this->load->view('doctor/edit/edit_bedallotment', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function edit_doctor_bedallotment() {
+        $this->load->model('nurse_model');
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            //form validation
+            $this->form_validation->set_rules('bedno', 'bedno', 'required');
+            $this->form_validation->set_rules('patient', 'patient', 'required');
+            $this->form_validation->set_rules('allotmentdate', 'allotmentdate', 'required');
+            $this->form_validation->set_rules('dischargedate', 'dischargedate', 'required');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->view('doctor/bed_allotment');
+            }
+            //if the form has passed through the validation
+            if ($this->form_validation->run()) {
+                if ($this->session->userdata('is_logged_in') == TRUE) {
+
+                    $data_to_store = array(
+                        'bedno' => $this->input->post('bedno'),
+                        'patient' => $this->input->post('patient'),
+                        'allotmentdate' => $this->input->post('allotmentdate'),
+                        'dischargedate' => $this->input->post('dischargedate')
+                    );
+
+                    //if the insert has returned true then we show the flash message
+                    if ($this->doctor_model->update_bedallotment($data_to_store)) {
+                        $data['flash_message'] = TRUE;
+                        redirect('doctor/bed_allotment', $data);
+                    } else {
+                        $data['flash_message'] = FALSE;
+                        redirect('doctor/bed_allotment', $data);
+                    }
                 }
             }
         }
@@ -389,12 +504,12 @@ class Doctor extends CI_Controller {
 
                 $config['upload_path'] = './img/projo/';
                 $config['allowed_types'] = '*';
-               
+
                 $config['encrypt_name'] = TRUE;
 
                 $this->load->library('upload', $config);
-                
-                
+
+
 
                 if (!$this->upload->do_upload('file')) {
                     $error = array('error' => $this->upload->display_errors());
@@ -406,7 +521,7 @@ class Doctor extends CI_Controller {
 
                     $q = $data['file_name'];
 
-                
+
                     $data_to_store = array(
                         'type' => $this->input->post('type'),
                         'description' => $this->input->post('description'),
@@ -428,9 +543,93 @@ class Doctor extends CI_Controller {
             }
         }
     }
-    
-    
-    //***************function for getting the reports***********************//
-      
+
+    //***************function for getting editing appointments***********************//
+
+    public function edit_appointment($id) {
+
+
+
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+            $data['query'] = $this->doctor_model->get_appointment1($id);
+
+            $data['name'] = $this->session->userdata('name');
+
+
+            $this->load->view('doctor/edit/edit_appointment', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function edit_patient_appointment($id) {
+
+        $this->form_validation->set_rules('description', 'description', 'required');
+        $this->form_validation->set_rules('appointmentdate', 'appointmentdate', 'required');
+        $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+        if ($this->form_validation->run() == FALSE) {
+            $data['query'] = $this->doctor_model->get_appointment1($id);
+
+            $data['name'] = $this->session->userdata('name');
+
+
+            $this->load->view('doctor/edit/edit_appointment', $data);
+        } else {
+            if ($this->session->userdata('is_logged_in') == TRUE) {
+                $data_to_store = array(
+                    'date' => $this->input->post('appointmentdate'),
+                    'description' => $this->input->post('description')
+                );
+                $this->doctor_model->update_appointment($data_to_store, $id);
+
+
+
+                $data['flash_message'] = TRUE;
+                redirect('doctor/appointment', $data);
+            }
+        }
+    }
+
+    //*************Edit Prescription function ***************//
+
+    public function edit_prescription($id) {
+        $this->load->model('pharmacy_model');
+        $q = $id;
+        $data['query'] = $this->pharmacy_model->get_prescription($q);
+        $data['name'] = $this->session->userdata('name');
+        $this->load->view('doctor/edit/edit_prescription', $data);
+    }
+
+    //****************function for updating prescription ******************//
+    public function update_prescription() {
+        $this->load->model('pharmacy_model');
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            //form validation
+            $this->form_validation->set_rules('medicationpharmacist', 'medication from pharmacist', 'required');
+            $this->form_validation->set_rules('description', 'description', 'required|trim');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+            if ($this->form_validation->run() == FALSE) {
+                $p = $this->input->post('id');
+                $data['query'] = $this->pharmacy_model->get_prescription($p);
+                $data['name'] = $this->session->userdata('name');
+                $this->load->view('doctor/edit/edit_prescription', $data);
+            }
+            //if the form has passed through the validation
+            if ($this->form_validation->run()) {
+
+                $p = $this->input->post('id');
+
+                $this->doctor_model->update_prescription();
+                redirect('doctor/prescription');
+            }
+        }
+    }
 
 }
