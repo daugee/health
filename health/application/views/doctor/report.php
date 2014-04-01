@@ -68,10 +68,10 @@
                                                 echo '<td>' . $row['id'] . '</td>';
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['patient'] . '</td>';
-                                                echo '<td>' . $row['doctor'] . '</td>';
+                                                echo '<td>' .$row['lname'].' </td>';
+                                                echo '<td>' . $row['name'] . '</td>';
                                                 echo '<td class="crud-actions">
-                  <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                   <a href="' . site_url("doctor") . '/edit_report/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                   <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                 </td>';
                                                 echo '</tr>';
@@ -102,10 +102,10 @@
                                                 echo '<td>' . $row['id'] . '</td>';
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['patient'] . '</td>';
-                                                echo '<td>' . $row['doctor'] . '</td>';
+                                                echo '<td>' .$row['lname'].' </td>';
+                                                echo '<td>' . $row['name'] . '</td>';
                                                 echo '<td class="crud-actions">
-                  <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                   <a href="' . site_url("doctor") . '/edit_report/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                   <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                 </td>';
                                                 echo '</tr>';
@@ -133,10 +133,10 @@
                                                 echo '<td>' . $row['id'] . '</td>';
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['patient'] . '</td>';
-                                                echo '<td>' . $row['doctor'] . '</td>';
+                                                 echo '<td>' .$row['lname'].' </td>';
+                                                echo '<td>' . $row['name'] . '</td>';
                                                 echo '<td class="crud-actions">
-                  <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                    <a href="' . site_url("doctor") . '/edit_report/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                   <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                 </td>';
                                                 echo '</tr>';
@@ -165,10 +165,10 @@
                                                 echo '<td>' . $row['id'] . '</td>';
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['patient'] . '</td>';
-                                                echo '<td>' . $row['doctor'] . '</td>';
+                                                 echo '<td>' .$row['lname'].' </td>';
+                                                echo '<td>' . $row['name'] . '</td>';
                                                 echo '<td class="crud-actions">
-                  <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                   <a href="' . site_url("doctor") . '/edit_report/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                    <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                 </td>';
                                                 echo '</tr>';
@@ -201,14 +201,10 @@
                                             <div class="control-group">
                                                 <label class="control-label" for="Doctor">Doctor</label>
                                                 <div class="controls">
-                                                    <select id="doctor" name="doctor" class="input-medium search-query" required="">
-                                                        < <?php
-                                            foreach ($doctor as $row) {
-                                                echo "<option value=" . $row['id'] . ">" . $row['dname'] . "</option>";
-                                            }
-                                            ?>
+                                                   
+                                                       <input type="text" name="doctor" value="<?php echo $this->session->userdata('name'); ?>" class="input-medium" readonly />
 
-                                                    </select>
+                                                  
                                                 </div>
                                             </div>
 

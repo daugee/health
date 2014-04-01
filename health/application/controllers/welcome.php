@@ -44,17 +44,16 @@ class Welcome extends CI_Controller {
         );
         /* setting the session variables */
         $this->session->set_userdata($data);
-        print_r($data);
+    
 
         
         if ($this->session->userdata('logged_in') == TRUE) {
 
- print "yes the session has been set";
             $this->load->model('nurse_model');
             $data['query'] = $this->nurse_model->get_patient();
             $this->load->view('patient/index', $data);
         } else {
-print "no the session hasn't been set";
+
             $data['error'] = 'login details are wrong';
             $this->load->view('welcome_message', $data);
         }

@@ -53,17 +53,18 @@
             </thead>
              <tbody>
               <?php
+              $i=1;
               foreach($query as $row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
+                echo '<td>'.$i.'</td>';$i++;
                 echo '<td>'.$row['name'].'</td>';
                 echo '<td>'.$row['age'].'</td>';
                 echo '<td>'.$row['sex'].'</td>';
                 echo '<td>'.$row['bloodgroup'].'</td>';
                 echo '<td>'.$row['birthdate'].'</td>';
                 echo '<td class="crud-actions">
-                  <a href="'.site_url("welcome").'/patients/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
+                  <a href="' . site_url("doctor") . '/edit_hospital_patient/' . $row['id'] . '" class="btn btn-info">view & edit</a> 
                   
                 </td>';
                 echo '</tr>';

@@ -79,7 +79,7 @@
                                                 <label class="control-label" for="date">Date</label>
                                                 <div class="controls">
                                                     <input id="date" name="date" type="text" value="<?php echo $query[0]['date']; ?>" class="input-medium" readonly>
-
+                                                    <input name="id" type="hidden" value="<?php echo $query[0]['id']; ?>">
                                                 </div>
                                             </div>
 

@@ -15,7 +15,7 @@
                 
                 <li class="dropdown">
                     <a href="index.html#" class="dropdown-toggle hidden-phone" data-toggle="dropdown">
-                        <?php echo $name;?>  account
+                        <?php echo $this->session->userdata('name');?>  account
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
