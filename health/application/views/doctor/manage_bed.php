@@ -39,7 +39,7 @@
         {
           echo '<div class="alert alert-success">';
             echo '<a class="close" data-dismiss="alert">×</a>';
-            echo '<strong>Well done!</strong> new patient created with success.';
+            echo '<strong>Well done!</strong> the update was successful.';
           echo '</div>';       
         }else{
           echo '<div class="alert alert-error">';
@@ -58,6 +58,7 @@
                 <th class="header">#</th>
                 <th class="yellow header headerSortDown">Bed Number</th>
                 <th class="green header">Type</th>
+                <th class="green header">Capacity</th>
                 <th class="red header">Actions</th>
               </tr>
             </thead>
@@ -69,6 +70,7 @@
                 echo '<td>'.$row['id'].'</td>';
                 echo '<td>'.$row['bedno'].'</td>';
                 echo '<td>'.$row['bedtype'].'</td>';
+                echo '<td>'.$row['capacity'].'</td>';
                 echo '<td class="crud-actions">
                   <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
                   <a href="'.site_url("admin").'/products/delete/'.$row['id'].'" class="btn btn-danger">delete</a>

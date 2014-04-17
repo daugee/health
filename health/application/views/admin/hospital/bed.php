@@ -64,22 +64,24 @@
              </tr>
             </thead>
            <tbody>
-              <?php
+            
+               <?php
+              $i=1;
               foreach($allotment as $row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
-                echo '<td>'.$row['bedno'].'</td>';
-                //echo '<td>'.$row['bedtype'].'</td>';
-                echo '<td>'.$row['patient'].'</td>';
+                echo '<td>'.$i.'</td>';$i++;
+                echo '<td>'.$row['bedno']. '</td>';
+                echo '<td>'.$row['name'].   '&nbsp;'.$row['lname'].'</td>';
                 echo '<td>'.$row['allotmentdate'].'</td>';
                 echo '<td>'.$row['dischargedate'].'</td>';
+                
                 echo '</tr>';
               }
-              ?>      
+              ?>    
             </tbody>
 </table>
-                
+                                                                          
 							</div>
 									<div class="tab-pane" id="tabs1-pane2">
 	<table class="table table-striped table-bordered table-condensed">
@@ -87,7 +89,8 @@
               <tr>
                 <th class="header">#</th>
                 <th class="yellow header headerSortDown">Bed Number</th>
-                <th class="green header">Type</th>          
+                <th class="green header">Type</th>     
+                <th class="green header">Capacity</th>  
               </tr>
             </thead>
              <tbody>
@@ -98,6 +101,7 @@
                 echo '<td>'.$row['id'].'</td>';
                 echo '<td>'.$row['bedno'].'</td>';
                 echo '<td>'.$row['bedtype'].'</td>';
+                echo '<td>'.$row['capacity'].'</td>';
                 echo '</tr>';
               }
               ?>      

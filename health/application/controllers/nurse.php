@@ -1,16 +1,306 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
 class Nurse extends CI_Controller {
-public function __construct()
-       {
-       parent::__construct();
-             $this->load->helper('url');
-            $this->load->library('session');
-            $this->load->library('form_validation');
-       
-       }
-       public function index() {
+
+    public function __construct() {
+        parent::__construct();
+        $this->load->helper('url');
+        $this->load->library('session');
+        $this->load->library('form_validation');
         $this->load->model('nurse_model');
-        $data['query'] = $this->nurse_model->get_patient();
-        $this->load->view('nurse/index', $data);
+        $this->load->library('pagination');
     }
+
+    public function index() {
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+            $this->load->model('nurse_model');
+            $data['query'] = $this->nurse_model->get_patient();
+            $this->load->view('nurse/index', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function add_patient() {
+        $this->load->model('nurse_model');
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            //form validation
+            $this->form_validation->set_rules('fname', 'fname', 'required');
+            $this->form_validation->set_rules('lname', 'lname', 'required');
+            $this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
+            $this->form_validation->set_rules('password', 'password', 'trim|required|min_length[6]');
+            $this->form_validation->set_rules('address', 'address', 'trim');
+            $this->form_validation->set_rules('city', 'city', 'trim');
+            $this->form_validation->set_rules('pcode', 'pcode', 'trim|numeric');
+            $this->form_validation->set_rules('country', 'country', 'trim');
+            $this->form_validation->set_rules('weight', 'weight', 'required');
+            $this->form_validation->set_rules('height', 'height', 'required');
+            $this->form_validation->set_rules('temperature', 'temperature', 'required');
+            $this->form_validation->set_rules('history', 'history', 'trim');
+            $this->form_validation->set_rules('phone', 'phone', 'trim|required');
+            $this->form_validation->set_rules('gender', 'gender', 'required');
+            $this->form_validation->set_rules('birthdate', 'birthdate', 'required');
+            $this->form_validation->set_rules('age', 'age', 'required|numeric');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->view('nurse/Registration');
+            }
+            //if the form has passed through the validation
+            if ($this->form_validation->run()) {
+                if ($this->session->userdata('is_logged_in') == TRUE) {
+
+
+                    $config['upload_path'] = './img/projo/';
+                    $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                    $config['max_size'] = '1000';
+                    $config['max_width'] = '1024';
+                    $config['max_height'] = '768';
+                    $config['encrypt_name'] = TRUE;
+
+                    $this->load->library('upload', $config);
+
+                    if (!$this->upload->do_upload('image')) {
+                        $error = array('error' => $this->upload->display_errors());
+
+
+                        $this->load->view('doctor/Registration', $error);
+                    } else {
+
+                        $data = $this->upload->data();
+
+                        $q = $data['file_name'];
+
+
+
+
+
+                        $data_to_store = array(
+                            'sex' => $this->input->post('gender'),
+                            'name' => $this->input->post('fname'),
+                            'lname' => $this->input->post('lname'),
+                            'email' => $this->input->post('email'),
+                            'password' => $this->input->post('password'),
+                            'address' => $this->input->post('address'),
+                            'phone' => $this->input->post('phone'),
+                            'birthdate' => $this->input->post('birthdate'),
+                            'age' => $this->input->post('age'),
+                            'bloodgroup' => $this->input->post('bloodgroup'),
+                            'city' => $this->input->post('city'),
+                            'pcode' => $this->input->post('pcode'),
+                            'country' => $this->input->post('country'),
+                            'weight' => $this->input->post('weight'),
+                            'height' => $this->input->post('height'),
+                            'temperature' => $this->input->post('temperature'),
+                            'history' => $this->input->post('history'),
+                            'image' => $q
+                        );
+
+
+                        //if the insert has returned true then we show the flash message
+                        if ($this->nurse_model->add_patient1($data_to_store)) {
+                            $data['flash_message'] = TRUE;
+                            redirect('welcome/patient_list', $data);
+                        } else {
+                            $data['flash_message'] = FALSE;
+                            $this->load->view('nurse/Registration', $data);
+                        }
+                    }
+                }
+                if ($this->session->userdata('is_logged_in') == FALSE) {
+                    $data['error'] = 'login details are wrong';
+                    $this->load->view('welcome_message', $data);
+                }
+            }
+        }
+    }
+
+    //*********************************** edit patient *************************************************//
+
+    public function edit_hospital_patient($id) {
+
+
+
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+
+            $this->load->model('doctor_model');
+            $data['name'] = $this->session->userdata('name');
+            $data['query'] = $this->doctor_model->get_patient($id);
+
+            $this->load->view('nurse/edit/edit_patient', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function edit_patient() {
+        $this->load->model('doctor_model');
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            //form validation
+            $this->form_validation->set_rules('fname', 'fname', 'required');
+            $this->form_validation->set_rules('lname', 'lname', 'required');
+            $this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
+            $this->form_validation->set_rules('address', 'address', 'trim');
+            $this->form_validation->set_rules('city', 'city', 'trim');
+            $this->form_validation->set_rules('pcode', 'pcode', 'trim|numeric');
+            $this->form_validation->set_rules('country', 'country', 'trim');
+            $this->form_validation->set_rules('weight', 'weight', 'required');
+            $this->form_validation->set_rules('height', 'height', 'required');
+            $this->form_validation->set_rules('temperature', 'temperature', 'required');
+            $this->form_validation->set_rules('history', 'history', 'trim');
+            $this->form_validation->set_rules('phone', 'phone', 'trim|required');
+            $this->form_validation->set_rules('gender', 'gender', 'required');
+            $this->form_validation->set_rules('birthdate', 'birthdate', 'required');
+            $this->form_validation->set_rules('age', 'age', 'required|numeric');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+            if ($this->form_validation->run() == FALSE) {
+                $id = $this->input->upost('id');
+
+                $data['name'] = $this->session->userdata('name');
+                $data['query'] = $this->doctor_model->get_patient($id);
+
+                $this->load->view('nurse/edit/edit_patient', $data);
+            }
+            //if the form has passed through the validation
+            if ($this->form_validation->run()) {
+                if ($this->session->userdata('is_logged_in') == TRUE) {
+
+                    $data_to_store = array(
+                        'sex' => $this->input->post('gender'),
+                        'name' => $this->input->post('fname'),
+                        'lname' => $this->input->post('lname'),
+                        'email' => $this->input->post('email'),
+                        'address' => $this->input->post('address'),
+                        'phone' => $this->input->post('phone'),
+                        'birthdate' => $this->input->post('birthdate'),
+                        'age' => $this->input->post('age'),
+                        'bloodgroup' => $this->input->post('bloodgroup'),
+                        'city' => $this->input->post('city'),
+                        'pcode' => $this->input->post('pcode'),
+                        'country' => $this->input->post('country'),
+                        'weight' => $this->input->post('weight'),
+                        'height' => $this->input->post('height'),
+                        'temperature' => $this->input->post('temperature'),
+                        'history' => $this->input->post('history'),
+                    );
+
+
+                    //if the insert has returned true then we show the flash message
+                    if ($this->doctor_model->update_patient1($data_to_store)) {
+                        $data['flash_message'] = TRUE;
+                        redirect('welcome/patient_list', $data);
+                    } else {
+                        $data['flash_message'] = FALSE;
+                        redirect('welcome/patient_list', $data);
+                    }
+                }
+            }
+            if ($this->session->userdata('is_logged_in') == FALSE) {
+                $data['error'] = 'login details are wrong';
+                $this->load->view('welcome_message', $data);
+            }
+        }
+    }
+
+    public function inpatient() {
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+            $data['allotment'] = $this->nurse_model->get_bedallotment();
+            $this->load->view('nurse/inpatient', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function discharge($id) {
+
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+            if ($this->nurse_model->disharge($id)) {
+
+                $data['flash_message'] = TRUE;
+                $data['allotment'] = $this->nurse_model->get_bedallotment();
+                $this->load->view('nurse/inpatient', $data);
+            } else {
+                $data['flash_message'] = FALSE;
+                $data['allotment'] = $this->nurse_model->get_bedallotment();
+                $this->load->view('nurse/inpatient', $data);
+            }
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function outpatient() {
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+            $data['patient'] = $this->nurse_model->get_outpatient();
+            $this->load->view('nurse/outpatient', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function edit_bed($id) {
+
+
+
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+
+
+
+            $data['query'] = $this->nurse_model->get_bed($id);
+
+            $this->load->view('nurse/edit/edit_bed', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function bed_edit() {
+
+
+        $id= $this->input->post('id');
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+            if ($this->nurse_model->bed_edit($id)) {
+
+
+                $data['flash_message'] = TRUE;
+                $data['query'] = $this->nurse_model->get_bed($id);
+
+                $this->load->view('nurse/edit/edit_bed', $data);
+            } else {
+                $data['flash_message'] = FALSE;
+                $data['query'] = $this->nurse_model->get_bed($id);
+
+                $this->load->view('nurse/edit/edit_bed', $data);
+            }
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
 }

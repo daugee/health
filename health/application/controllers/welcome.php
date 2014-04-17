@@ -44,9 +44,9 @@ class Welcome extends CI_Controller {
         );
         /* setting the session variables */
         $this->session->set_userdata($data);
-    
 
-        
+
+
         if ($this->session->userdata('logged_in') == TRUE) {
 
             $this->load->model('nurse_model');
@@ -62,10 +62,15 @@ class Welcome extends CI_Controller {
     /* Nurse controller main */
 
     public function nurse() {
-
-        $this->load->model('nurse_model');
-        $data['query'] = $this->nurse_model->get_patient();
-        $this->load->view('nurse/index', $data);
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+            $this->load->model('nurse_model');
+            $data['query'] = $this->nurse_model->get_patient();
+            $this->load->view('nurse/index', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     /* ########################login  function####################################################### */
@@ -136,7 +141,7 @@ class Welcome extends CI_Controller {
                         'id' => $result[0]->login_type,
                         'email' => $result[0]->email,
                         'name' => $result[0]->name,
-                        'logged_in' => true
+                        'is_logged_in' => true
                     );
 
                     /* setting the session variables */
@@ -170,41 +175,10 @@ class Welcome extends CI_Controller {
                 }
             }
 
-//            else {
-//
-//                // If user did not validate, then show them login page again
-//                $error['error'] = '<font color=red>Invalid username and/or password .</font><br />';
-//                $this->load->view('welcome_message', $error);
-//            }
             if (sizeof($result1) > 0) {
 
                 $this->patient_index();
-//                
-//                $data = array(
-//                        'id' => $result1->id,
-//                        'email' => $result1->email,
-//                        'name' => $result1->name,
-//                        'lname' => $result1->lname,
-//                        'logged_in' => true
-//                    );
-//                    /* setting the session variables */
-//                    $this->session->set_userdata($data);
-//                    
-//                   
-//                    //print_r($data);die;
-//                    if ($this->session->userdata('logged_in') == TRUE) {
-//                       // die("here");
-//                        $this->load->model('nurse_model');
-//                        $data['query'] = $this->nurse_model->get_patient();
-//                        $this->load->view('patient/index', $data);
-//                        //exit();
-//                       
-//                    }
-//                    if ($this->session->userdata('logged_in') == FALSE) {
-//                         
-//                        $data['error'] = 'login details are wrong';
-//                        $this->load->view('welcome_message', $data);
-//                    }
+
             } else {
 
                 // If user did not validate, then show them login page again
@@ -219,69 +193,131 @@ class Welcome extends CI_Controller {
     }
 
     public function patient_list() {
-        $data['query'] = $this->nurse_model->get_patient();
-        $this->load->view('nurse/patient_list', $data);
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+            $data['query'] = $this->nurse_model->get_patient();
+            $this->load->view('nurse/patient_list', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function new_patient() {
-        $this->load->view('nurse/new_patient');
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+            $this->load->view('nurse/Registration');
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function patient_profile() {
-        $this->load->view('nurse/patient_profile');
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+            $this->load->view('nurse/patient_profile');
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function manage_bed() {
-
+        if ($this->session->userdata('is_logged_in') == TRUE) {
         $data['query'] = $this->nurse_model->get_bed();
         $this->load->view('nurse/manage_bed', $data);
+        }
+         if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     //bed allotment function
     public function bed_allotment() {
+         if ($this->session->userdata('is_logged_in') == TRUE) {
         $data['allotment'] = $this->nurse_model->get_bedallotment();
         $data['query'] = $this->get_bed();
         $data['result'] = $this->get_patient();
         $data['main_content'] = 'nurse/bed_allotment';
         $this->load->view('nurse/template', $data);
-//		$this->load->view('nurse/bed_allotment',$data);
+         }
+ if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     //get bed function
     public function get_bed() {
+         if ($this->session->userdata('is_logged_in') == TRUE) {
         $q = $this->nurse_model->get_bed();
         if ($q) {
             return $q;
+        }
+         }
+         if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
         }
     }
 
     //function of getting patient
     public function get_patient() {
+          if ($this->session->userdata('is_logged_in') == TRUE) {
         $q = $this->nurse_model->get_patient();
         if ($q) {
             return $q;
+        }
+          }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
         }
     }
 
     //function of getting nurse report
     public function get_nurse_report() {
+          if ($this->session->userdata('is_logged_in') == TRUE) {
         $q = $this->nurse_model->get_nurse_report();
         if ($q) {
             return $q;
         }
+          }
+          if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+          
     }
 
     public function nurse_report() {
+        if ($this->session->userdata('is_logged_in') == TRUE) {
         $data['result'] = $this->get_patient();
         $data['query'] = $this->nurse_model->get_nurse_report_operation();
         $data['q'] = $this->nurse_model->get_nurse_report_birth();
         $data['d'] = $this->nurse_model->get_nurse_report_death();
         $data['oth'] = $this->nurse_model->get_nurse_report_other();
         $this->load->view('nurse/nurse_report', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function nurse_profile() {
+        if ($this->session->userdata('is_logged_in') == TRUE) {
         $this->load->view('nurse/nurse_profile');
+        }
+         if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+        
     }
 
     public function add() {
@@ -305,7 +341,7 @@ class Welcome extends CI_Controller {
             }
             //if the form has passed through the validation
             if ($this->form_validation->run()) {
-
+                if ($this->session->userdata('is_logged_in') == TRUE) {
                 if ($this->input->post('gender') == 0) {
                     $data_to_store = array(
                         'sex' => 'male',
@@ -341,6 +377,11 @@ class Welcome extends CI_Controller {
                     redirect('welcome/patient_list', $data);
                 }
             }
+            if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+            }
         }
     }
 
@@ -357,12 +398,13 @@ class Welcome extends CI_Controller {
             $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
 
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('nurse/manage_bed');
+               $data['query'] = $this->nurse_model->get_bed();
+        $this->load->view('nurse/manage_bed', $data);
             }
             //if the form has passed through the validation
             if ($this->form_validation->run()) {
 
-
+                if ($this->session->userdata('is_logged_in') == TRUE) {
                 $data_to_store = array(
                     'bedno' => $this->input->post('bedno'),
                     'bedtype' => $this->input->post('bedtype'),
@@ -377,6 +419,11 @@ class Welcome extends CI_Controller {
                     $data['flash_message'] = FALSE;
                     redirect('welcome/manage_bed', $data);
                 }
+            }
+             if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
             }
         }
     }
@@ -399,7 +446,7 @@ class Welcome extends CI_Controller {
             }
             //if the form has passed through the validation
             if ($this->form_validation->run()) {
-
+if ($this->session->userdata('is_logged_in') == TRUE) {
 
                 $data_to_store = array(
                     'bedno' => $this->input->post('bedno'),
@@ -418,6 +465,11 @@ class Welcome extends CI_Controller {
                     redirect('welcome/bed_allotment', $data);
                 }
             }
+            }
+             if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
         }
     }
 
@@ -441,7 +493,7 @@ class Welcome extends CI_Controller {
             }
             //if the form has passed through the validation
             if ($this->form_validation->run()) {
-
+if ($this->session->userdata('is_logged_in') == TRUE) {
 
                 $data_to_store = array(
                     'type' => $this->input->post('type'),
@@ -460,6 +512,11 @@ class Welcome extends CI_Controller {
                     redirect('welcome/nurse_report', $data);
                 }
             }
+            if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+            }
         }
     }
 
@@ -470,6 +527,7 @@ class Welcome extends CI_Controller {
      */
 
     public function blood_bank() {
+        if ($this->session->userdata('is_logged_in') == TRUE) {
         $data['a'] = $this->nurse_model->a();
         $data['a1'] = $this->nurse_model->a1();
         $data['b'] = $this->nurse_model->b();
@@ -480,11 +538,22 @@ class Welcome extends CI_Controller {
         $data['o1'] = $this->nurse_model->o1();
 
         $this->load->view('nurse/manage_blood_bank', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function blood_donors() {
+        if ($this->session->userdata('is_logged_in') == TRUE) {
         $data['query'] = $this->nurse_model->get_donors();
         $this->load->view('nurse/manage_blood_donor', $data);
+        }
+         if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     // add blood donor
@@ -507,7 +576,7 @@ class Welcome extends CI_Controller {
             }
             //if the form has passed through the validation
             if ($this->form_validation->run()) {
-
+ if ($this->session->userdata('is_logged_in') == TRUE) {
 
                 $data_to_store = array(
                     'name' => $this->input->post('name'),
@@ -531,18 +600,23 @@ class Welcome extends CI_Controller {
                     redirect('welcome/blood_donors', $data);
                 }
             }
+            }
+             if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
         }
     }
 
     /* #######################patients view appointment########################### */
 
     public function view_appointment() {
-  $this->session->set_userdata();
-  $q=$this->session->userdata('id');
+        $this->session->set_userdata();
+        $q = $this->session->userdata('id');
         if ($this->session->userdata('logged_in') == true) {
             $this->load->model('patient_model');
             $data['query'] = $this->patient_model->get_appointment($q);
-            $this->load->view('patient/appointment',$data);
+            $this->load->view('patient/appointment', $data);
         } else {
             echo 'haha';
         }

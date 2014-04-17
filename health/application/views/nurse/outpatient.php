@@ -28,11 +28,16 @@
                
                 <!-- end statistics chart -->
  <div class="row">
+     <div class="row-fluid header">
         <div class="span12 columns">
-   
-
+            <label  class="btn-flat success pull-left">
+                            <span></span>
+                           OUTPATIENT
+              </label>
+        </div>
+     </div>
                 <!-- UI Elements section -->
-                
+                <div class="row-fluid table">      
                 <!-- end UI elements section -->
 <table class="table table-striped table-bordered table-condensed">
             <thead>
@@ -49,7 +54,7 @@
              <tbody>
               <?php
               $i=1;
-              foreach($query as $row)
+              foreach($patient as $row)
               {
                 echo '<tr>';
                 echo '<td>'.$i.'</td>';$i++;
@@ -59,15 +64,17 @@
                 echo '<td>'.$row['bloodgroup'].'</td>';
                 echo '<td>'.$row['birthdate'].'</td>';
                 echo '<td class="crud-actions">
-                  <a href="' . site_url("nurse") . '/edit_hospital_patient/' . $row['id'] . '" class="btn btn-info">view & edit</a>
+                  <a href="' . site_url("nurse") . '/edit_hospital_patient/' . $row['id'] . '" class="btn btn-info">view & edit</a> 
+                  
                 </td>';
                 echo '</tr>';
               }
               ?>      
             </tbody>
 </table>
-          
+                <?php echo '<div class="pagination">'.$this->pagination->create_links().'</div>'; ?>
                    </div>
+     </div>
         </div>
     </div>
 

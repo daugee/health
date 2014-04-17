@@ -19,8 +19,8 @@
                 <ul class="submenu">
                     <li><a href="<?php echo site_url('welcome/patient_list');?>">Patient list</a></li>
                     <li><a href="<?php echo site_url('welcome/new_patient');?>">New Patient form</a></li>
-                    <li><a href="<?php echo site_url('welcome/patient_profile');?>">Inpatient</a></li>
-                    <li><a href="<?php echo site_url('welcome/patient_profile');?>">outpatient</a></li>
+                    <li><a href="<?php echo site_url('nurse/inpatient');?>">Inpatient</a></li>
+                    <li><a href="<?php echo site_url('nurse/outpatient');?>">outpatient</a></li>
                 </ul>
             </li>
             <li>

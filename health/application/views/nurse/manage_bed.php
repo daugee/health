@@ -39,7 +39,7 @@
         {
           echo '<div class="alert alert-success">';
             echo '<a class="close" data-dismiss="alert">×</a>';
-            echo '<strong>Well done!</strong> new patient created with success.';
+            echo '<strong>Well done!</strong> update was successful.';
           echo '</div>';       
         }else{
           echo '<div class="alert alert-error">';
@@ -63,15 +63,16 @@
             </thead>
              <tbody>
               <?php
+              $i=1;
               foreach($query as $row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
+                echo '<td>'.$i.'</td>';$i++;
                 echo '<td>'.$row['bedno'].'</td>';
                 echo '<td>'.$row['bedtype'].'</td>';
                 echo '<td class="crud-actions">
-                  <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
-                  <a href="'.site_url("admin").'/products/delete/'.$row['id'].'" class="btn btn-danger">delete</a>
+                  <a href="'.site_url("nurse").'/edit_bed/'.$row['id'].'" class="btn btn-info">view & edit</a>  
+         
                 </td>';
                 echo '</tr>';
               }

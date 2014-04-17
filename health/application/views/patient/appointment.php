@@ -27,53 +27,56 @@
                         <div class="tabbable span12">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a href="#tabs1-pane1" data-toggle="tab">Appointment list</a></li>
-                               
+
 
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs1-pane1">
-                                    
+
                                     <table class="table table-striped table-bordered table-condensed">
                                         <thead>
                                             <tr>
                                                 <th class="header">#</th>
                                                 <th class="yellow header headerSortDown">Date</th>
+                                                <th class="green header">Description</th>
                                                 <th class="green header">Doctor</th>
                                                 <th class="green header">Department</th>
-                                                
+
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $i=1;
+                                            $i = 1;
                                             foreach ($query as $row) {
                                                 echo '<tr>';
-                                                echo '<td>' . $i. '</td>';$i++;
+                                                echo '<td>' . $i . '</td>';
+                                                $i++;
                                                 echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['dname'] . '</td>';
-                                                echo '<td>' . $row['dept'] . '</td>';
-                                                
+                                                echo '<td>' . $row['description'] . '</td>';
+                                                echo '<td>' . $row['name'] . '</td>';
+                                                echo '<td>' . $row['dep_id'] . '</td>';
+
                                                 echo '</tr>';
                                             }
                                             ?>      
                                         </tbody>
                                     </table>
-                                    <?php echo '<div class="pagination">' . $this->pagination->create_links() . '</div>'; ?>
+<?php echo '<div class="pagination">' . $this->pagination->create_links() . '</div>'; ?>
                                 </div>
-                          
-                                </div>
+
                             </div>
+                        </div>
 
-                        </div><!-- /.tab-content -->
-                    </div><!-- /.tabbable -->
-                </div><!-- /.row -->
+                    </div><!-- /.tab-content -->
+                </div><!-- /.tabbable -->
+            </div><!-- /.row -->
 
 
-                <!-- right column -->
+            <!-- right column -->
 
-            </div>
         </div>
     </div>
+</div>
 </div>
 <!-- end main container -->
 

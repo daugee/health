@@ -38,6 +38,38 @@
                         }
                     }
                     ?>
+                     <?php
+                    //flash messages
+                    if (isset($flash)) {
+                        if ($flash == TRUE) {
+                            echo '<div class="alert alert-success">';
+                            echo '<a class="close" data-dismiss="alert">×</a>';
+                            echo '<strong>Well done!</strong> Nurse details  has been updated successfully.';
+                            echo '</div>';
+                        } else {
+                            echo '<div class="alert alert-error">';
+                            echo '<a class="close" data-dismiss="alert">×</a>';
+                            echo '<strong>Oh snap!</strong> The was a problem updating.';
+                            echo '</div>';
+                        }
+                    }
+                    ?>
+                    <?php
+                    //flash messages
+                    if (isset($flash_msg)) {
+                        if ($flash_msg== TRUE) {
+                            echo '<div class="alert alert-success">';
+                            echo '<a class="close" data-dismiss="alert">×</a>';
+                            echo '<strong>Well done!</strong> Nurse been removed from system successfully.';
+                            echo '</div>';
+                        } else {
+                            echo '<div class="alert alert-error">';
+                            echo '<a class="close" data-dismiss="alert">×</a>';
+                            echo '<strong>Oh snap!</strong> The was a problem updating.';
+                            echo '</div>';
+                        }
+                    }
+                    ?>
 
                     <?php
                     //form validation
@@ -79,8 +111,8 @@
 
 
                                             echo '<td class="crud-actions">
-                  <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                  <a href="' . site_url("admin") . '/products/delete/' . $row['id'] . '" class="btn btn-danger">delete</a>
+                  <a href="' . site_url("admin") . '/nurse_update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                  <a href="' . site_url("admin") . '/delete_nurse/' . $row['id'] . '" class="btn btn-danger">delete</a>
                 </td>';
                                             echo '</tr>';
                                         }

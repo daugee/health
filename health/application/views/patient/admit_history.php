@@ -39,32 +39,29 @@
                                                 <th class="header">#</th>
                                                 <th class="yellow header headerSortDown">Bed Number</th>
                                                 <th class="green header">Bed Type</th>
-                                                <!--<th class="red header">Patient</th>-->
+                                               
                                                 <th class="red header">Allotment Date</th>
                                                 <th class="red header">Discharge Date</th>
-                                           
+
 
                                             </tr>
                                         </thead>
-<!--                                        <tbody>
-                                        <?php
-              foreach($allotment as $row)
-              {
-                echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
-                echo '<td>'.$row['bedno'].'</td>';
-                //echo '<td>'.$row['bedtype'].'</td>';
-                echo '<td>'.$row['patient'].'</td>';
-                echo '<td>'.$row['allotmentdate'].'</td>';
-                echo '<td>'.$row['dischargedate'].'</td>';
-                echo '<td class="crud-actions">
-                  <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
-                 
-                </td>';
-                echo '</tr>';
-              }
-              ?>      
-                                        </tbody>-->
+                                        <tbody>
+                                            <?php
+                                            $i=1;
+                                            foreach ($allotment as $row) {
+                                                echo '<tr>';
+                                                echo '<td>' . $i . '</td>';$i++;
+                                                echo '<td>' . $row['bedno'] . '</td>';
+                                                
+                                                echo '<td>' . $row['bedtype'] . '</td>';
+                                                echo '<td>' . $row['allotmentdate'] . '</td>';
+                                                echo '<td>' . $row['dischargedate'] . '</td>';
+                                                
+                                                echo '</tr>';
+                                            }
+                                            ?>      
+                                        </tbody>
                                     </table>
                                     <?php echo '<div class="pagination">' . $this->pagination->create_links() . '</div>'; ?>
                                 </div>

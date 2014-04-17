@@ -17,13 +17,19 @@ class Nurse_model extends CI_Model {
     }
 
     public function get_patient() {
-
+        $this->db->where('disable !=', 'disable');
         $query = $this->db->get('patient');
         return $query->result_array();
     }
 
     //function for getting bed details
     public function get_bed() {
+        $query = $this->db->get('bed');
+        return $query->result_array();
+    }
+
+    public function get_bed1($id) {
+        $this->db->where('id', $id);
         $query = $this->db->get('bed');
         return $query->result_array();
     }
@@ -36,11 +42,11 @@ class Nurse_model extends CI_Model {
 
     //function for getting bed allotment details
     public function get_bedallotment() {
-        
-        $this->db->select('bedallotment.*,patient.name');
-    
+
+        $this->db->select('bedallotment.*,patient.name,patient.lname,bed.bedtype');
+        $this->db->where('bedallotment.discharge !=', 'yes');
         $this->db->join('patient', 'patient.id = bedallotment.patient', 'INNER');
-       
+        $this->db->join('bed', 'bed.bedno = bedallotment.bedno', 'INNER');
         $query = $this->db->get('bedallotment');
         return $query->result_array();
     }
@@ -166,6 +172,43 @@ class Nurse_model extends CI_Model {
         //print_r($data);
         //  return $data;
         //return $result[0]->blood_aggregate;
+    }
+
+    public function disharge($id) {
+        $data = array(
+            'discharge' => 'yes',
+        );
+
+
+        $this->db->where('id', $id);
+        $this->db->update('bedallotment', $data);
+        return TRUE;
+    }
+
+    //************************outpatient patients **************************//
+
+    public function get_outpatient() {
+
+
+
+        $this->db->select('patient.*,bedallotment.*');
+        // $this->db->where('bedallotment.patient !=', 'patient.id');
+        $this->db->join('bedallotment', 'bedallotment.patient != patient.id', 'LEFT');
+        // $query = $this->db->get('bedallotment,patient');
+        $query = $this->db->get('patient');
+        return $query->result_array();
+    }
+    public function bed_edit($id){
+        $data = array(
+            'bedno' => $this->input->post('bedno'),
+            'bedtype' => $this->input->post('bedtype'),
+            'description' => $this->input->post('description'),
+            
+        );
+
+        $this->db->where('id', $id);
+        $this->db->update('bed', $data);
+        return TRUE;
     }
 
 }

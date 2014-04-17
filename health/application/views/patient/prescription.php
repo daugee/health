@@ -39,36 +39,38 @@
                                                 <th class="header">#</th>
                                                 <th class="yellow header headerSortDown">Date</th>
                                                 <th class="green header">Doctor</th>
-                                                <th class="red header">Actions</th>
+                                                <th class="green header">Case History</th>
+                                                <th class="green header">Medication</th>
+                                                <th class="green header">Description</th>
+                                                
                                             </tr>
                                         </thead>
                                         <?php
-                                    //flash messages
-                                    if (isset($flash_message)) {
-                                        if ($flash_message == TRUE) {
-                                            $i = 1;
-                                            foreach ($query as $row) {
-                                                echo '<tr>';
-                                                echo '<td>' . $i . '</td>';
-                                                $i++;
-                                                echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['dname'] . '</td>';
-                                                echo '<td class="crud-actions">
-                  <a href="' . site_url("patient") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                 
-                </td>';
-                                                echo '</tr>';
-                                                echo '<input type="hidden" name="id" value="' . $row['id'] . '" /> ';
+                                        //flash messages
+                                        if (isset($flash_message)) {
+                                            if ($flash_message == TRUE) {
+                                                $i = 1;
+                                                foreach ($query as $row) {
+                                                    echo '<tr>';
+                                                    echo '<td>' . $i . '</td>';
+                                                    $i++;
+                                                    echo '<td>' . $row['date'] . '</td>';
+                                                    echo '<td>' . $row['name'] . '</td>';
+                                                    echo '<td>' . $row['casehistory'] . '</td>';
+                                                    echo '<td>' . $row['medication'] . '</td>';
+                                                    echo '<td>' . $row['description'] . '</td>';
+                                                    echo '</tr>';
+                                                    echo '<input type="hidden" name="id" value="' . $row['id'] . '" /> ';
+                                                }
+                                            } else {
+                                                echo '<div class="alert alert-error">';
+                                                echo '<a class="close" data-dismiss="alert">×</a>';
+                                                echo '<strong>You dont have any prescription</strong>';
+                                                echo '</div>';
                                             }
-                                        } else {
-                                            echo '<div class="alert alert-error">';
-                                            echo '<a class="close" data-dismiss="alert">×</a>';
-                                            echo '<strong>You dont have any prescription</strong>' ;
-                                            echo '</div>';
                                         }
-                                    }
-                                    ?>
-                                         
+                                        ?>
+
 
                                     </table>
 

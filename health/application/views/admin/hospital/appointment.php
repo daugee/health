@@ -67,10 +67,11 @@
                                             echo '<tr>';
                                             echo '<td>' . $i . '</td>';$i++;
                                             echo '<td>' . $row['date'] . '</td>';
-                                            echo '<td>' . $row['name'] . '&nbsp' . $row['lname'] . '</td>';
-                                            echo '<td>' . $row['dname'] . '</td>';
+                                            echo '<td>' . $row['name'] . '</td>';
+                                            echo '<td>' . $row['lname']  . '</td>';
                                             echo '</tr>';
                                         }
+                                         
                                         ?>      
                                     </table>
 

@@ -152,6 +152,7 @@ class Doctor_model extends CI_Model {
 
 
         $this->db->where('bedallotment.id', $id);
+        $this->db->where('bedallotment.discharge', 'no');
         $this->db->select('bedallotment.*,patient.name');
         $this->db->join('patient', 'patient.id = bedallotment.patient', 'INNER');
         $query = $this->db->get('bedallotment');
