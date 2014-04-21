@@ -63,12 +63,13 @@
                                             </tr>
                                         </thead>
                                         <?php
+                                        $i=1;
                                         foreach ($results as $row) {
                                             echo '<tr>';
-                                            echo '<td>' . $row['id'] . '</td>';
+                                            echo '<td>' . $i . '</td>';$i++;
                                             echo '<td>' . $row['date'] . '</td>';
-                                            echo '<td>' . $row['name'] . '&nbsp' . $row['lname'] . '</td>';
-                                            echo '<td>' . $row['dname'] . '</td>';
+                                            echo '<td>' . $row['lname'] .'</td>';
+                                            echo '<td>' . $row['name'] . '</td>';
                                             echo '<td> <button id="add" name="add" class="btn btn-primary">0 Report</button></td>';
                                             echo '<td class="crud-actions">
                   <a href="' . site_url("lab") . '/edit_diagnostic_report/' . $row['id'] . '/' . $row['patientid'] . '" class="btn btn-info">view & edit</a>  

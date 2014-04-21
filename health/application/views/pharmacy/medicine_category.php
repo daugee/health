@@ -24,16 +24,32 @@
                     </div>
                     <?php
                     //flash messages
-                    if (isset($flash_message) || isset($query)) {
+                    if (isset($flash_message) ){
                         if ($flash_message == TRUE) {
                             echo '<div class="alert alert-success">';
                             echo '<a class="close" data-dismiss="alert">×</a>';
-                            echo '<strong>Well done!</strong> new patient created with success.';
+                            echo '<strong>Well done!</strong> medicine category created with success.';
                             echo '</div>';
                         } else {
                             echo '<div class="alert alert-error">';
                             echo '<a class="close" data-dismiss="alert">×</a>';
-                            echo '<strong>Oh snap!</strong> '.$query.' exists in the database.';
+                            echo '<strong>Oh snap!</strong> something was wrong check and re submit.';
+                            echo '</div>';
+                        }
+                    }
+                    ?>
+                    <?php
+                    //flash messages
+                    if (isset($flash_msg) ){
+                        if ($flash_msg == TRUE) {
+                            echo '<div class="alert alert-success">';
+                            echo '<a class="close" data-dismiss="alert">×</a>';
+                            echo '<strong>Well done!</strong> medicine category updated successfully.';
+                            echo '</div>';
+                        } else {
+                            echo '<div class="alert alert-error">';
+                            echo '<a class="close" data-dismiss="alert">×</a>';
+                            echo '<strong>Oh snap!</strong> something was wrong check and re submit.';
                             echo '</div>';
                         }
                     }
@@ -46,7 +62,8 @@
                         <div class="tabbable span12">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a href="#tabs1-pane1" data-toggle="tab">Medicine Category List</a></li>
-                                <li><a href="#tabs1-pane2" data-toggle="tab">+add Medicine Category</a></li>
+                                <li><a href="#tabs1-pane2" data-toggle="tab">Visualizer</a></li>
+                                <li><a href="#tabs1-pane3" data-toggle="tab">+add Medicine Category</a></li>
 
                             </ul>
                             <div class="tab-content">
@@ -71,8 +88,8 @@
                                             echo '<td>' . $row['med_cat_name'] . '</td>';
                                             echo '<td>' . $row['med_cat_description'] . '</td>';
                                             echo '<td class="crud-actions">
-                  <a href="' . site_url("admin") . '/products/update/' . $row['med_cat_id'] . '" class="btn btn-info">view & edit</a>  
-                  <a href="' . site_url("admin") . '/products/delete/' . $row['med_cat_id'] . '" class="btn btn-danger">delete</a>
+                  <a href="' . site_url("pharmacy") . '/medicine_category_update/' . $row['med_cat_id'] . '" class="btn btn-info">view & edit</a>  
+                  
                 </td>';
                                             echo '</tr>';
                                         }
@@ -81,7 +98,8 @@
                                     </table>
 
                                 </div>
-                                <div class="tab-pane" id="tabs1-pane2">
+                                <div class="tab-pane" id="tabs1-pane2"></div>
+                                <div class="tab-pane" id="tabs1-pane3">
                                     <form method="post" action="<?php echo site_url('pharmacy/add_medicine_category'); ?>" id="formID" class="form-horizontal" >					
 
                                         <fieldset>

@@ -7,7 +7,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/docs/docs_sidebar.php"); ?>
+    <?php include("includes/sidebar.php"); ?>
 
     <!-- main container -->
     <div class="content">
@@ -52,7 +52,7 @@
                                     //form validation
                                     echo validation_errors();
                                     ?>
-                                    <form method="post" action="<?php echo site_url('doctor/edit_doctor_bedallotment'); ?>" id="formID" class="form-horizontal" >
+                                    <form method="post" action="<?php echo site_url('nurse/edit_nurse_bedallotment/'.$allotment[0]['id'].''); ?>" id="formID" class="form-horizontal" >
                                         <fieldset>
 
                                             <!-- Form Name -->

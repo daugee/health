@@ -210,5 +210,28 @@ class Nurse_model extends CI_Model {
         $this->db->update('bed', $data);
         return TRUE;
     }
+    
+    //=========================blood donors edit =========================//
+    public function get_donors_edit($id) {
 
+        $this->db->where('id', $id);
+        
+        $query = $this->db->get('blood_bank');
+        return $query->result_array();
+
+        return $query->result_array();
+    }
+
+    public function update_donors($data) {
+
+
+
+        $this->db->where('id', $this->input->post('id'));
+        $this->db->update('blood_bank', $data);
+        return TRUE;
+    }
+    
+    
+    
+    
 }

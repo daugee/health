@@ -27,5 +27,17 @@ class Lab_model extends CI_Model {
         $a = $this->db->count_all_results();
         return $a;
     }
+     public function get_prescription() {
+        $this->db->select('prescription.*,users.name,users.dep_id,patient.lname');
+       
+        $this->db->join('patient', 'patient.id = prescription.patientid', 'INNER');
+        $this->db->join('users', 'users.id = prescription.doctorid');
+        $query = $this->db->get('prescription');
+
+
+
+
+        return $query->result_array();
+    }
 
 }

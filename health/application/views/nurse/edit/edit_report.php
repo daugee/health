@@ -4,7 +4,7 @@
     <!-- navbar -->
     <?php include("includes/navbar.php"); ?>
     <!-- end navbar -->
-    <?php include("includes/docs/docs_sidebar.php"); ?>
+    <?php include("includes/sidebar.php"); ?>
     <div class="content">
 
         <!-- settings changer -->
@@ -49,7 +49,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs1-pane1">
                                    
-                                    <form method="post" action="<?php echo site_url('doctor/edit_docs_report'); ?>" id="formID" class="form-horizontal" enctype="multipart/form-data" >
+                                    <form method="post" action="<?php echo site_url('nurse/edit_nurse_report'); ?>" id="formID" class="form-horizontal" enctype="multipart/form-data" >
                                         <fieldset>
 
                                             <!-- Form Name -->

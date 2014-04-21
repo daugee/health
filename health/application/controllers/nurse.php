@@ -280,7 +280,7 @@ class Nurse extends CI_Controller {
     public function bed_edit() {
 
 
-        $id= $this->input->post('id');
+        $id = $this->input->post('id');
         if ($this->session->userdata('is_logged_in') == TRUE) {
 
             if ($this->nurse_model->bed_edit($id)) {
@@ -300,6 +300,320 @@ class Nurse extends CI_Controller {
         if ($this->session->userdata('is_logged_in') == FALSE) {
             $data['error'] = 'login details are wrong';
             $this->load->view('welcome_message', $data);
+        }
+    }
+
+    //========================EDIT BED ALLOTMENT ===========================//
+    public function edit_bedallotment($id) {
+
+
+
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+            $this->load->model('doctor_model');
+
+            $data['allotment'] = $this->doctor_model->get_bedallotment($id);
+
+            $this->load->view('nurse/edit/edit_bedallotment', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function edit_nurse_bedallotment($id) {
+        $this->load->model('doctor_model');
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            //form validation
+            $this->form_validation->set_rules('bedno', 'bedno', 'required');
+            $this->form_validation->set_rules('patient', 'patient', 'required');
+            $this->form_validation->set_rules('allotmentdate', 'allotmentdate', 'required');
+            $this->form_validation->set_rules('dischargedate', 'dischargedate', 'required');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->model('doctor_model');
+
+                $data['allotment'] = $this->doctor_model->get_bedallotment($id);
+
+                $this->load->view('nurse/edit/edit_bedallotment', $data);
+                ;
+            }
+            //if the form has passed through the validation
+            if ($this->form_validation->run()) {
+                if ($this->session->userdata('is_logged_in') == TRUE) {
+
+                    $data_to_store = array(
+                        'bedno' => $this->input->post('bedno'),
+                        'patient' => $this->input->post('patient'),
+                        'allotmentdate' => $this->input->post('allotmentdate'),
+                        'dischargedate' => $this->input->post('dischargedate')
+                    );
+
+                    //if the insert has returned true then we show the flash message
+                    if ($this->doctor_model->update_bedallotment($data_to_store)) {
+                        $data['flash'] = TRUE;
+                        $data['allotment'] = $this->nurse_model->get_bedallotment();
+                        $this->load->view('nurse/inpatient', $data);
+                    } else {
+                        $data['flash'] = FALSE;
+                        $data['allotment'] = $this->doctor_model->get_bedallotment($id);
+                        $this->load->view('nurse/edit/edit_bedallotment', $data);
+                    }
+                }
+                if ($this->session->userdata('is_logged_in') == FALSE) {
+                    $data['error'] = 'login details are wrong';
+                    $this->load->view('welcome_message', $data);
+                }
+            }
+        }
+    }
+
+    //============================ update of blood donors ===========================//
+    public function donors_update($id) {
+
+
+
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+            $data['results'] = $this->nurse_model->get_donors_edit($id);
+            $data['query'] = $this->nurse_model->get_donors();
+
+            $this->load->view('nurse/edit/edit_blood_donor', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function edit_donors($id) {
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            //form validation
+            $this->form_validation->set_rules('name', 'name', 'required');
+            $this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
+            $this->form_validation->set_rules('address', 'address', 'trim');
+            $this->form_validation->set_rules('phone', 'phone', 'trim|required');
+            $this->form_validation->set_rules('gender', 'gender', 'required');
+            $this->form_validation->set_rules('age', 'age', 'required|numeric');
+            $this->form_validation->set_rules('donationdate', 'donationdate', 'required');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+            if ($this->form_validation->run() == FALSE) {
+                $data['results'] = $this->nurse_model->get_donors_edit($id);
+                $data['query'] = $this->nurse_model->get_donors();
+
+                $this->load->view('nurse/edit/edit_blood_donor', $data);
+            }
+            //if the form has passed through the validation
+            if ($this->form_validation->run()) {
+                if ($this->session->userdata('is_logged_in') == TRUE) {
+
+                    $data_to_store = array(
+                        'name' => $this->input->post('name'),
+                        'email' => $this->input->post('email'),
+                        'address' => $this->input->post('address'),
+                        'phone' => $this->input->post('phone'),
+                        'gender' => $this->input->post('gender'),
+                        'donationdate' => $this->input->post('donationdate'),
+                        'age' => $this->input->post('age'),
+                        'bloodgroup' => $this->input->post('bloodgroup')
+                    );
+
+
+
+                    //if the insert has returned true then we show the flash message
+                    if ($this->nurse_model->update_donors($data_to_store)) {
+                        $data['flash_msg'] = TRUE;
+                        $data['query'] = $this->nurse_model->get_donors();
+                        $this->load->view('nurse/manage_blood_donor', $data);
+                    } else {
+                        $data['flash_message'] = FALSE;
+                        $data['results'] = $this->nurse_model->get_donors_edit($id);
+                        $data['query'] = $this->nurse_model->get_donors();
+
+                        $this->load->view('nurse/edit/edit_blood_donor', $data);
+                    }
+                }
+            }
+            if ($this->session->userdata('is_logged_in') == FALSE) {
+                $data['error'] = 'login details are wrong';
+                $this->load->view('welcome_message', $data);
+            }
+        }
+    }
+
+    //=======================function for adding reports =============================//
+    public function add_report() {
+        $q = $this->session->userdata('id');
+        $this->load->model('doctor_model');
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            //form validation
+            $this->form_validation->set_rules('type', 'type', 'required');
+
+            $this->form_validation->set_rules('description', 'description', 'required');
+            $this->form_validation->set_rules('doctor', 'doctor', 'required');
+            $this->form_validation->set_rules('patient', 'patient', 'required');
+            $this->form_validation->set_rules('date', 'date', 'required');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->model('doctor_model');
+                $data['result'] = $this->nurse_model->get_patient();
+                $data['doctor'] = $this->doctor_model->get_doctor();
+                $data['query'] = $this->doctor_model->get_report_operation($q);
+                $data['q'] = $this->doctor_model->get_report_birth($q);
+                $data['d'] = $this->doctor_model->get_report_death($q);
+                $data['oth'] = $this->doctor_model->get_report_other($q);
+
+
+                $this->load->view('nurse/edit/edit_report', $data);
+            }
+            //if the form has passed through the validation
+            if ($this->form_validation->run()) {
+                if ($this->session->userdata('is_logged_in') == TRUE) {
+
+                    $config['upload_path'] = './img/projo/';
+                    $config['allowed_types'] = '*';
+
+                    $config['encrypt_name'] = TRUE;
+
+                    $this->load->library('upload', $config);
+
+
+
+                    if (!$this->upload->do_upload('file')) {
+                        $error = array('error' => $this->upload->display_errors());
+
+                        $data['result'] = $this->nurse_model->get_patient();
+                        $data['doctor'] = $this->doctor_model->get_doctor();
+                        $data['query'] = $this->doctor_model->get_report_operation($q);
+                        $data['q'] = $this->doctor_model->get_report_birth($q);
+                        $data['d'] = $this->doctor_model->get_report_death($q);
+                        $data['oth'] = $this->doctor_model->get_report_other($q);
+
+
+                        $this->load->view('nurse/edit/edit_report', $data);
+                    } else {
+
+                        $data = $this->upload->data();
+
+                        $q = $data['file_name'];
+
+
+                        $data_to_store = array(
+                            'type' => $this->input->post('type'),
+                            'description' => $this->input->post('description'),
+                            'doctor' => $this->session->userdata('id'),
+                            'patient' => $this->input->post('patient'),
+                            'date' => $this->input->post('date'),
+                            'file' => $q
+                        );
+
+                        //if the insert has returned true then we show the flash message
+                        if ($this->doctor_model->add_report($data_to_store)) {
+                            $data['flash_message'] = TRUE;
+                            redirect('welcome/nurse_report');
+                        } else {
+                            $data['flash_message'] = FALSE;
+                            $data['result'] = $this->nurse_model->get_patient();
+                            $data['doctor'] = $this->doctor_model->get_doctor();
+                            $data['query'] = $this->doctor_model->get_report_operation($q);
+                            $data['q'] = $this->doctor_model->get_report_birth($q);
+                            $data['d'] = $this->doctor_model->get_report_death($q);
+                            $data['oth'] = $this->doctor_model->get_report_other($q);
+
+
+                            $this->load->view('nurse/edit/edit_report', $data);
+                        }
+                    }
+                }
+                if ($this->session->userdata('is_logged_in') == FALSE) {
+                    $data['error'] = 'login details are wrong';
+                    $this->load->view('welcome_message', $data);
+                }
+            }
+        }
+    }
+
+    public function edit_report($id) {
+
+        $this->load->model('doctor_model');
+
+        if ($this->session->userdata('is_logged_in') == TRUE) {
+
+
+            $data['query'] = $this->doctor_model->get_report($id);
+            $data['name'] = $this->session->userdata('name');
+            $this->load->view('nurse/edit/edit_report', $data);
+        }
+        if ($this->session->userdata('is_logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+
+    public function edit_nurse_report() {
+        $this->load->model('doctor_model');
+        $q = $this->session->userdata('id');
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            //form validation
+            $this->form_validation->set_rules('type', 'type', 'required');
+            $this->form_validation->set_rules('description', 'description', 'required');
+            $this->form_validation->set_rules('doctor', 'doctor', 'required');
+            $this->form_validation->set_rules('patient', 'patient', 'required');
+            $this->form_validation->set_rules('date', 'date', 'required');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+            if ($this->form_validation->run() == FALSE) {
+                $id = $this->input->post('id');
+                $data['query'] = $this->doctor_model->get_report($id);
+                $data['name'] = $this->session->userdata('name');
+                $this->load->view('nurse/edit/edit_report', $data);
+                //if the form has passed through the validation
+            } if ($this->form_validation->run()) {
+                if ($this->session->userdata('is_logged_in') == TRUE) {
+
+
+                    $data_to_store = array(
+                        'type' => $this->input->post('type'),
+                        'description' => $this->input->post('description'),
+                        'date' => $this->input->post('date'),
+                    );
+
+
+                    //if the insert has returned true then we show the flash message
+                    if ($this->doctor_model->update_report($data_to_store)) {
+                        $data['flash_msg'] = TRUE;
+                        $data['result'] = $this->nurse_model->get_patient();
+                        $data['doctor'] = $this->doctor_model->get_doctor();
+                        $data['query'] = $this->doctor_model->get_report_operation($q);
+                        $data['q'] = $this->doctor_model->get_report_birth($q);
+                        $data['d'] = $this->doctor_model->get_report_death($q);
+                        $data['oth'] = $this->doctor_model->get_report_other($q);
+                        $this->load->view('nurse/nurse_report', $data);
+                    } else {
+                        $data['flash_msg'] = FALSE;
+                        $id = $this->input->post('id');
+                $data['query'] = $this->doctor_model->get_report($id);
+                $data['name'] = $this->session->userdata('name');
+                $this->load->view('nurse/edit/edit_report', $data);
+                    }
+                }
+
+                if ($this->session->userdata('is_logged_in') == FALSE) {
+                    $data['error'] = 'login details are wrong';
+                    $this->load->view('welcome_message', $data);
+                }
+            }
         }
     }
 

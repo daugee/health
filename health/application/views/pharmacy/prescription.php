@@ -39,6 +39,22 @@
                     }
                     ?>
                     <?php
+                    //flash messages
+                    if (isset($flash_msg)) {
+                        if ($flash_msg == TRUE) {
+                            echo '<div class="alert alert-success">';
+                            echo '<a class="close" data-dismiss="alert">×</a>';
+                            echo '<strong>Well done!</strong> the prescription has been updated successful.';
+                            echo '</div>';
+                        } else {
+                            echo '<div class="alert alert-error">';
+                            echo '<a class="close" data-dismiss="alert">×</a>';
+                            echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
+                            echo '</div>';
+                        }
+                    }
+                    ?>
+                    <?php
                     //form validation
                     echo validation_errors();
                     ?> 
@@ -63,13 +79,13 @@
                                             </tr>
                                         </thead>
                            <?php
-                           
+                           $i=1;
                                             foreach ($query as $row) {
                                                 echo '<tr>';
-                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $i . '</td>';$i++;
                                                 echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['name'] .'&nbsp'.$row['lname']. '</td>';
-                                                echo '<td>' . $row['dname'] . '</td>';
+                                                echo '<td>' . $row['lname'] . '</td>';
+                                                echo '<td>' . $row['name'] . '</td>';
                                                 echo '<td class="crud-actions">
                   <a href="' . site_url("pharmacy") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                  

@@ -14,8 +14,7 @@ class Doctor_model extends CI_Model {
 
     //function for getting prescription details
     public function get_prescription($q) {
-        $this->db->select('prescription.*,users.name,users.dep_id,
-           patient.name,patient.lname');
+        $this->db->select('prescription.*,users.name,users.dep_id,patient.lname');
         $this->db->where('doctorid', $q);
         $this->db->join('patient', 'patient.id = prescription.patientid', 'INNER');
         $this->db->join('users', 'users.id = prescription.doctorid');
@@ -152,7 +151,7 @@ class Doctor_model extends CI_Model {
 
 
         $this->db->where('bedallotment.id', $id);
-        $this->db->where('bedallotment.discharge', 'no');
+        $this->db->where('bedallotment.discharge !=', 'yes');
         $this->db->select('bedallotment.*,patient.name');
         $this->db->join('patient', 'patient.id = bedallotment.patient', 'INNER');
         $query = $this->db->get('bedallotment');
@@ -172,7 +171,8 @@ class Doctor_model extends CI_Model {
 
 
         $this->db->where('id', $this->input->post('id'));
-        $this->db->update('prescription', $data);
+        $this->db->update('bedallotment', $data);
+        return TRUE;
     }
 
     
@@ -181,6 +181,7 @@ class Doctor_model extends CI_Model {
 
         $this->db->where('id', $this->input->post('id'));
         $this->db->update('report', $data);
+        return TRUE;
     }
     
      public function get_patient($id) {

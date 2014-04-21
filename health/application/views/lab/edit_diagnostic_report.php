@@ -74,7 +74,7 @@
                                             <div class="control-group">
                                                 <label class="control-label" for="doctor">Doctor  </label>
                                                 <div class="controls">
-                                                    <input id="doctor" name="doctor" type="text" value="<?php echo $query[0]['dname']; ?>" class="input-medium" readonly>
+                                                    <input id="doctor" name="doctor" type="text" value="<?php echo $query[0]['name']; ?>" class="input-medium" readonly>
                                                     <input type="hidden" name="doctor1" id="<?php echo $query[0]['doctorid']; ?>"/>
 
                                                 </div>
@@ -84,7 +84,7 @@
                                             <div class="control-group">
                                                 <label class="control-label" for="patient">Patient</label>
                                                 <div class="controls">
-                                                    <input id="patient" name="patient" type="text"value="<?php echo $query[0]['name']; ?>" class="input-medium" readonly>
+                                                    <input id="patient" name="patient" type="text"value="<?php echo $query[0]['lname']; ?>" class="input-medium" readonly>
                                                     <input type="hidden" name="patient1" id="<?php echo $query[0]['patientid']; ?>"/>
                                                 </div>
                                             </div>
@@ -249,12 +249,13 @@
                                             </tr>
                                         </thead>
                                         <?php
+                                        $i=1;
                                         foreach ($query as $row) {
                                             echo '<tr>';
-                                            echo '<td>' . $row['id'] . '</td>';
+                                            echo '<td>' . $i . '</td>';$i++;
                                             echo '<td>' . $row['date'] . '</td>';
-                                            echo '<td>' . $row['name'] . '&nbsp' . $row['lname'] . '</td>';
-                                            echo '<td>' . $row['dname'] . '</td>';
+                                            echo '<td>' . $row['lname'] .  '</td>';
+                                            echo '<td>' . $row['name'] . '</td>';
                                             echo '<td> <button id="add" name="add" class="btn btn-primary">'.$count.' Report</button></td>';
                                             echo '<td class="crud-actions">
                   <a href="' . site_url("lab") . '/edit_diagnostic_report/' . $row['id'] . '/' . $row['patientid'] . '" class="btn btn-info">view & edit</a>  

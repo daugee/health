@@ -597,7 +597,12 @@ class Doctor extends CI_Controller {
             $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
 
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('doctor/bed_allotment');
+                $id= $this->session->userdata('name');
+                $data['allotment'] = $this->doctor_model->get_bedallotment($id);
+
+            $data['name'] = 
+            $this->load->view('doctor/edit/edit_bedallotment', $data);
+               
             }
             //if the form has passed through the validation
             if ($this->form_validation->run()) {
@@ -630,6 +635,7 @@ class Doctor extends CI_Controller {
     //*********************doctor report add function***************************//
 
     public function add_report() {
+        $q = $this->session->userdata('id');
         //if save button was clicked, get the data sent via post
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
 
@@ -646,6 +652,10 @@ class Doctor extends CI_Controller {
                 $this->load->model('nurse_model');
                 $data['result'] = $this->nurse_model->get_patient();
                 $data['doctor'] = $this->doctor_model->get_doctor();
+                $data['query'] = $this->doctor_model->get_report_operation($q);
+                $data['q'] = $this->doctor_model->get_report_birth($q);
+                $data['d'] = $this->doctor_model->get_report_death($q);
+                $data['oth'] = $this->doctor_model->get_report_other($q);
                 $this->load->view('doctor/report', $data);
             }
             //if the form has passed through the validation

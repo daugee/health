@@ -32,7 +32,7 @@
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs1-pane1">
-                                    <form method="post" action="<?php echo site_url('pharmacy/update_prescription'); ?>" id="formID" class="form-horizontal" >					
+                                    <form method="post" action="<?php echo site_url('pharmacy/update_prescription/'.$query[0]['id'].''); ?>" id="formID" class="form-horizontal" >					
                                         <fieldset>
 
                                             <!-- Form Name -->
@@ -42,8 +42,8 @@
                                             <div class="control-group">
                                                 <label class="control-label" for="doctor">Doctor</label>
                                                 <div class="controls">
-                                                    <input id="doctor" name="doctor" type="text" value="<?php echo $query[0]['dname']; ?>" class="input-medium" readonly>
-                                                    
+                                                    <input id="doctor" name="doctor" type="text" value="<?php echo $query[0]['name']; ?>" class="input-medium" readonly>
+
                                                 </div>
                                             </div>
 
@@ -51,7 +51,7 @@
                                             <div class="control-group">
                                                 <label class="control-label" for="patient">Patient</label>
                                                 <div class="controls">
-                                                    <input id="patient" name="patient" type="text" value="<?php echo $query[0]['name']; ?>" class="input-medium" readonly>
+                                                    <input id="patient" name="patient" type="text" value="<?php echo $query[0]['lname']; ?>" class="input-medium" readonly>
 
                                                 </div>
                                             </div>
@@ -143,21 +143,21 @@
                                                 <th class="red header">Actions</th>
                                             </tr>
                                         </thead>
-                            <!--             <tbody>
-                                        <?php
-                                        foreach ($query as $row) {
-                                            echo '<tr>';
-                                            echo '<td>' . $row['id'] . '</td>';
-                                            echo '<td>' . $row['bedno'] . '</td>';
-                                            echo '<td>' . $row['bedtype'] . '</td>';
-                                            echo '<td class="crud-actions">
-                  <a href="' . site_url("admin") . '/products/update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
-                  <a href="' . site_url("admin") . '/products/delete/' . $row['id'] . '" class="btn btn-danger">delete</a>
+                                        <tbody>
+                                            <?php
+                                            foreach ($query as $row) {
+                                                echo '<tr>';
+                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $row['date'] . '</td>';
+                                                echo '<td>' . $row['name'] . '&nbsp' . $row['lname'] . '</td>';
+                                                echo '<td>' . $name . '</td>';
+                                                echo '<td class="crud-actions">
+                <a href="' . site_url("doctor") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                 </td>';
-                                            echo '</tr>';
-                                        }
-                                        ?>      
-                                        </tbody>-->
+                                                echo '</tr>';
+                                            }
+                                            ?>     
+                                        </tbody>
                                     </table>
 
 

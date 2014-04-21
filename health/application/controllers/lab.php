@@ -17,19 +17,32 @@ class Lab extends CI_Controller {
     }
 
     public function diagnostic_report() {
+         if ($this->session->userdata('logged_in') == TRUE) {
         $this->load->model('doctor_model');
         
-        $data['results'] = $this->doctor_model->get_prescription();
+        $data['results'] = $this->lab_model->get_prescription();
         $this->load->view('lab/diagnostic_report', $data);
+         }
+         if ($this->session->userdata('logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function index() {
+         if ($this->session->userdata('logged_in') == TRUE) {
         $this->load->view('lab/index');
+         }
+         if ($this->session->userdata('logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     /* ################### Lab blood bank/donor ################################### */
 
     public function blood_bank() {
+         if ($this->session->userdata('logged_in') == TRUE) {
         $this->load->model('nurse_model');
         $data['a'] = $this->nurse_model->a();
         $data['a1'] = $this->nurse_model->a1();
@@ -40,23 +53,41 @@ class Lab extends CI_Controller {
         $data['o'] = $this->nurse_model->o();
         $data['o1'] = $this->nurse_model->o1();
         $this->load->view('lab/blood_bank', $data);
+         }
+         if ($this->session->userdata('logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function blood_donor() {
+         if ($this->session->userdata('logged_in') == TRUE) {
         $this->load->model('nurse_model');
         $data['query'] = $this->nurse_model->get_donors();
         $this->load->view('lab/manage_blood_donor', $data);
+         }
+         if ($this->session->userdata('logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     /* ################### Lab profile ################################### */
 
     public function lab_profile() {
+         if ($this->session->userdata('logged_in') == TRUE) {
         $this->load->view('lab/lab_profile');
+         }
+         if ($this->session->userdata('logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     //**********************Edit diagnostic report ***********************//
 
     public function edit_diagnostic_report($id,$patientid) {
+         if ($this->session->userdata('logged_in') == TRUE) {
         $this->load->model('pharmacy_model');
         $this->load->model('doctor_model');
         $p = $id;
@@ -65,14 +96,20 @@ class Lab extends CI_Controller {
         $data['query'] = $this->pharmacy_model->get_prescription($p);
         $data['count'] = $this->lab_model->count_report($patientid);
 
-        $data['results'] = $this->doctor_model->get_prescription();
+        $data['results'] = $this->lab_model->get_prescription();
         $data['id'] = $id;
 
         $this->load->view('lab/edit_diagnostic_report', $data);
+         }
+        
+         if ($this->session->userdata('logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
     }
 
     public function add_diagnostic_report() {
-
+ if ($this->session->userdata('logged_in') == TRUE) {
         $this->load->model('pharmacy_model');
         $this->load->model('doctor_model');
         if ($this->input->server('REQUEST_METHOD') === 'POST') {
@@ -157,5 +194,88 @@ class Lab extends CI_Controller {
             }
         }
     }
+     if ($this->session->userdata('logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
 
+    
+    //=================edit donors ==================//
+     public function donors_update($id) {
+
+$this->load->model('nurse_model');
+
+        if ($this->session->userdata('logged_in') == TRUE) {
+
+            $data['results'] = $this->nurse_model->get_donors_edit($id);
+            $data['query'] = $this->nurse_model->get_donors();
+
+            $this->load->view('lab/edit/edit_blood_donor', $data);
+        }
+        if ($this->session->userdata('logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+    
+    
+    public function edit_donors($id) {
+        $this->load->model('nurse_model');
+        //if save button was clicked, get the data sent via post
+        if ($this->input->server('REQUEST_METHOD') === 'POST') {
+
+            //form validation
+            $this->form_validation->set_rules('name', 'name', 'required');
+            $this->form_validation->set_rules('email', 'email', 'trim|required|valid_email');
+            $this->form_validation->set_rules('address', 'address', 'trim');
+            $this->form_validation->set_rules('phone', 'phone', 'trim|required');
+            $this->form_validation->set_rules('gender', 'gender', 'required');
+            $this->form_validation->set_rules('age', 'age', 'required|numeric');
+            $this->form_validation->set_rules('donationdate', 'donationdate', 'required');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><a class="close" data-dismiss="alert">×</a><strong>', '</strong></div>');
+
+            if ($this->form_validation->run() == FALSE) {
+                $data['results'] = $this->nurse_model->get_donors_edit($id);
+                $data['query'] = $this->nurse_model->get_donors();
+
+                $this->load->view('lab/edit/edit_blood_donor', $data);
+            }
+            //if the form has passed through the validation
+            if ($this->form_validation->run()) {
+                if ($this->session->userdata('logged_in') == TRUE) {
+
+                    $data_to_store = array(
+                        'name' => $this->input->post('name'),
+                        'email' => $this->input->post('email'),
+                        'address' => $this->input->post('address'),
+                        'phone' => $this->input->post('phone'),
+                        'gender' => $this->input->post('gender'),
+                        'donationdate' => $this->input->post('donationdate'),
+                        'age' => $this->input->post('age'),
+                        'bloodgroup' => $this->input->post('bloodgroup')
+                    );
+
+
+
+                    //if the insert has returned true then we show the flash message
+                    if ($this->nurse_model->update_donors($data_to_store)) {
+                        $data['flash_msg'] = TRUE;
+                        $data['query'] = $this->nurse_model->get_donors();
+                        $this->load->view('lab/manage_blood_donor', $data);
+                    } else {
+                        $data['flash_message'] = FALSE;
+                        $data['results'] = $this->nurse_model->get_donors_edit($id);
+                        $data['query'] = $this->nurse_model->get_donors();
+
+                        $this->load->view('lab/edit/edit_blood_donor', $data);
+                    }
+                }
+            }
+            if ($this->session->userdata('logged_in') == FALSE) {
+                $data['error'] = 'login details are wrong';
+                $this->load->view('welcome_message', $data);
+            }
+        }
+    }
 }

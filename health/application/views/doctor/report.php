@@ -63,9 +63,10 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $i=1;
                                             foreach ($query as $row) {
                                                 echo '<tr>';
-                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $i . '</td>';$i++;
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
                                                 echo '<td>' .$row['lname'].' </td>';
@@ -97,9 +98,10 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $i=1;
                                             foreach ($q as $row) {
                                                 echo '<tr>';
-                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $i . '</td>';$i++;
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
                                                 echo '<td>' .$row['lname'].' </td>';
@@ -128,9 +130,10 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $i=1;
                                             foreach ($d as $row) {
                                                 echo '<tr>';
-                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $i . '</td>';$i++;
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
                                                  echo '<td>' .$row['lname'].' </td>';
@@ -160,9 +163,10 @@
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $i=1;
                                             foreach ($oth as $row) {
                                                 echo '<tr>';
-                                                echo '<td>' . $row['id'] . '</td>';
+                                                echo '<td>' . $i . '</td>';$i++;
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
                                                  echo '<td>' .$row['lname'].' </td>';
