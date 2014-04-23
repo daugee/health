@@ -7,7 +7,10 @@
     <!-- sidebar -->
     <?php include("includes/docs/docs_sidebar.php"); ?>
     <!-- end sidebar -->
-
+<style type="text/css" title="currentStyle">
+       @import "<?php echo base_url(); ?>dt2/css/demo_page.css";
+     @import "<?php echo base_url(); ?>dt2/css/demo_table.css";
+        </style>
 
     <!-- main container -->
     <div class="content">
@@ -52,8 +55,10 @@
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs1-pane1">
-
-                                    <table class="table table-striped table-bordered table-condensed">
+             <div>
+<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
+</div>
+                                    <table class="table table-striped table-bordered table-condensed" id="table">
                                         <thead>
                                             <tr>
                                                 <th class="header">#</th>
@@ -69,8 +74,8 @@
                                                 echo '<tr>';
                                                 echo '<td>' . $row['id'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['name'] .'&nbsp'.$row['lname']. '</td>';
-                                                echo '<td>' . $name . '</td>';
+                                                echo '<td>' . $row['lname']. '</td>';
+                                                echo '<td>' . $row['name']. '</td>';
                                                 echo '<td class="crud-actions">
                 <a href="' . site_url("doctor") . '/edit_prescription/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                 </td>';
@@ -186,13 +191,12 @@
 <script type="text/javascript">
     $(function() {
 
-        // add uniform plugin styles to html elements
-        $("input:checkbox, input:radio").uniform();
+      
 
-        // select2 plugin for select elements
-        $(".select2").select2({
-            placeholder: "Select a State"
-        });
+//        // select2 plugin for select elements
+//        $(".select2").select2({
+//            placeholder: "Select a State"
+//        });
 
         // datepicker plugin
         $('.datepicker').datepicker().on('changeDate', function(ev) {
@@ -200,9 +204,45 @@
         });
 
         // wysihtml5 plugin on textarea
-        $(".wysihtml5").wysihtml5({
-            "font-styles": false
-        });
+//        $(".wysihtml5").wysihtml5({
+//            "font-styles": false
+//        });
     });
 </script>
+
+<script type="text/javascript">
+            function demoFromHTML() {
+                var pdf = new jsPDF('p','pt','letter'), source = $('#tabs1-pane1')[0]  // This is your HTML Div to generate pdf
+                , specialElementHandlers = {
+                    '#bypassme': function(element, renderer){
+                        return true
+                    }
+                }
+                
+              
+                pdf.setProperties({
+                    title: 'Title',
+                    subject: 'This is the subject',		
+                    author: 'James Hall'
+                   // keywords: 'generated, javascript, web 2.0, ajax',
+                    //creator: 'MEEE'
+                });
+              
+                pdf.fromHTML(
+                source // HTML string or DOM elem ref.
+                , 50 // x coord
+                , 10 // y coord
+                , {
+                    'width':500.5 // max width of content on PDF
+                    , 'elementHandlers': specialElementHandlers
+                }
+            )
+                pdf.output('dataurl')
+            }
+        </script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                $('#table').dataTable();
+            });
+        </script>
 </body>

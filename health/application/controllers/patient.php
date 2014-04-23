@@ -112,5 +112,44 @@ class Patient extends CI_Controller {
             $this->load->view('welcome_message', $data);
         }
     }
+    public function patient_profile($id) {
+ $this->load->model('doctor_model');
+ $this->load->model('patient_model');
+        if ($this->session->userdata('logged_in') == TRUE) {
+                        
+            $data['query'] = $this->doctor_model->get_patient($id);
+             $data['allotment'] = $this->patient_model->admit_history($id);
+              $data['query1'] = $this->patient_model->get_prescription1($id);
+              $data['query2'] = $this->patient_model->get_appointment($id);
+               $data['reports'] = $this->patient_model->get_report($id);
+
+            
+            $this->load->view('patient/patient_profile',$data);
+        }
+        if ($this->session->userdata('logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
+    
+       public function view_prescription1($id) {
+ $this->load->model('doctor_model');
+ $this->load->model('patient_model');
+
+
+        if ($this->session->userdata('logged_in') == TRUE) {
+            $data['query'] = $this->doctor_model->get_patient($id);
+             $data['allotment'] = $this->patient_model->admit_history($id);
+              $data['query1'] = $this->patient_model->get_prescription1($id);
+              $data['query2'] = $this->patient_model->get_appointment($id);
+               $data['reports'] = $this->patient_model->get_report($id);
+
+            $this->load->view('patient/patient/view_prescription', $data);
+        }
+        if ($this->session->userdata('logged_in') == FALSE) {
+            $data['error'] = 'login details are wrong';
+            $this->load->view('welcome_message', $data);
+        }
+    }
 
 }

@@ -65,6 +65,7 @@
                 echo '<td>'.$row['birthdate'].'</td>';
                 echo '<td class="crud-actions">
                   <a href="' . site_url("nurse") . '/edit_hospital_patient/' . $row['id'] . '" class="btn btn-info">view & edit</a> 
+                      <a href="' . site_url("nurse") . '/patient_profile/' . $row['id'] . '" class="btn btn-success">Profile</a>
                   
                 </td>';
                 echo '</tr>';

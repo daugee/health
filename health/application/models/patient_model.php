@@ -33,6 +33,18 @@ class Patient_model extends CI_Model {
         
         return $query->result_array();
     }
+    public function get_prescription1($id) {
+        $this->db->select('prescription.*,users.name,users.dep_id,patient.lname');
+            $this->db->where('patientid',$id);
+        $this->db->join('patient', 'patient.id = prescription.patientid', 'INNER');
+        $this->db->join('users', 'users.id = prescription.doctorid');
+        $query = $this->db->get('prescription');
+
+
+
+
+        return $query->result_array();
+    }
     
     public function admit_history($q) {
         

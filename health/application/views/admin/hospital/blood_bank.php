@@ -46,10 +46,11 @@
             </thead>
         <tbody>
               <?php
+              $i=1;
               foreach($query as $row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
+                echo '<td>'.$i.'</td>';$i=1;
                 echo '<td>'.$row['name'].'</td>';
                 echo '<td>'.$row['age'].'</td>';
                 echo '<td>'.$row['gender'].'</td>';
