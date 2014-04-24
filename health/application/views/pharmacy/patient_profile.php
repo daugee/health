@@ -25,11 +25,11 @@
                         <h3 class="name"><?php echo $query[0]['name']; ?> &nbsp; <?php echo $query[0]['lname']; ?></h3>
                          <?php $id=$query[0]['id']?> 
                     </div>
-                    <a href=" <?php echo  site_url("admin/delete_patient/").'/'. $id; ?>" class="btn-flat icon pull-right delete-user" data-toggle="tooltip" title="Delete user" data-placement="top">
+                    <a href=" <?php echo  site_url("pharmacy/delete_patient/").'/'. $id; ?>" class="btn-flat icon pull-right delete-user" data-toggle="tooltip" title="Delete user" data-placement="top">
                         <i class="icon-trash"></i>
                     </a>
                    
-                     <a href=" <?php echo  site_url("admin/edit_hospital_patient/").'/'. $id; ?>" class="btn btn-info large pull-right edit" >
+                     <a href=" <?php echo  site_url("pharmacy/edit_hospital_patient/").'/'. $id; ?>" class="btn btn-info large pull-right edit" >
                         Edit this person
                     </a>
                     &nbsp;

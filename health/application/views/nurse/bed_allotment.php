@@ -1,5 +1,8 @@
 
-
+ <style type="text/css" title="currentStyle">
+       @import "<?php echo base_url(); ?>dt2/css/demo_page.css";
+     @import "<?php echo base_url(); ?>dt2/css/demo_table.css";
+        </style>
 
 	<!-- main container -->
     <div class="content">
@@ -45,7 +48,10 @@
                     <?php   
       //form validation
       echo validation_errors();?> 
-        <table class="table table-striped table-bordered table-condensed">
+                                                                                                        <div class="span2">
+<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
+</div>
+        <table class="table table-striped table-bordered table-condensed" id="table">
             <thead>
               <tr>
                 <th class="header">#</th>

@@ -41,10 +41,15 @@
                 <!-- UI Elements section -->
                 
                 <!-- end UI elements section -->
-<table class="table table-striped table-bordered table-condensed" id="table">
-    <div>
-<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
+ 
+                                       <div class="span2">
+<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a><br />
 </div>
+                <div>
+                    <br />
+                </div>
+
+                <table class="table table-striped table-bordered table-condensed" id="table">
             <thead>
               <tr>
                 <th class="header">#</th>

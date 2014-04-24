@@ -39,13 +39,15 @@
               </a>
         </div>
      </div>
-       <div>
-<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
-</div>
+   
                 <!-- UI Elements section -->
                 <div class="row-fluid table" id="report">      
                 <!-- end UI elements section -->
+                                                    <div class="span2">
+<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
+</div>
 <table class="table table-striped table-bordered table-condensed" id="table">
+    
             <thead>
               <tr>
                 <th class="header">#</th>

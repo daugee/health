@@ -48,7 +48,6 @@
         
         
          <script src="<?php echo base_url(); ?>dt2/js/jquery.dataTables.min.js"></script>
-       
-    
+  		
     </body>
 </html>

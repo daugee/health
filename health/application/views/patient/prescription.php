@@ -8,6 +8,10 @@
     <?php include("includes/patient/sidebar.php"); ?>
     <!-- end sidebar -->
 
+     <style type="text/css" title="currentStyle">
+       @import "<?php echo base_url(); ?>dt2/css/demo_page.css";
+     @import "<?php echo base_url(); ?>dt2/css/demo_table.css";
+        </style>
 
     <!-- main container -->
     <div class="content">
@@ -32,10 +36,10 @@
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs1-pane1">
- <div>
+                                     <div class="span2">
 <a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
 </div>
-                                    <table class="table table-striped table-bordered table-condensed">
+                                    <table class="table table-striped table-bordered table-condensed" id="table">
                                         <thead>
                                             <tr>
                                                 <th class="header">#</th>
@@ -101,23 +105,12 @@
 <script type="text/javascript">
     $(function() {
 
-        // add uniform plugin styles to html elements
-        $("input:checkbox, input:radio").uniform();
-
-        // select2 plugin for select elements
-        $(".select2").select2({
-            placeholder: "Select a State"
-        });
-
         // datepicker plugin
         $('.datepicker').datepicker().on('changeDate', function(ev) {
             $(this).datepicker('hide');
         });
 
-        // wysihtml5 plugin on textarea
-        $(".wysihtml5").wysihtml5({
-            "font-styles": false
-        });
+    
     });
 </script>
 
@@ -151,5 +144,9 @@
                 pdf.output('dataurl')
             }
         </script>
-
+   <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                $('#table').dataTable();
+            });
+        </script>
 </body>

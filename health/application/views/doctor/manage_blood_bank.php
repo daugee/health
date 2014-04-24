@@ -25,9 +25,7 @@
                      <div class="page-header">
 			    <h1>View Blood Bank</h1>
 		    </div>
-		                  <div>
-<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
-</div>   
+
 		    		<div class="row">
 							<div class="tabbable span12">
 								<ul class="nav nav-tabs">
@@ -37,7 +35,9 @@
 								</ul>
 								<div class="tab-content">
 									<div class="tab-pane active" id="tabs1-pane1">
-                                                                  
+                                                                                                      <div class="span2">
+<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
+</div>
         <table class="table table-striped table-bordered table-condensed" id="table">
             <thead>
               <tr>
@@ -51,10 +51,11 @@
             </thead>
         <tbody>
               <?php
+              $i=1;
               foreach($query as $row)
               {
                 echo '<tr>';
-                echo '<td>'.$row['id'].'</td>';
+                echo '<td>'.$i.'</td>';$i++;
                 echo '<td>'.$row['name'].'</td>';
                 echo '<td>'.$row['age'].'</td>';
                 echo '<td>'.$row['gender'].'</td>';

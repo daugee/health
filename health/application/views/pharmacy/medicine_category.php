@@ -7,7 +7,10 @@
     <!-- sidebar -->
     <?php include("includes/pharmacy/sidebar.php"); ?>
     <!-- end sidebar -->
-
+    <style type="text/css" title="currentStyle">
+        @import "<?php echo base_url(); ?>dt2/css/demo_page.css";
+        @import "<?php echo base_url(); ?>dt2/css/demo_table.css";
+    </style>
 
     <!-- main container -->
     <div class="content">
@@ -24,7 +27,7 @@
                     </div>
                     <?php
                     //flash messages
-                    if (isset($flash_message) ){
+                    if (isset($flash_message)) {
                         if ($flash_message == TRUE) {
                             echo '<div class="alert alert-success">';
                             echo '<a class="close" data-dismiss="alert">×</a>';
@@ -40,7 +43,7 @@
                     ?>
                     <?php
                     //flash messages
-                    if (isset($flash_msg) ){
+                    if (isset($flash_msg)) {
                         if ($flash_msg == TRUE) {
                             echo '<div class="alert alert-success">';
                             echo '<a class="close" data-dismiss="alert">×</a>';
@@ -68,8 +71,11 @@
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs1-pane1">
+                                    <div class="span2">
+                                        <a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
+                                    </div>
 
-                                    <table class="table table-striped table-bordered table-condensed">
+                                    <table class="table table-striped table-bordered table-condensed" id="table">
                                         <thead>
                                             <tr>
                                                 <th class="header">#</th>
@@ -78,22 +84,22 @@
                                                 <th class="red header">Actions</th>
                                             </tr>
                                         </thead>
-                          <tbody>
-                                        <?php
-                                        $i = 1;
-                                        foreach ($results as $row) {
-                                            echo '<tr>';
-                                            echo '<td>' . $i . '</td>';
-                                            $i++;
-                                            echo '<td>' . $row['med_cat_name'] . '</td>';
-                                            echo '<td>' . $row['med_cat_description'] . '</td>';
-                                            echo '<td class="crud-actions">
+                                        <tbody>
+                                            <?php
+                                            $i = 1;
+                                            foreach ($results as $row) {
+                                                echo '<tr>';
+                                                echo '<td>' . $i . '</td>';
+                                                $i++;
+                                                echo '<td>' . $row['med_cat_name'] . '</td>';
+                                                echo '<td>' . $row['med_cat_description'] . '</td>';
+                                                echo '<td class="crud-actions">
                   <a href="' . site_url("pharmacy") . '/medicine_category_update/' . $row['med_cat_id'] . '" class="btn btn-info">view & edit</a>  
                   
                 </td>';
-                                            echo '</tr>';
-                                        }
-                                        ?>      
+                                                echo '</tr>';
+                                            }
+                                            ?>      
                                         </tbody>
                                     </table>
 
@@ -159,23 +165,51 @@
 <script type="text/javascript">
     $(function() {
 
-        // add uniform plugin styles to html elements
-        $("input:checkbox, input:radio").uniform();
-
-        // select2 plugin for select elements
-        $(".select2").select2({
-            placeholder: "Select a State"
-        });
+    
 
         // datepicker plugin
         $('.datepicker').datepicker().on('changeDate', function(ev) {
             $(this).datepicker('hide');
         });
 
-        // wysihtml5 plugin on textarea
-        $(".wysihtml5").wysihtml5({
-            "font-styles": false
-        });
+     
     });
 </script>
+
+ <script type="text/javascript">
+            function demoFromHTML() {
+                var pdf = new jsPDF('p','pt','letter'), source = $('#tabs1-pane1')[0]  // This is your HTML Div to generate pdf
+                , specialElementHandlers = {
+                    '#bypassme': function(element, renderer){
+                        return true
+                    }
+                }
+                
+              
+                pdf.setProperties({
+                    title: 'Title',
+                    subject: 'This is the subject',		
+                    author: 'James Hall'
+                   // keywords: 'generated, javascript, web 2.0, ajax',
+                    //creator: 'MEEE'
+                });
+              
+                pdf.fromHTML(
+                source // HTML string or DOM elem ref.
+                , 50 // x coord
+                , 10 // y coord
+                , {
+                    'width':500.5 // max width of content on PDF
+                    , 'elementHandlers': specialElementHandlers
+                }
+            )
+                pdf.output('dataurl')
+            }
+        </script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                $('#table').dataTable();
+            });
+        </script>
+
 </body>

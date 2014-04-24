@@ -9,6 +9,10 @@
     <?php include("includes/sidebar.php"); ?>
     <!-- end sidebar -->
 
+     <style type="text/css" title="currentStyle">
+       @import "<?php echo base_url(); ?>dt2/css/demo_page.css";
+     @import "<?php echo base_url(); ?>dt2/css/demo_table.css";
+        </style>
 
 <!-- main container -->
 <div class="content">
@@ -47,9 +51,11 @@
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane active" id="tabs1-pane1">
-
+                                      <div class="span2">
+<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
+</div>
                                
-                                <table class="table table-striped table-bordered table-condensed">
+                                <table class="table table-striped table-bordered table-condensed" id="table">
                                     <thead>
                                         <tr>
                                             <th class="header">#</th>
@@ -83,7 +89,10 @@
                                 <?php echo '<div class="pagination">' . $this->pagination->create_links() . '</div>'; ?>
                             </div>
                             <div class="tab-pane" id="tabs1-pane2">
-                                  <table class="table table-striped table-bordered table-condensed">
+                                                                      <div class="span2">
+<a href="javascript:demo()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
+</div>
+                                  <table class="table table-striped table-bordered table-condensed" id="table1">
                                     <thead>
                                         <tr>
                                             <th class="header">#</th>
@@ -136,7 +145,72 @@
 <!-- scripts for this page -->
 
 
-
+ <script type="text/javascript">
+            function demoFromHTML() {
+                var pdf = new jsPDF('p','pt','letter'), source = $('#tabs1-pane1')[0]  // This is your HTML Div to generate pdf
+                , specialElementHandlers = {
+                    '#bypassme': function(element, renderer){
+                        return true
+                    }
+                }
+                
+              
+                pdf.setProperties({
+                    title: 'Title',
+                    subject: 'This is the subject',		
+                    author: 'James Hall'
+                   // keywords: 'generated, javascript, web 2.0, ajax',
+                    //creator: 'MEEE'
+                });
+              
+                pdf.fromHTML(
+                source // HTML string or DOM elem ref.
+                , 50 // x coord
+                , 10 // y coord
+                , {
+                    'width':500.5 // max width of content on PDF
+                    , 'elementHandlers': specialElementHandlers
+                }
+            )
+                pdf.output('dataurl')
+            }
+        </script>
+         <script type="text/javascript">
+            function demo() {
+                var pdf = new jsPDF('p','pt','letter'), source = $('#tabs1-pane2')[0]  // This is your HTML Div to generate pdf
+                , specialElementHandlers = {
+                    '#bypassme': function(element, renderer){
+                        return true
+                    }
+                }
+                
+              
+                pdf.setProperties({
+                    title: 'Title',
+                    subject: 'This is the subject',		
+                    author: 'James Hall'
+                   // keywords: 'generated, javascript, web 2.0, ajax',
+                    //creator: 'MEEE'
+                });
+              
+                pdf.fromHTML(
+                source // HTML string or DOM elem ref.
+                , 50 // x coord
+                , 10 // y coord
+                , {
+                    'width':500.5 // max width of content on PDF
+                    , 'elementHandlers': specialElementHandlers
+                }
+            )
+                pdf.output('dataurl')
+            }
+        </script>
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function() {
+                $('#table').dataTable();
+                $('#table1').dataTable();
+            });
+        </script>
 
 
 

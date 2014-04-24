@@ -57,7 +57,7 @@
                     <?php   
       //form validation
       echo validation_errors();?> 
-                                                                                   <div>
+                                        <div class="span2">
 <a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
 </div>
         <table class="table table-striped table-bordered table-condensed" id="table">
