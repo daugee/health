@@ -9,9 +9,9 @@
     <!-- end sidebar -->
 
     <style type="text/css" title="currentStyle">
-       @import "<?php echo base_url(); ?>dt2/css/demo_page.css";
-     @import "<?php echo base_url(); ?>dt2/css/demo_table.css";
-        </style>
+        @import "<?php echo base_url(); ?>dt2/css/demo_page.css";
+        @import "<?php echo base_url(); ?>dt2/css/demo_table.css";
+    </style>
 
     <!-- main container -->
     <div class="content">
@@ -31,7 +31,8 @@
                         <div class="tabbable span12">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a href="#tabs1-pane1" data-toggle="tab">Patient list</a></li>
-                                <li><a href="#tabs1-pane2" data-toggle="tab">add patient</a></li>
+                                <li><a href="#tabs1-pane2" data-toggle="tab">Visualizer</a></li>
+                                <li><a href="#tabs1-pane3" data-toggle="tab">add patient</a></li>
 
                             </ul>
                             <div class="tab-content">
@@ -91,9 +92,9 @@
                                     echo validation_errors();
                                     ?> 
                                     <table class="table table-striped table-bordered table-condensed" id="table">
-                                                                         <div class="span2">
-<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
-</div>
+                                        <div class="span2">
+                                            <a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
+                                        </div>
                                         <thead>
                                             <tr>
                                                 <th class="header">#</th>
@@ -106,30 +107,48 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-<?php
-$i = 1;
-foreach ($query as $row) {
-    echo '<tr>';
-    echo '<td>' . $i . '</td>';
-    $i++;
-    echo '<td>' . $row['name'] . '</td>';
-    echo '<td>' . $row['age'] . '</td>';
-    echo '<td>' . $row['sex'] . '</td>';
-    echo '<td>' . $row['bloodgroup'] . '</td>';
-    echo '<td>' . $row['birthdate'] . '</td>';
-    echo '<td class="crud-actions">
+                                            <?php
+                                            $a = 0;
+                                            $p = 0;
+                                            foreach ($query as $row) {
+                                                if ($row['sex'] == 'male') {
+                                                    $a++;
+                                                } else {
+                                                    $p++;
+                                                }
+                                            }
+                                            ?>
+                                            
+                                            <?php
+                                            $i = 1;
+                                            foreach ($query as $row) {
+                                                echo '<tr>';
+                                                echo '<td>' . $i . '</td>';
+                                                $i++;
+                                                echo '<td>' . $row['name'] . '</td>';
+                                                echo '<td>' . $row['age'] . '</td>';
+                                                echo '<td>' . $row['sex'] . '</td>';
+                                                echo '<td>' . $row['bloodgroup'] . '</td>';
+                                                echo '<td>' . $row['birthdate'] . '</td>';
+                                                echo '<td class="crud-actions">
                  <a href="' . site_url("admin") . '/edit_hospital_patient/' . $row['id'] . '" class="btn btn-info">view & edit</a> 
                      <a href="' . site_url("admin") . '/patient_profile/' . $row['id'] . '" class="btn btn-success">Profile</a>
                  <a href="' . site_url("admin") . '/delete_patient/' . $row['id'] . '" class="btn btn-danger">delete</a>
                 </td>';
-    echo '</tr>';
-}
-?>      
+                                                echo '</tr>';
+                                            }
+                                            ?>     
+
                                         </tbody>
                                     </table>
-<?php echo '<div class="pagination">' . $this->pagination->create_links() . '</div>'; ?>
+                                    <?php echo '<div class="pagination">' . $this->pagination->create_links() . '</div>'; ?>
                                 </div>
+
                                 <div class="tab-pane" id="tabs1-pane2">
+                                    <div id="chart1" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
+                                    <!--<div id="chart" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
+                                </div>
+                                <div class="tab-pane" id="tabs1-pane3">
                                     <div class="span12">
                                         <div id="fuelux-wizard" class="wizard row-fluid">
                                             <ul class="wizard-steps">
@@ -151,22 +170,22 @@ foreach ($query as $row) {
                                                 </li>
                                             </ul>                            
                                         </div>
-<?php
+                                        <?php
 //flash messages
-if (isset($flash_message)) {
-    if ($flash_message == TRUE) {
-        echo '<div class="alert alert-success">';
-        echo '<a class="close" data-dismiss="alert">×</a>';
-        echo '<strong>Well done!</strong> new patient created with success.';
-        echo '</div>';
-    } else {
-        echo '<div class="alert alert-error">';
-        echo '<a class="close" data-dismiss="alert">×</a>';
-        echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
-        echo '</div>';
-    }
-}
-?>
+                                        if (isset($flash_message)) {
+                                            if ($flash_message == TRUE) {
+                                                echo '<div class="alert alert-success">';
+                                                echo '<a class="close" data-dismiss="alert">×</a>';
+                                                echo '<strong>Well done!</strong> new patient created with success.';
+                                                echo '</div>';
+                                            } else {
+                                                echo '<div class="alert alert-error">';
+                                                echo '<a class="close" data-dismiss="alert">×</a>';
+                                                echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
+                                                echo '</div>';
+                                            }
+                                        }
+                                        ?>
                                         <?php
                                         //form validation
 
@@ -332,6 +351,107 @@ if (isset($flash_message)) {
 <script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
 <script src="<?php echo base_url(); ?>js/theme.js"></script>
 <script src="<?php echo base_url(); ?>js/fuelux.wizard.js"></script>
+<script type="text/javascript">
+  $(function() {
+        $('#chart1').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Hospital Departments'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
+                }
+            },
+            series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                   
+                        ['male', <?php echo $a;?>],
+                        ['female', <?php echo $p;?>]
+                                
+                     
+                     
+                    ]
+                }]
+        });
+    });
+</script>
+<script type="text/javascript">
+
+    $(function() {
+        $('#chart').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Patient Attendance'
+            },
+            xAxis: {
+                categories: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec'
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Patients'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                    name: 'male',
+                    data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+                }, {
+                    name: 'female',
+                    data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+                } ]
+        });
+    });
+
+</script>
 
 <script type="text/javascript">
     $(function() {
@@ -384,42 +504,44 @@ if (isset($flash_message)) {
 
     });
 </script>
-  <?php include ("includes/scripts.php");?>
 
-        <script type="text/javascript">
-            function demoFromHTML() {
-                var pdf = new jsPDF('p','pt','letter'), source = $('#tabs1-pane1')[0]  // This is your HTML Div to generate pdf
+
+<script type="text/javascript">
+    function demoFromHTML() {
+        var pdf = new jsPDF('p', 'pt', 'letter'), source = $('#tabs1-pane1')[0]  // This is your HTML Div to generate pdf
                 , specialElementHandlers = {
-                    '#bypassme': function(element, renderer){
-                        return true
-                    }
-                }
-                
-              
-                pdf.setProperties({
-                    title: 'Title',
-                    subject: 'This is the subject',		
-                    author: 'James Hall'
-                   // keywords: 'generated, javascript, web 2.0, ajax',
+            '#bypassme': function(element, renderer) {
+                return true
+            }
+        }
+
+
+        pdf.setProperties({
+            title: 'Title',
+            subject: 'This is the subject',
+            author: 'James Hall'
+                    // keywords: 'generated, javascript, web 2.0, ajax',
                     //creator: 'MEEE'
-                });
-              
-                pdf.fromHTML(
+        });
+
+        pdf.fromHTML(
                 source // HTML string or DOM elem ref.
                 , 50 // x coord
                 , 10 // y coord
                 , {
-                    'width':500.5 // max width of content on PDF
+            'width': 500.5 // max width of content on PDF
                     , 'elementHandlers': specialElementHandlers
-                }
-            )
-                pdf.output('dataurl')
-            }
-        </script>
-        <script type="text/javascript" charset="utf-8">
-            $(document).ready(function() {
-                $('#table').dataTable();
-            });
-        </script>
+        }
+        )
+        pdf.output('dataurl')
+    }
+</script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#table').dataTable();
+    });
+</script>
+
+
 
 </body>

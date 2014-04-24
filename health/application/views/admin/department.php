@@ -8,10 +8,10 @@
     <?php include("includes/admin/sidebar.php"); ?>
     <!-- end sidebar -->
 
- <style type="text/css" title="currentStyle">
-       @import "<?php echo base_url(); ?>dt2/css/demo_page.css";
-     @import "<?php echo base_url(); ?>dt2/css/demo_table.css";
-        </style>
+    <style type="text/css" title="currentStyle">
+        @import "<?php echo base_url(); ?>dt2/css/demo_page.css";
+        @import "<?php echo base_url(); ?>dt2/css/demo_table.css";
+    </style>
     <!-- main container -->
     <div class="content">
 
@@ -51,16 +51,18 @@
                         <div class="tabbable span12">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a href="#tabs1-pane1" data-toggle="tab">Department list</a></li>
-                                <li><a href="#tabs1-pane2" data-toggle="tab">+add department</a></li>
+                                <li><a href="#tabs1-pane2" data-toggle="tab">Visualizer</a></li>
+                                <li><a href="#tabs1-pane3" data-toggle="tab">+add department</a></li>
+
 
                             </ul>
                             <div class="tab-content">
                                 <div class="tab-pane active" id="tabs1-pane1">
 
                                     <table class="table table-striped table-bordered table-condensed" id="table">
-                                         <div class="span2">
-<a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
-</div>
+                                        <div class="span2">
+                                            <a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
+                                        </div>
                                         <thead>
                                             <tr>
                                                 <th class="header">#</th>
@@ -71,10 +73,11 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                             $i = 1;
+                                            $i = 1;
                                             foreach ($results as $row) {
                                                 echo '<tr>';
-                                                echo '<td>' . $i . '</td>';$i++;
+                                                echo '<td>' . $i . '</td>';
+                                                $i++;
                                                 echo '<td>' . $row['dep_name'] . '</td>';
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td class="crud-actions">
@@ -89,6 +92,12 @@
 
                                 </div>
                                 <div class="tab-pane" id="tabs1-pane2">
+
+<div id="chart" style="min-width: 700px; height: 400px; margin: 0 auto"></div>
+
+                                 
+                                </div>
+                                <div class="tab-pane" id="tabs1-pane3">
 
                                     <form method="post" action="<?php echo site_url('admin/add_department'); ?>" id="formID" class="form-horizontal" >					
 
@@ -148,7 +157,7 @@
 <script type="text/javascript">
     $(function() {
 
-    
+
         // datepicker plugin
         $('.datepicker').datepicker().on('changeDate', function(ev) {
             $(this).datepicker('hide');
@@ -161,40 +170,82 @@
 
 
 
-        <script type="text/javascript">
-            function demoFromHTML() {
-                var pdf = new jsPDF('p','pt','letter'), source = $('#tabs1-pane1')[0]  // This is your HTML Div to generate pdf
+<script type="text/javascript">
+    function demoFromHTML() {
+        var pdf = new jsPDF('p', 'pt', 'letter'), source = $('#tabs1-pane1')[0]  // This is your HTML Div to generate pdf
                 , specialElementHandlers = {
-                    '#bypassme': function(element, renderer){
-                        return true
-                    }
-                }
-                
-              
-                pdf.setProperties({
-                    title: 'Title',
-                    subject: 'This is the subject',		
-                    author: 'James Hall'
-                   // keywords: 'generated, javascript, web 2.0, ajax',
+            '#bypassme': function(element, renderer) {
+                return true
+            }
+        }
+
+
+        pdf.setProperties({
+            title: 'Title',
+            subject: 'This is the subject',
+            author: 'James Hall'
+                    // keywords: 'generated, javascript, web 2.0, ajax',
                     //creator: 'MEEE'
-                });
-              
-                pdf.fromHTML(
+        });
+
+        pdf.fromHTML(
                 source // HTML string or DOM elem ref.
                 , 50 // x coord
                 , 10 // y coord
                 , {
-                    'width':500.5 // max width of content on PDF
+            'width': 500.5 // max width of content on PDF
                     , 'elementHandlers': specialElementHandlers
+        }
+        )
+        pdf.output('dataurl')
+    }
+</script>
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+        $('#table').dataTable();
+    });
+</script>
+<script type="text/javascript">
+    $(function() {
+        $('#chart').highcharts({
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false
+            },
+            title: {
+                text: 'Hospital Departments'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                        style: {
+                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                        }
+                    }
                 }
-            )
-                pdf.output('dataurl')
-            }
-        </script>
-        <script type="text/javascript" charset="utf-8">
-            $(document).ready(function() {
-                $('#table').dataTable();
-            });
-        </script>
+            },
+            series: [{
+                    type: 'pie',
+                    name: 'Browser share',
+                    data: [
+                       <?php foreach ($results as $row): ?> 
+                        ['<?php echo $row['dep_name'];?>', 50.0],
+                       <?php endforeach; ?> 
+                                
+                     
+                     
+                    ]
+                }]
+        });
+    });
+</script>
 
 </body>
