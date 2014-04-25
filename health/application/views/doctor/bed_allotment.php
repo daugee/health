@@ -26,7 +26,23 @@
                      <div class="page-header">
 			    <h1>Bed Allotment</h1>
 		    </div>
-		    
+		          <?php
+      //flash messages
+      if(isset($flash)){
+        if($flash == TRUE)
+        {
+          echo '<div class="alert alert-success">';
+            echo '<a class="close" data-dismiss="alert">×</a>';
+            echo '<strong>The date for admission should be greater than today !</strong> .';
+          echo '</div>';       
+        }else{
+          echo '<div class="alert alert-error">';
+            echo '<a class="close" data-dismiss="alert">×</a>';
+            echo '<strong>Oh snap!</strong> change a few things up and try submitting again.';
+          echo '</div>';          
+        }
+      }
+      ?>
 		    		<div class="row">
 							<div class="tabbable span12">
 								<ul class="nav nav-tabs">
@@ -54,6 +70,8 @@
         }
       }
       ?>
+                                                                            
+                                                                            
                     <?php   
       //form validation
       echo validation_errors();?> 

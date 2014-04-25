@@ -54,8 +54,8 @@
                                                 echo '<td>' . $row['id'] . '</td>';
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['patient'] . '</td>';
-                                                echo '<td>' . $row['doctor'] . '</td>';
+                                                echo '<td>' . $row['lname'] . '</td>';
+                                                echo '<td>' . $row['name'] . '</td>';
                                                 echo '<td class="crud-actions">
                  <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                        </td>';
@@ -90,8 +90,8 @@
                                                 echo '<td>' . $row['id'] . '</td>';
                                                 echo '<td>' . $row['description'] . '</td>';
                                                 echo '<td>' . $row['date'] . '</td>';
-                                                echo '<td>' . $row['patient'] . '</td>';
-                                                echo '<td>' . $row['doctor'] . '</td>';
+                                                echo '<td>' . $row['lname'] . '</td>';
+                                                echo '<td>' . $row['name'] . '</td>';
                                                 echo '<td class="crud-actions">
                  <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                        </td>';
@@ -117,14 +117,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                     
 <?php
 foreach ($d as $row) {
     echo '<tr>';
     echo '<td>' . $row['id'] . '</td>';
     echo '<td>' . $row['description'] . '</td>';
     echo '<td>' . $row['date'] . '</td>';
-    echo '<td>' . $row['patient'] . '</td>';
-    echo '<td>' . $row['doctor'] . '</td>';
+    echo '<td>' . $row['lname'] . '</td>';
+    echo '<td>' . $row['name'] . '</td>';
     echo '<td class="crud-actions">
                  <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                        </td>';
@@ -157,8 +158,8 @@ foreach ($oth as $row) {
     echo '<td>' . $row['id'] . '</td>';
     echo '<td>' . $row['description'] . '</td>';
     echo '<td>' . $row['date'] . '</td>';
-    echo '<td>' . $row['patient'] . '</td>';
-    echo '<td>' . $row['doctor'] . '</td>';
+    echo '<td>' . $row['lname'] . '</td>';
+    echo '<td>' . $row['name'] . '</td>';
     echo '<td class="crud-actions">
                  <a href="' . base_url('') . 'img/projo/' . $row['file'] . '" class="btn btn-danger">file</a>
                        </td>';

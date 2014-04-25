@@ -26,6 +26,8 @@ class Nurse extends CI_Controller {
         }
     }
 
+
+    
     public function add_patient() {
         $this->load->model('nurse_model');
         //if save button was clicked, get the data sent via post
@@ -218,6 +220,7 @@ class Nurse extends CI_Controller {
     public function inpatient() {
         if ($this->session->userdata('is_logged_in') == TRUE) {
             $data['allotment'] = $this->nurse_model->get_bedallotment();
+             $data['discharge'] = $this->nurse_model->discharged_patient();
             $this->load->view('nurse/inpatient', $data);
         }
         if ($this->session->userdata('is_logged_in') == FALSE) {
@@ -226,13 +229,14 @@ class Nurse extends CI_Controller {
         }
     }
 
-    public function discharge($id) {
+    public function discharge($id,$bedno) {
 
         if ($this->session->userdata('is_logged_in') == TRUE) {
-            if ($this->nurse_model->disharge($id)) {
+            if ($this->nurse_model->disharge($id,$bedno)) {
 
                 $data['flash_message'] = TRUE;
                 $data['allotment'] = $this->nurse_model->get_bedallotment();
+                $data['discharge'] = $this->nurse_model->discharged_patient();
                 $this->load->view('nurse/inpatient', $data);
             } else {
                 $data['flash_message'] = FALSE;
@@ -305,8 +309,6 @@ class Nurse extends CI_Controller {
 
     //========================EDIT BED ALLOTMENT ===========================//
     public function edit_bedallotment($id) {
-
-
 
         if ($this->session->userdata('is_logged_in') == TRUE) {
             $this->load->model('doctor_model');

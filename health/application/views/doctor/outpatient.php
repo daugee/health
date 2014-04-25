@@ -6,13 +6,13 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/sidebar.php");?>
+    <?php include("includes/docs/docs_sidebar.php"); ?>
     <!-- end sidebar -->
+
  <style type="text/css" title="currentStyle">
        @import "<?php echo base_url(); ?>dt2/css/demo_page.css";
      @import "<?php echo base_url(); ?>dt2/css/demo_table.css";
         </style>
-
 	<!-- main container -->
     <div class="content">
 
@@ -33,18 +33,17 @@
  <div class="row">
      <div class="row-fluid header">
         <div class="span12 columns">
-            <a href="<?php echo site_url('welcome/new_patient');?>" class="btn-flat success pull-right">
-                            <span>&#43;</span>
-                           New Patient
-              </a>
+            <label  class="btn-flat success pull-left">
+                            <span></span>
+                           OUTPATIENT
+              </label>
         </div>
      </div>
-                                                               <div class="span2">
+                                          <div class="span2">
 <a href="javascript:demoFromHTML()" class="button" style="alignment-adjust:middle" target=" " ><button>Print report</button></a>
 </div>
                 <!-- UI Elements section -->
-                <div class="row-fluid table" id="report">    
- 
+                <div class="row-fluid table" id="report">      
                 <!-- end UI elements section -->
 <table class="table table-striped table-bordered table-condensed" id="table">
             <thead>
@@ -61,7 +60,7 @@
              <tbody>
               <?php
               $i=1;
-              foreach($query as $row)
+              foreach($patient as $row)
               {
                 echo '<tr>';
                 echo '<td>'.$i.'</td>';$i++;
@@ -71,9 +70,8 @@
                 echo '<td>'.$row['bloodgroup'].'</td>';
                 echo '<td>'.$row['birthdate'].'</td>';
                 echo '<td class="crud-actions">
-                  <a href="' . site_url("nurse") . '/edit_hospital_patient/' . $row['id'] . '" class="btn btn-info">view & edit</a> 
-                      <a href="' . site_url("nurse") . '/patient_profile/' . $row['id'] . '" class="btn btn-success">Profile</a>
-                  
+                  <a href="' . site_url("doctor") . '/edit_hospital_patient/' . $row['id'] . '" class="btn btn-info">view & edit</a> 
+                  <a href="' . site_url("doctor") . '/patient_profile/' . $row['id'] . '" class="btn btn-success">Profile</a>
                 </td>';
                 echo '</tr>';
               }
@@ -89,6 +87,7 @@
 
 	<!-- scripts -->
     <?php include ("includes/scripts.php");?>
+
 
          <script type="text/javascript">
             function demoFromHTML() {

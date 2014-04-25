@@ -28,8 +28,16 @@ class Doctor_model extends CI_Model {
 
     //function for adding up appointment
     function add_appointment($data) {
-        $insert = $this->db->insert('appointment', $data);
-        return $insert;
+         $this->db->where('doctor', $this->input->post('doctor'));
+         $this->db->where('date', $this->input->post('appointmentdate'));
+         $query = $this->db->get('appointment');
+        if ($query->num_rows() > 0) {
+            return FALSE;
+        } else {
+             $insert = $this->db->insert('appointment', $data);
+            return $insert;
+        }
+       
     }
 
     public function update_appointment($data, $id) {
@@ -40,8 +48,17 @@ class Doctor_model extends CI_Model {
 
     public function get_doctor() {
 
-        $query = $this->db->get('doctor');
+        $this->db->select('users.name,users.id,users.disable,department.dep_name,
+           department.dep_id');
+        $this->db->where('type', 'doctor');
+        $this->db->where('users.disable !=', 'disable');
+        $this->db->join('department', 'department.dep_id = users.dep_id', 'INNER');
+
+        $query = $this->db->get('users');
+
+
         return $query->result_array();
+        
     }
 
     //function for adding nurse report details
@@ -120,6 +137,17 @@ class Doctor_model extends CI_Model {
 
         return $query->result_array();
     }
+    
+     public function get_appointment_date() {
+        $this->db->select('appointment.*,users.name,users.dep_id');
+   
+       
+        $this->db->join('users', 'users.id = appointment.doctor', 'INNER');
+        $query = $this->db->get('appointment');
+
+
+        return $query->result_array();
+    }
 
     public function get_appointment1($id) {
         $this->db->select('appointment.*,users.name,users.dep_id,
@@ -145,6 +173,8 @@ class Doctor_model extends CI_Model {
 
         $this->db->where('patientid', $this->input->post('id'));
         $this->db->update('prescription', $data);
+        
+        return TRUE;
     }
 
     public function get_bedallotment($id) {
@@ -164,7 +194,7 @@ class Doctor_model extends CI_Model {
 
         $data = array(
             'bedno' => $this->input->post('bedno'),
-            'patient' => $this->input->post('patient'),
+            
             'allotmentdate' => $this->input->post('allotmentdate'),
             'dischargedate' => $this->input->post('dischargedate')
         );

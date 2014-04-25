@@ -71,12 +71,11 @@
                 echo '<td>'.$row['id'].'</td>';
                 echo '<td>'.$row['bedno'].'</td>';
                 //echo '<td>'.$row['bedtype'].'</td>';
-                echo '<td>'.$row['patient'].'</td>';
+                echo '<td>'.$row['name'].'&nbsp'.$row['lname'].'</td>';
                 echo '<td>'.$row['allotmentdate'].'</td>';
                 echo '<td>'.$row['dischargedate'].'</td>';
                 echo '<td class="crud-actions">
-                  <a href="'.site_url("admin").'/products/update/'.$row['id'].'" class="btn btn-info">view & edit</a>  
-                  <a href="'.site_url("admin").'/products/delete/'.$row['id'].'" class="btn btn-danger">delete</a>
+                    <a href="' . site_url("nurse") . '/edit_bedallotment/' . $row['id'] .'" class="btn btn-info">view & edit</a> 
                 </td>';
                 echo '</tr>';
               }
@@ -136,7 +135,7 @@
       <?php
               foreach($result as $row)
               {
-                echo "<option value=".$row['name'].">".$row['name']."</option>";
+                echo "<option value=".$row['id'].">".$row['name']."</option>";
               }
               ?>
     </select>
@@ -147,7 +146,7 @@
 <div class="control-group">
   <label class="control-label" for="allotment date">allotment date</label>
   <div class="controls">
-      <input type="text" name="allotmentdate" value="allotment date" class="input-medium datepicker"  data-date-format="yyyy/mm/dd" />
+      <input type="text" name="allotmentdate" id="dpd1" value="allotment date" class="input-medium datepicker"  data-date-format="yyyy/mm/dd" />
   </div>
 </div>
 
@@ -155,7 +154,7 @@
 <div class="control-group">
   <label class="control-label" for="discharge date">discharge_date</label>
   <div class="controls">
-    <input type="text" name="dischargedate"  value="discharge date" class="input-medium datepicker" data-date-format="yyyy/mm/dd" />
+    <input type="text" name="dischargedate" id="dpd2" value="discharge date" class="input-medium datepicker" data-date-format="yyyy/mm/dd" />
   </div>
 </div>
 
@@ -167,6 +166,7 @@
   </div>
 </div>
 
+</div>
 </fieldset>
 </form>                                                                      
 
@@ -189,8 +189,59 @@
     <!-- end main container -->
 
 	<!-- scripts for this page -->
+     <?php include("includes/scripts.php") ?>
+    <script type="text/javascript">
     
-  
+        $(function() {
+
+
+
+
+            // datepicker plugin
+            $('.datepicker').datepicker().on('changeDate', function(ev) {
+                $(this).datepicker('hide');
+            });
+
+
+        });
+    </script>
+
+    <script type="text/javascript">
+        function demoFromHTML() {
+            
+            var pdf = new jsPDF('p', 'pt', 'letter'), source = $('#tabs1-pane1')[0]  // This is your HTML Div to generate pdf
+                    , specialElementHandlers = {
+                '#bypassme': function(element, renderer) {
+                    return true
+                }
+            }
+
+
+            pdf.setProperties({
+                title: 'Title',
+                subject: 'This is the subject',
+                author: 'James Hall'
+                        // keywords: 'generated, javascript, web 2.0, ajax',
+                        //creator: 'MEEE'
+            });
+
+            pdf.fromHTML(
+                    source // HTML string or DOM elem ref.
+                    , 50 // x coord
+                    , 10 // y coord
+                    , {
+                'width': 500.5 // max width of content on PDF
+                        , 'elementHandlers': specialElementHandlers
+            }
+            )
+            pdf.output('dataurl')
+        }
+    </script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            $('#table').dataTable();
+        });
+    </script>
 
 
    

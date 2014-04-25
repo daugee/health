@@ -24,12 +24,14 @@ class Nurse_model extends CI_Model {
 
     //function for getting bed details
     public function get_bed() {
+        $this->db->where('occupied !=', 'occupied');
         $query = $this->db->get('bed');
         return $query->result_array();
     }
 
     public function get_bed1($id) {
         $this->db->where('id', $id);
+        
         $query = $this->db->get('bed');
         return $query->result_array();
     }
@@ -45,6 +47,18 @@ class Nurse_model extends CI_Model {
 
         $this->db->select('bedallotment.*,patient.name,patient.lname,bed.bedtype');
         $this->db->where('bedallotment.discharge !=', 'yes');
+       
+        $this->db->join('patient', 'patient.id = bedallotment.patient', 'INNER');
+        $this->db->join('bed', 'bed.bedno = bedallotment.bedno', 'INNER');
+        $query = $this->db->get('bedallotment');
+        return $query->result_array();
+    }
+    
+    public function discharged_patient() {
+
+        $this->db->select('bedallotment.*,patient.name,patient.lname,bed.bedtype');
+        $this->db->where('bedallotment.discharge ', 'yes');
+       
         $this->db->join('patient', 'patient.id = bedallotment.patient', 'INNER');
         $this->db->join('bed', 'bed.bedno = bedallotment.bedno', 'INNER');
         $query = $this->db->get('bedallotment');
@@ -53,6 +67,13 @@ class Nurse_model extends CI_Model {
 
     //function for adding bed allotment
     public function add_bedallotment($data) {
+        $data_to_store = array(
+                        'occupied' => 'occupied',
+                        
+                    );
+        $this->db->where('bedno', $this->input->post('bedno'));
+        $this->db->update('bed',$data_to_store);
+        $this->db->flush_cache();
         $insert = $this->db->insert('bedallotment', $data);
         return $insert;
     }
@@ -66,37 +87,46 @@ class Nurse_model extends CI_Model {
     //function for getting nurse report
     public function get_nurse_report_operation() {
 
-        $this->db->select('*');
-        $this->db->from('report');
-        $this->db->where('type', 'operation');
-        $query = $this->db->get();
+         $this->db->select('report.*, patient.lname,users.dep_id, users.name');
+        $this->db->where('report.type', 'operation');
+        
+        $this->db->join('patient', 'patient.id = report.patient', 'INNER');
+        $this->db->join('users', 'users.id = report.doctor');
+        $query = $this->db->get('report');
         return $query->result_array();
     }
 
     public function get_nurse_report_birth() {
 
-        $this->db->select('*');
-        $this->db->from('report');
-        $this->db->where('type', 'birth');
-        $q = $this->db->get();
+        $this->db->select('report.*, patient.lname,users.dep_id, users.name');
+        $this->db->where('report.type', 'birth');
+        
+        $this->db->join('patient', 'patient.id = report.patient', 'INNER');
+        $this->db->join('users', 'users.id = report.doctor');
+        $q = $this->db->get('report');
         return $q->result_array();
     }
 
     public function get_nurse_report_death() {
 
-        $this->db->select('*');
-        $this->db->from('report');
-        $this->db->where('type', 'death');
-        $d = $this->db->get();
+     $this->db->select('report.*, patient.lname,users.dep_id, users.name');
+        $this->db->where('report.type', 'death');
+        
+        $this->db->join('patient', 'patient.id = report.patient', 'INNER');
+        $this->db->join('users', 'users.id = report.doctor');
+        $d = $this->db->get('report');
+       
         return $d->result_array();
     }
 
     public function get_nurse_report_other() {
 
-        $this->db->select('*');
-        $this->db->from('report');
-        $this->db->where('type', 'other');
-        $oth = $this->db->get();
+         $this->db->select('report.*, patient.lname,users.dep_id, users.name');
+        $this->db->where('report.type', 'other');
+       
+        $this->db->join('patient', 'patient.id = report.patient', 'INNER');
+        $this->db->join('users', 'users.id = report.doctor');
+        $oth = $this->db->get('report');
         return $oth->result_array();
     }
 
@@ -174,14 +204,23 @@ class Nurse_model extends CI_Model {
         //return $result[0]->blood_aggregate;
     }
 
-    public function disharge($id) {
+    public function disharge($id,$bedno) {
         $data = array(
             'discharge' => 'yes',
         );
 
-
+        
         $this->db->where('id', $id);
         $this->db->update('bedallotment', $data);
+        $this->db->flush_cache();
+        
+         $data_to_store = array(
+                        'occupied' => '',
+                        
+                    );
+        $this->db->where('bedno', $bedno);
+        $this->db->update('bed',$data_to_store);
+        
         return TRUE;
     }
 
@@ -191,7 +230,7 @@ class Nurse_model extends CI_Model {
 
 
 
-        $this->db->select('patient.*,bedallotment.*');
+        $this->db->select('patient.*, bedallotment.*');
         // $this->db->where('bedallotment.patient !=', 'patient.id');
         $this->db->join('bedallotment', 'bedallotment.patient != patient.id', 'LEFT');
         // $query = $this->db->get('bedallotment,patient');

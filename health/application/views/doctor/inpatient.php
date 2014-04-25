@@ -6,7 +6,7 @@
     <!-- end navbar -->
 
     <!-- sidebar -->
-    <?php include("includes/sidebar.php"); ?>
+    <?php include("includes/docs/docs_sidebar.php"); ?>
     <!-- end sidebar -->
 
      <style type="text/css" title="currentStyle">
@@ -80,7 +80,7 @@
                                             echo '<td>' . $row['allotmentdate'] . '</td>';
                                             echo '<td>' . $row['dischargedate'] . '</td>';
                                             echo '<td class="crud-actions">
-                   <a href="' . site_url("nurse") . '/edit_bedallotment/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
+                   <a href="' . site_url("doctor") . '/edit_bedallotment/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                 </td>';
                                             echo '</tr>';
                                         }
@@ -117,7 +117,7 @@
                                             echo '<td>' . $row['allotmentdate'] . '</td>';
                                             echo '<td>' . $row['dischargedate'] . '</td>';
                                             echo '<td class="crud-actions">
-                   <a href="' . site_url("nurse") . '/discharge/' . $row['id'] .'/'.$row['bedno'].  '" class="btn btn-info">Discharge</a>  
+                   <a href="' . site_url("doctor") . '/discharge/' . $row['id'] .'/'.$row['bedno'].  '" class="btn btn-info">Discharge</a>  
                 </td>';
                                             
                                             echo '</tr>';
@@ -156,7 +156,7 @@
                                             echo '<td>' . $row['allotmentdate'] . '</td>';
                                             echo '<td>' . $row['dischargedate'] . '</td>';
                                             echo '<td class="crud-actions">
-                   <a href="' . site_url("nurse") . '/discharge/' . $row['id'] .'/'.$row['bedno'].  '" class="btn btn-info">Discharge</a>  
+                   <a href="' . site_url("doctor") . '/discharge/' . $row['id'] .'/'.$row['bedno'].  '" class="btn btn-info">Discharge</a>  
                 </td>';
                                             
                                             echo '</tr>';

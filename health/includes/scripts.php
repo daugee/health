@@ -3,9 +3,9 @@
 <!-- <script src="<?php echo base_url(); ?>js/jquery-ui-1.10.2.custom.min.js"></script> -->
 <!--<script src="<?php echo base_url(); ?>js/jquery-1.9.1.js"></script>-->   
 
-
-<!--     datepicker -->
 <script src="<?php echo base_url(); ?>js/bootstrap.datepicker.js"></script>
+<!--     datepicker -->
+<script src="<?php echo base_url(); ?>js/datetimepicker.min.js"></script>
 <!--<script src="<?php echo base_url(); ?>js/jquery.uniform.min.js"></script>-->
 <script src="<?php echo base_url(); ?>js/select2.min.js"></script>
 
@@ -49,6 +49,8 @@
 <script src="<?php echo base_url(); ?>highcharts/js/modules/exporting.js"></script>
 
 <script src="<?php echo base_url(); ?>dt2/js/jquery.dataTables.min.js"></script>
+
+
 
 </body>
 </html>

@@ -62,7 +62,7 @@
                                                 <th class="green header">Sex</th>
                                                 <th class="green header">Blood Group</th>
                                                 <th class="green header">Last Donation Date</th>
-                                                <th class="red header">Actions</th>
+                                                <th class="red header" id="actions1">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -77,7 +77,7 @@
                                                 echo '<td>' . $row['gender'] . '</td>';
                                                 echo '<td>' . $row['bloodgroup'] . '</td>';
                                                 echo '<td>' . $row['donationdate'] . '</td>';
-                                                echo '<td class="crud-actions">
+                                                echo '<td class="crud-actions" id=actions1>
                   <a href="' . site_url("nurse") . '/donors_update/' . $row['id'] . '" class="btn btn-info">view & edit</a>  
                  
                 </td>';
@@ -246,6 +246,7 @@
 
    <script type="text/javascript">
             function demoFromHTML() {
+                document.getElementById('actions1').style.display = "";
                 var pdf = new jsPDF('p','pt','letter'), source = $('#tabs1-pane1')[0]  // This is your HTML Div to generate pdf
                 , specialElementHandlers = {
                     '#bypassme': function(element, renderer){

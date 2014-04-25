@@ -14,9 +14,11 @@
     <link href="<?php echo base_url();?>css/lib/jquery-ui-1.10.2.custom.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url();?>css/lib/font-awesome.css" type="text/css" rel="stylesheet" />
     <link href="<?php echo base_url();?>css/lib/bootstrap.datepicker.css" type="text/css" rel="stylesheet">
+    <link href="<?php echo base_url();?>css/lib/datepicker.css" type="text/css" rel="stylesheet">
     
-
-    <!-- global styles -->
+    <link href="<?php echo base_url();?>css/lib/datetimepicker.min.css" type="text/css" rel="stylesheet">
+    
+   <!-- global styles -->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/layout.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/elements.css">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/icons.css">

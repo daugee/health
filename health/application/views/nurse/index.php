@@ -58,7 +58,7 @@
                                     echo '<tr>';
                                     echo '<td>' . $i . '</td>';
                                     $i++;
-                                    echo '<td>' . $row['name'] . '</td>';
+                                    echo '<td>' . $row['name'] .'&nbsp'.$row['lname']. '</td>';
                                     echo '<td>' . $row['age'] . '</td>';
                                     echo '<td>' . $row['sex'] . '</td>';
                                     echo '<td>' . $row['bloodgroup'] . '</td>';

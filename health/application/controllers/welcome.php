@@ -412,7 +412,8 @@ class Welcome extends CI_Controller {
                     $data_to_store = array(
                         'bedno' => $this->input->post('bedno'),
                         'bedtype' => $this->input->post('bedtype'),
-                        'description' => $this->input->post('description')
+                        'description' => $this->input->post('description'),
+                        'occupied' => 'occupied'
                     );
 
                     //if the insert has returned true then we show the flash message
@@ -455,7 +456,7 @@ class Welcome extends CI_Controller {
                     $data_to_store = array(
                         'bedno' => $this->input->post('bedno'),
                         'patient' => $this->input->post('patient'),
-                        'patient' => $this->input->post('patient'),
+                        
                         'allotmentdate' => $this->input->post('allotmentdate'),
                         'dischargedate' => $this->input->post('dischargedate')
                     );
